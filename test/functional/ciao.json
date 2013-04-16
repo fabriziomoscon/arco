@@ -1,0 +1,8 @@
+{
+  "defaults": {
+    "protocol": "http:",
+    "host": "localhost",
+    "port": 4000,
+    "headers": { "User-Agent": "Ciao/Client 1.0" }
+  }
+}

@@ -1,0 +1,46 @@
+dependencies
+
+- remove unused dependencies 
+
+bootstrapping
+
+- create startup script that checks for NODE_PATH and stop execution when not found
+
+ciao
+
+- add ciao API example
+- add ciao HTML example
+
+- add ciao doc example
+
+architecture
+
+- user session management
+- complete user controller with logic
+- add two step view example
+
+mapper
+
+- add password hashing to user api mapper
+
+frontend
+
+- add stylus css example
+- add mustache view example
+
+db
+
+- add index example
+- add geo location example
+
+test
+
+- add travis test badge
+- add mocks
+- add a unit example
+- add an integration example
+
+package
+
+- put lib/mongo/gateway into its own npm package
+- put lib/mongo/logger into its own npm package

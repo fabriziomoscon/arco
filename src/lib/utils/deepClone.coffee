@@ -1,0 +1,28 @@
+ObjectID = require('mongodb').ObjectID
+
+clone = (obj) ->
+  if not obj? or typeof obj isnt 'object'
+    return obj
+
+  if obj instanceof Date
+    return new Date(obj.getTime()) 
+
+  if obj instanceof RegExp
+    flags = ''
+    flags += 'g' if obj.global?
+    flags += 'i' if obj.ignoreCase?
+    flags += 'm' if obj.multiline?
+    flags += 'y' if obj.sticky?
+    return new RegExp(obj.source, flags) 
+
+  if obj instanceof ObjectID
+    return new ObjectID obj+''
+
+  newInstance = new obj.constructor()
+
+  for key of obj
+    newInstance[key] = clone obj[key]
+
+  return newInstance
+
+module.exports = clone

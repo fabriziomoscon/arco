@@ -1,0 +1,1 @@
+module.exports = (id) -> return /^[0-9A-F]{24}$/i.test id
