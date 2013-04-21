@@ -1,16 +1,13 @@
-CoffeeStack
-===========
+Arco
+====
 
-Predefined node.js express web stack written in CoffeeScript providing common CRUD actions for account management as an example user case. This layered architecture is an extended MVC which uses data mapper, repository pattern and two step view to achieve a neat separation of concerns between the layers. The application code integrates a basic template for unit, functional, integration tests and HTML rendering template using stylus and mustache. It also provide JSON endpoints which can be called using standard HTTP headers for `Accept` as shown in JSON web service functional test [example](https://github.com/fabriziomoscon/coffeestack/blob/master/test/functional/json/user/create/success.coffee). 
+This project main goal is to provide an Open Public API to store and manage Archery scores.
 
-Ready to go
+We need you
 -----------
 
-Download the code to create an initial web application setup and extend it as you wish.
+Contributions are most welcome. If you care about archery and know how to program you can help making progress to the project. Ping me on github or Twitter if you have questins. Fork the this repository and start coding.
 
-```
-git clone git@github.com:fabriziomoscon/coffeestack.git
-```
 
 Setup
 -----
@@ -119,7 +116,7 @@ and executing it
 smog &
 ```
 
-once smog is running open a browser to [http://localhost:8080/](http://localhost:8080/) and change `test` to `coffeestackDB` inside the DSN popup
+once smog is running open a browser to [http://localhost:8080/](http://localhost:8080/) and change `test` to `arco` inside the DSN popup
 
 NOTE
 

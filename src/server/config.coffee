@@ -4,7 +4,7 @@ config =
     db:
       protocol: "mongodb"
       host:     "127.0.0.1"
-      dbName:   "coffeestackDB"
+      dbName:   "arco"
       port:     27017
       user:     null
       password: null
@@ -26,7 +26,7 @@ config =
           redirectUri: ''
     client:
       seo:
-        title: 'CoffeeStack'
+        title: 'Arco an Open Public Archery API for scores'
       google:
         maps:
           key: ''
@@ -35,7 +35,7 @@ config =
     db:
       protocol: "mongodb"
       host:     "127.0.0.1"
-      dbName:   "coffeestackDB"
+      dbName:   "arco"
       port:     27017
       user:     null
       password: null
@@ -57,7 +57,7 @@ config =
           redirectUri: ''
     client:
       seo:
-        title: 'CoffeeStack'
+        title: 'Arco an Open Public Archery API for scores'
       google:
         maps:
           key: ''
@@ -66,7 +66,7 @@ config =
     db:
       protocol: "mongodb"
       host:     "127.0.0.1"
-      dbName:   "coffeestackDB"
+      dbName:   "arco"
       port:     27017
       user:     null
       password: null
@@ -88,7 +88,7 @@ config =
           redirectUri: ''
     client:
       seo:
-        title: 'CoffeeStack'
+        title: 'Arco an Open Public Archery API for scores'
       google:
         maps:
           key: ''
@@ -97,7 +97,7 @@ config =
     db:
       protocol: "mongodb"
       host:     "127.0.0.1"
-      dbName:   "coffeestackDB"
+      dbName:   "arco"
       port:     27017
       user:     null
       password: null
@@ -119,11 +119,12 @@ config =
           redirectUri: ''
     client:
       seo:
-        title: 'CoffeeStack'
+        title: 'Arco an Open Public Archery API for scores'
       google:
         maps:
           key: ''
 
-module.exports = (environment) ->
+
+module.exports = (environment = process.env.NODE_ENV) ->
   throw new Error 'Environment not found' unless environment? and config[environment]?
   return config[environment]
