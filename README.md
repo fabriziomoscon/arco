@@ -6,7 +6,7 @@ This project main goal is to provide an Open Public API to store and manage Arch
 We need you
 -----------
 
-Contributions are most welcome. If you care about archery and know how to program you can help making progress to the project. Ping me on github or Twitter if you have questins. Fork the this repository and start coding.
+Contributions are most welcome. If you care about archery and know how to build software you can help making progress to this exciting project. Ping me on github or Twitter if you have questins. Fork the this repository and start coding.
 
 
 Setup
