@@ -5,7 +5,7 @@ isValidEmail    = require 'src/validator/email'
 
 class User
 
-  @minPasslength: 6
+  @minPasslength: 8
 
   constructor: (props) ->
     throw new Error 'Invalid first name' unless props?.first_name?
@@ -44,6 +44,10 @@ class User
   setCreatedAt: (createdAt) ->
     throw new Error 'Invalid created at' unless createdAt instanceof Date
     @createdAt = createdAt
+
+
+  setBirthdate: (birthdate) ->
+    throw new Error 'Invlaid birthdate' unless birthdate instanceof Date
 
 
 module.exports = User
