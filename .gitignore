@@ -5,3 +5,6 @@ client/lib/*.js
 public/lib/*.js
 client/style/*.css
 public/style/*.css
+arco.*.log
+arco.*.log.*
+.project
