@@ -4,6 +4,7 @@ UserRepository  = require 'src/repository/User'
 isValidObjectId = require 'src/validator/type/ObjectId'
 isValidEmail    = require 'src/validator/email'
 
+
 class Account
 
   constructor: (UserRepo = UserRepository) ->
