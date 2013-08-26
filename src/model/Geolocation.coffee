@@ -9,12 +9,12 @@ class Geolocation
 
 
   setLat: (lat) ->
-    throw new Error 'Invalid lat' unless check.isNumber(lat) and lat <= 90 and lat >= -90
+    throw new TypeError 'Invalid latitude' unless check.isNumber(lat) and lat <= 90 and lat >= -90
     @lat = lat
 
 
   setLong: (long) ->
-    throw new Error 'Invalid long' unless check.isNumber(long) and long <= 180 and long >= -180
+    throw new TypeError 'Invalid longitude' unless check.isNumber(long) and long <= 180 and long >= -180
     @long = long
 
 

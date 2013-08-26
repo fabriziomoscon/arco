@@ -1,5 +1,7 @@
 deepClone = require 'src/lib/utils/deepClone'
 
+places = require('test/data/db/place').getData()
+
 ObjectID = require('mongodb').ObjectID
 
 ids = 
@@ -9,6 +11,10 @@ ids =
   validIdString4: '50b896ddc814556766000004'
   validIdString5: '50b896ddc814556766000005'
   validIdString6: '50b896ddc814556766000006'
+  validIdString6: '50b896ddc814556766000007'
+  validIdString6: '50b896ddc814556766000008'
+  validIdString6: '50b896ddc814556766000009'
+
 
 data =
 
@@ -28,4 +34,5 @@ data =
     password: 'qwerty'
     created_at: new Date 2012, 11, 7
 
-module.exports.getData = -> deepClone data
+
+module.exports.getData = () -> deepClone data

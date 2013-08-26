@@ -1,53 +1,65 @@
 validator = require 'validator'
 
+Hash = require 'node-hash'
+
+Place = require 'src/model/Place'
+
 isValidObjectId = require 'src/validator/type/ObjectId'
 isValidEmail    = require 'src/validator/email'
 
+
 class User
 
-  @minPasslength: 8
+
+  @MIN_PASSWORD_LENGTH: 8
+
 
   constructor: (props) ->
-    throw new Error 'Invalid first name' unless props?.first_name?
-    throw new Error 'Invalid last name' unless props?.last_name?
+    throw new TypeError 'Invalid properties' unless props?
+    throw new TypeError 'Invalid first name' unless props.first_name?
+    throw new TypeError 'Invalid last name' unless props.last_name?
 
     @setFirstName props.first_name
     @setLastName props.last_name
-
-
-  setEmail: (email) =>
-    throw new Error 'Invalid email' unless isValidEmail email
-    @email = email
-
-
-  setFirstName: (firstName) =>
-    throw new Error 'Invalid first name' unless typeof firstName is 'string'
-    @first_name = firstName
-
-
-  setLastName: (lastName) =>
-    throw new Error 'Invalid last name' unless typeof lastName is 'string'
-    @last_name = lastName
-
-
-  setPassword: (password) =>
-    throw new Error 'Invalid password' unless typeof password is 'string'
-    validator.check(password, 'Invalid password').len(User.minPasslength)
-    @password = password
+    @times = new Hash Date
+    @places = new Hash Place
+    @records = new Hash Score
 
 
   setId: (id) ->
-    throw new Error 'Invalid id' unless isValidObjectId id
+    throw new TypeError 'Invalid id' unless isValidObjectId id
     @id = id
 
 
-  setCreatedAt: (createdAt) ->
-    throw new Error 'Invalid created at' unless createdAt instanceof Date
-    @createdAt = createdAt
+  setEmail: (email) =>
+    throw new TypeError 'Invalid email' unless isValidEmail email
+    @email = email
 
 
-  setBirthdate: (birthdate) ->
-    throw new Error 'Invlaid birthdate' unless birthdate instanceof Date
+  setFirstName: (first_name) =>
+    throw new TypeError 'Invalid first name' unless typeof first_name is 'string'
+    @first_name = first_name
+
+
+  setLastName: (last_name) =>
+    throw new TypeError 'Invalid last name' unless typeof last_name is 'string'
+    @last_name = last_name
+
+
+  setPassword: (password) =>
+    throw new TypeError 'Invalid password' unless typeof password is 'string'
+    validator.check(password, 'Invalid password').len(User.MIN_PASSWORD_LENGTH)
+    @password = password
+
+
+  setBirthdate: (dob) ->
+    throw new TypeError 'Invalid birthdate' unless dob instanceof Date
+    @dob = dob
+
+
+  setSex: (sex) ->
+    throw new TypeError 'Invalid sex' unless sex in ['M', 'F']
+    @sex = sex
 
 
 module.exports = User

@@ -15,6 +15,7 @@
     "test": "npm run back-test && coffee test/lint.coffee && npm run front-test"
   },
   "dependencies": {
+    "node-hash": "*",
     "mongodb": "1.3.19",
     "underscore": "1.5.x",
     "coffee-script": "1.6.x",
