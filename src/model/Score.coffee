@@ -39,11 +39,6 @@ class Score
     @user_id = user_id
 
 
-  setMatchId: (match_id) ->
-    throw new TypeError 'Invalid match id' unless isValidObjectId match_id
-    @match_id = match_id    
-
-
   addPoint: (point, partial_name) ->
     throw new Error 'Score type not specified' unless @type?
     throw new TypeError 'Invalid point' unless check.isPositiveNumber(point) or point is 0

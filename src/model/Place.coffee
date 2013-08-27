@@ -1,9 +1,11 @@
 Geolocation = require 'src/model/Geolocation'
 
+
 class Place
 
-  
-  constructor: () ->
+
+  constructor: (geolocation) ->
+    @setGeolocation geolocation
 
 
   setGeolocation: (geolocation) ->
@@ -21,4 +23,4 @@ class Place
     @city = city
 
 
-module.export = Place
+module.exports = Place

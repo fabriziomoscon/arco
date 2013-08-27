@@ -3,6 +3,7 @@ validator = require 'validator'
 Hash = require 'node-hash'
 
 Place = require 'src/model/Place'
+Score = require 'src/model/Score'
 
 isValidObjectId = require 'src/validator/type/ObjectId'
 isValidEmail    = require 'src/validator/email'
@@ -17,7 +18,7 @@ class User
   constructor: (props) ->
     throw new TypeError 'Invalid properties' unless props?
     throw new TypeError 'Invalid first name' unless props.first_name?
-    throw new TypeError 'Invalid last name' unless props.last_name?
+    throw new TypeError 'Invalid last name'  unless props.last_name?
 
     @setFirstName props.first_name
     @setLastName props.last_name
@@ -52,9 +53,9 @@ class User
     @password = password
 
 
-  setBirthdate: (dob) ->
-    throw new TypeError 'Invalid birthdate' unless dob instanceof Date
-    @dob = dob
+  setBirthdate: (birthdate) ->
+    throw new TypeError 'Invalid birthdate' unless birthdate instanceof Date
+    @birthdate = birthdate
 
 
   setSex: (sex) ->

@@ -1,5 +1,3 @@
-require('rootpath')()
-
 walk = require 'walk'
 fs = require 'fs'
 

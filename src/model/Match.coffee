@@ -27,6 +27,7 @@ class Match
 
 
   constructor: () ->
+    @score_ids = []
 
 
   setId: (id) ->
@@ -37,6 +38,9 @@ class Match
   setType: (type) ->
     throw new TypeError 'Invalid type' unless type in Object.keys(Match.TYPES)
     @type = type
+
+
+
 
 
 module.exports = Match

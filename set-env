@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# This is a simple wrapper for setting enviroment variables before
+# running scripts. We do this to allow dev etc to closely mimic the
+# way production, staging, etc work and to allow developers to have
+# their own custom env setting without commiting them to the repo
+#
+# Usage :
+# ./set-env [env-name] {command} [{arg1} {arg2} {...}]
+#
+# e.g:
+# ./set-env fab npm start
+# ./set-env node bootsrapper.js
+#
+# The first [optional] argument is the name of the enviroment to load up. For a
+# given name the path `./env/{ENV_NAME}.conf` is looked up.
+# the next argument is the command you want to run. Any further arguments are
+# passed through to the command
+#
+# An example enviroment file is included at ./env/local.conf
+# which will be loaded by default if the first arguement isn't
+# a path to a enviroment file. If you want change any settings
+# just for your own enviroment you should copy that file and edit the
+# copied file. Please don't commit the duplicated file to git...
+
+
+envfile=("$@")
+
+if [ -r src/env/$envfile.conf ]
+then
+	. src/env/$envfile.conf
+	shift
+else
+	. src/env/local.conf
+fi
+
+"$@"
+
+

@@ -1,4 +1,5 @@
 --compilers coffee:coffee-script
 --reporter spec
---require test/common
 --recursive
+--require test/init
+--require should

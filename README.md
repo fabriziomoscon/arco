@@ -46,7 +46,7 @@ Run Tests
 ---------
 
 ```bash
-npm test
+make test-unit-back path="test/unit/mapper/UserMapperTest.coffee"
 ```
 
 Functional test using ciao

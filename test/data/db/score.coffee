@@ -2,7 +2,6 @@ deepClone = require 'src/lib/utils/deepClone'
 
 users = require('test/data/db/user').getData()
 places = require('test/data/db/place').getData()
-matches = require('test/data/db/match').getData()
 
 ObjectID = require('mongodb').ObjectID
 
@@ -46,7 +45,6 @@ data =
       '50': []
       '30': []
     total: 1285
-    match_id: matches.validMatch1._id
   
   validScore2:
     _id: new ObjectID(ids.validIdString2)
@@ -61,7 +59,6 @@ data =
       second: 290 
     arrows: []
     total: 570
-    match_id: matches.validMatch1._id
   
   validScore3:
     _id: new ObjectID(ids.validIdString3)
@@ -76,7 +73,6 @@ data =
       field: 320
     arrows: []
     total: 630
-    match_id: matches.validMatch1._id
 
   validScore4:
     _id: new ObjectID(ids.validIdString4)
@@ -91,7 +87,6 @@ data =
       second: 320
     arrows: []
     total: 620
-    match_id: matches.validMatch1._id
 
 
 module.exports.getData = () -> deepClone data

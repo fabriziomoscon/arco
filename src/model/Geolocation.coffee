@@ -18,4 +18,4 @@ class Geolocation
     @long = long
 
 
-module.export = Geolocation
+module.exports = Geolocation
