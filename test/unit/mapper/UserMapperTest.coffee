@@ -2,11 +2,6 @@ should = require 'should'
 
 UserMapper = require 'src/mapper/User'
 
-User = require 'src/model/User'
-
-
-userFactory = () -> return new User first_name: 'Fab', last_name: 'Mos'
-
 
 describe 'marshall', ->
 
