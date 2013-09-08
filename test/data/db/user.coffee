@@ -23,16 +23,22 @@ data =
     first_name: 'fabrizio'
     last_name: 'moscon'
     email: 'fab@coffeestack.com'
-    password: 'qwerty'
-    created_at: new Date 2012, 1, 1
+    password: 'qwerty21'
+    gender: 'M'
+    birthdate: new Date 1983, 5, 6
+    times:
+      created: new Date 2012, 1, 1
 
   validUser2:
     _id: new ObjectID( ids.validIdString2 )
     first_name: 'peter'
     last_name: 'johnson'
     email: 'peter@coffestack.com'
-    password: 'qwerty'
-    created_at: new Date 2012, 11, 7
+    password: 'qwerty21'
+    gender: 'M'
+    birthdate: new Date 1983, 0, 25
+    times:
+      created: new Date 2012, 11, 7
 
 
 module.exports.getData = () -> deepClone data
