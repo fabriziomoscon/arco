@@ -24,13 +24,9 @@
     "underscore": "1.5.x",
     "coffee-script": "1.6.x",
     "express": "3.3.x",
-    "socket.io": "0.9.x",
     "date-utils": "*",
     "connect-mongo": "*",
-    "numeral": "1.4.x",
-    "node-markdown": "~0.1.1",
     "check-types": "0.6.x",
-    "request": "2.27.x",
     "async": "0.2.x",
     "supervisor": "*",
     "validator": "*",
@@ -40,7 +36,6 @@
   },
   "devDependencies": {
     "mocha": "1.12.x",
-    "assert": "0.4.x",
     "should": "1.2.x",
     "breakdown": "*",
     "walk": "~2.2.1"
