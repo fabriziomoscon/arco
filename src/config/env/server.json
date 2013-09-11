@@ -1,0 +1,13 @@
+{
+  "enableTestController": "bool",
+  "auth": {
+    "saltLength": "int"
+  },
+  "api": {
+    "listenPort": "int",
+    "listenHost": "string"
+  },
+  "session": {
+    "secret": "string"
+  }
+}

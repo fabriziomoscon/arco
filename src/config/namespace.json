@@ -1,0 +1,22 @@
+[
+  {
+    "name": "redis",
+    "prefix": "REDIS_",
+    "opts": {}
+  },
+  {
+    "name": "server",
+    "prefix": "SERVER_",
+    "opts": {}
+  },
+  {
+    "name": "logger",
+    "prefix": "LOGGER_",
+    "opts": {}
+  },
+  {
+    "name": "db",
+    "prefix": "DB_",
+    "opts": {}
+  }
+]

@@ -1,33 +1,36 @@
-process.env.NODE_ENV ?= 'development'
-
 require('rootpath')()
+
+config = require 'src/config/environment'
 
 global.log = require 'src/middleware/logger/log'
 
-express  = require 'express'
-path     = require 'path'
+redisConnect = require 'src/lib/redis/connect'
 
-express = require 'express'
-http = require 'http'
-# https = require 'https'
+redisConnect config, log.child({component: 'Redis'}), (err) ->
+  throw err if err?
 
-app = express()
-server = http.createServer app
+  path    = require 'path'
+  express = require 'express'
+  http = require 'http'
+  # https = require 'https'
 
-app.set 'baseDir', require('path').resolve __dirname
+  app = express()
+  server = http.createServer app
 
-app.configure require 'src/server/init'
-app.configure require 'src/server/routes'
+  app.set 'baseDir', require('path').resolve __dirname
 
-# Far better error stack debugging. Do not use in production!
-if process.env.NODE_ENV is 'development'
+  app.configure require 'src/server/init'
+  app.configure require 'src/server/routes'
 
-  # Breakdown
-  breakdown = require 'breakdown'
-  app.use (err, req, res, next) ->
-    breakdown err
-    res.writeHead 500, 'Content-Type': 'text/plain'
-    res.end err.stack
+  # Far better error stack debugging. Do not use in production!
+  if process.env.NODE_ENV is 'development'
 
-server.listen app.get('port'), '0.0.0.0'
-log.info 'LISTENING ON PORT ' + app.get('port')
+    # Breakdown
+    breakdown = require 'breakdown'
+    app.use (err, req, res, next) ->
+      breakdown err
+      res.writeHead 500, 'Content-Type': 'text/plain'
+      res.end err.stack
+
+  server.listen config.server.api.listenPort, config.server.api.listenHost, () ->
+    log.info {server: server.address()}, 'listening'

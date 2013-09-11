@@ -2,12 +2,10 @@ Db       = require('mongodb').Db
 Server   = require('mongodb').Server
 ObjectID = require('mongodb').ObjectID
 
+
 class MongoGateway
 
   @db = undefined
-
-  @init: (configDb) ->
-    MongoGateway.getDbInstance configDb.host, configDb.dbName, configDb.port
 
   @setLogger: (@logger) ->
 
@@ -28,7 +26,6 @@ class MongoGateway
   #   reaperTimeout {Number, default:30000}, the amount of time before a callback times out.
   #   retryMiliSeconds {Number, default:5000}, number of miliseconds between retries.
   #   numberOfRetries {Number, default:5}, number of retries off connection.
-
   @getDbInstance: (host, dbName, port, options = {safe:true}) ->
     if MongoGateway.db is undefined
       options.logger = MongoGateway.getLogger()
@@ -36,16 +33,17 @@ class MongoGateway
       MongoGateway.db = new Db dbName, dbServer, options
     return MongoGateway.db
 
-  @connect: (username, password) ->
 
+  @connect: (host, dbName, port, option, username, password) ->
     # open() calls server.connect() internally
-    MongoGateway.getDbInstance().open (err, Db) ->
-      if err? then throw new Error "error #{err} when opening a connection", 500
+    MongoGateway.getDbInstance(host, dbName, port, option)
+      .open (err, Db) ->
+        if err? then throw new Error "error #{err} when opening a connection", 500
 
-      if username? and password?
-        Db.authenticate username, password, (err, result) ->
-          if err? or result is false or result is null
-            throw new Error "error #{err} authenticating with: #{username}:#{password}", 500
+        if username? and password?
+          Db.authenticate username, password, (err, result) ->
+            if err? or result is false or result is null
+              throw new Error "error #{err} authenticating with: #{username}:#{password}", 500
 
   # @param {String} targetCollection
   # @param {Object} data

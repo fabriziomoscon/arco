@@ -41,6 +41,7 @@ module.exports = ->
   if process.env.NODE_ENV in ['testing', 'staging']
 
     TestController = require 'src/controller/Test'
+
     @post '/testing',                TestController.index
     @post '/testing/drop',           TestController.dropDatabase
     @post '/testing/fixtures',       TestController.loadFixtures

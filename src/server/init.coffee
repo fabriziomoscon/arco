@@ -1,24 +1,18 @@
-express          = require 'express'
-MongoStore       = require('connect-mongo') express
-MongoGateway     = require 'src/lib/mongo/Gateway'
+express      = require 'express'
+MongoGateway = require 'src/lib/mongo/Gateway'
+redisSession = require 'src/middleware/redisSession'
 
-getConfig = require 'src/server/config'
+Redis = require 'redis'
+
+config = require 'src/config/environment'
 
 
 module.exports = ->
 
-  console.log 'Loading config: DEFAULT'
-
-  baseDir = @get 'baseDir'
-
-  config = getConfig process.env.NODE_ENV
-  @configure process.env.NODE_ENV, require "src/server/environment/#{process.env.NODE_ENV}"
-
-  @set 'port', process.env.PORT || config.server.listenPort
-
   @use express.bodyParser()
   @use express.methodOverride()
   @use express.cookieParser()
+  @use redisSession(config)
   @use require 'src/middleware/onionware/onion'
 
   @use (req, res, next) ->
@@ -27,25 +21,25 @@ module.exports = ->
     res.onion.use require 'src/middleware/onionware/renderer/html'
     next()
 
-  userAndPassDSN = ''
-  if config.db.user? and config.db.password?
-    userAndPassDSN = config.db.user + ':' + config.db.password + '@'
-  @set 'dsn', config.db.protocol + '://' + userAndPassDSN + config.db.host + ':' + config.db.port + '/' + config.db.dbName
-  @set 'port', process.env.PORT || config.server.listenPort
-  @set 'sessionSecret', config.server.session.secret
+  if config.db.mongo.user is ''
+    config.db.mongo.user = null
+  if config.db.mongo.password is ''
+    config.db.mongo.password = null
 
-  @set 'facebookAppId', config.server.oauth.facebook.id
-  @set 'facebookAppSecret', config.server.oauth.facebook.secret
-
-  @set 'googleAppId', config.server.oauth.google.id
-  @set 'googleAppSecret', config.server.oauth.google.secret
+  mongoDBUserPass = ''
+  if config.db.mongo.user? and config.db.mongo.password?
+    mongoDBUserPass = "#{config.db.mongo.user}:#{config.db.mongo.password}@"
 
   # configure database
-  console.log 'Connecting to database: ' + @get 'dsn'
   MongoGateway.setLogger @get('MongoLogger')
-  MongoGateway.init config.db
-  MongoGateway.connect config.db.user, config.db.password
 
-  # configure session storage
-  @set 'sessionStore', new MongoStore url: @get 'dsn'
-  @use express.session store: @get('sessionStore'), secret: @get('sessionSecret'), cookie: { httpOnly: false }
+  MongoGateway.connect(
+    config.db.mongo.host
+    config.db.mongo.dbname
+    config.db.mongo.port
+    {"safe": true}
+    config.db.mongo.user
+    config.db.mongo.password
+  )
+
+  log.info "Connected to mongodb://#{mongoDBUserPass}#{config.db.mongo.host}:#{config.db.mongo.port}/#{config.db.mongo.dbname}"

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/fabriziomoscon/arco.png?branch=master)](https://travis-ci.org/fabriziomoscon/arco)
+
 Arco
 ====
 
@@ -34,8 +36,14 @@ Start Server
 ------------
 
 ```bash
-npm run dev-api
+./set-env local npm run dev-api
 ```
+
+testing modality
+```bash
+./set-env test npm run dev-api
+```
+
 
 Browse localhost
 -------------
@@ -47,7 +55,7 @@ Run Tests
 ---------
 
 ```bash
-make test-unit-back path="test/unit/mapper/UserMapperTest.coffee"
+./set-env test make test-unit-back path="test/unit/mapper/UserMapperTest.coffee"
 ```
 
 Functional test using ciao

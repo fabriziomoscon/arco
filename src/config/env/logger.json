@@ -1,0 +1,26 @@
+{
+  "enableSrc": "bool",
+  "stdout": {
+    "enabled": "bool",
+    "level": "string"
+  },
+  "stderr": {
+    "enabled": "bool",
+    "level": "string"
+  },
+  "ringbuffer": {
+    "enabled": "bool",
+    "level": "string",
+    "limit": "int"
+  },
+  "syslog": {
+    "enabled": "bool",
+    "level": "string",
+    "stream": {
+      "type": "string",
+      "facility": "string",
+      "host": "string",
+      "port": "int"
+    }
+  }
+}
