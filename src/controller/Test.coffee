@@ -6,7 +6,9 @@ AccountService = require 'src/service/Account'
 
 UserMapper = require 'src/mapper/User'
 
+
 class Controller
+
 
   @index: (req, res) ->
     return res.onion.use( http.badRequest 'Invalid ENV' ).peel() unless process.env.NODE_ENV is 'testing'
@@ -16,6 +18,7 @@ class Controller
       curl -XPOST http://localhost:4000/testing/fixtures/users
 
     '''
+
 
   @dropDatabase: (req, res) ->
 
@@ -49,6 +52,7 @@ class Controller
 
 
 module.exports = Controller
+
 
 # local functions
 

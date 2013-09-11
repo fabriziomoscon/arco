@@ -8,6 +8,7 @@ UserMapper = require 'src/mapper/api/User'
 
 check = require 'check-types'
 
+
 class Controller
 
 # ----------
@@ -56,6 +57,7 @@ class Controller
 
     else return res.onion.peel()
 
+
 # ----------
 
   @edit: (req, res, next) ->
@@ -80,6 +82,7 @@ class Controller
         res.status 200
         res.data.body.user = user
         return res.onion.peel()
+
 
 # ----------
 

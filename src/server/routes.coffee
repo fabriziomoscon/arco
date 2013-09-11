@@ -8,7 +8,7 @@ dispatch = (controllerName, actionName) ->
     action = controllers[controllerName]
     if actionName and typeof action[actionName] is 'function'
       action = action[actionName]
-      try res.onion.use require "view/twostep/#{controllerName}/#{actionName}"
+      try res.onion.use require "src/twostep/#{controllerName}/#{actionName}"
       catch e then console.error "twostep view not defined for #{controllerName}/#{actionName}", e
     action req, res, next
 
@@ -20,8 +20,8 @@ sessionIdReplaceRedirect = (action) ->
     else
       res.status 401
       res.data.body.error = 'Unauthorized: Please sign in to continue'
-      res.view = 'pages/auth/unauthorized'
       res.onion.peel()
+
 
 # Routes
 module.exports = ->

@@ -1,10 +1,5 @@
 node_modules
 npm-debug.log
-client/src/templates.coffee
-client/lib/*.js
-public/lib/*.js
-client/style/*.css
-public/style/*.css
 arco.*.log
 arco.*.log.*
 .project

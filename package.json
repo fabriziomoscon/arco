@@ -3,16 +3,20 @@
   "preferGlobal": true,
   "private": true,
   "version": "0.0.1",
-  "description": "social archery community",
-  "contributors": [],
+  "description": "archery scoring API",
+  "contributors": [
+    {
+      "first_name": "Fabrizio",
+      "last_name": "Moscon",
+      "email": "mosconfabrizio@gmail.com"
+    }
+  ],
   "scripts": {
-    "prestart": "./node_modules/.bin/jake siteminify",
     "start": "coffee app.coffee",
     "supervisor": "supervisor app.coffee",
     "testing": "export NODE_ENV=testing && supervisor -i ciao app.coffee",
-    "front-test": "./node_modules/.bin/jake jstest",
     "back-test": "export TZ='Europe/London' && mocha test/unit",
-    "test": "npm run back-test && coffee test/lint.coffee && npm run front-test"
+    "test": "npm run back-test && coffee test/lint.coffee"
   },
   "dependencies": {
     "node-hash": "*",
@@ -21,17 +25,12 @@
     "coffee-script": "1.6.x",
     "express": "3.3.x",
     "socket.io": "0.9.x",
-    "stylus": "0.37.x",
-    "hogan.js": "2.0.0",
     "date-utils": "*",
     "connect-mongo": "*",
     "numeral": "1.4.x",
     "node-markdown": "~0.1.1",
-    "browserify": "2.29.x",
     "check-types": "0.6.x",
     "request": "2.27.x",
-    "q": "0.9.x",
-    "mmm-vanillahogan": "0.2.x",
     "async": "0.2.x",
     "supervisor": "*",
     "validator": "*",
@@ -40,15 +39,9 @@
     "rootpath": "0.1.x"
   },
   "devDependencies": {
-    "jake": "0.6.x",
-    "coffeelint": "0.5.x",
     "mocha": "1.12.x",
     "assert": "0.4.x",
     "should": "1.2.x",
-    "chai": "1.7.x",
-    "one": "3.1.x",
-    "uglify-js": "2.4.x",
-    "watch": "0.8.x",
     "breakdown": "*",
     "walk": "~2.2.1"
   },

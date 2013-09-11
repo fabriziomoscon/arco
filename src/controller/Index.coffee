@@ -1,5 +1,6 @@
 http = require 'src/controller/helper/httpResponse'
 
+
 class Controller
 
 # ----------
@@ -8,5 +9,6 @@ class Controller
 
     res.status 200
     return res.onion.peel()
+
 
 module.exports = Controller

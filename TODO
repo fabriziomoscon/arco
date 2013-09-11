@@ -1,0 +1,2 @@
+- remove onionware: user app.use router()
+- in controllers initialise services at the top of the file to reduce memory and init overhead
