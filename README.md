@@ -1,25 +1,30 @@
 Arco
 ====
 
-This project main goal is to provide an Open Public API to store and manage Archery scores.
+`Arco` provides an Open Public API to store and manage individual Archery scores.
+
 
 We need you
 -----------
 
-Contributions are most welcome. If you care about archery and know how to build software you can help making progress to this exciting project. Ping me on github or Twitter if you have questins. Fork the this repository and start coding.
+Contributions are most welcome. If you care about archery, know how to build software you can help making progress to this exciting project. Open an issue if you have questions. Fork the this repository and start contributing.
 
+
+Technologies
+------------
+The core of the API is written in CoffeeScript and runs a node.js app based on `express.js`. The database is `mongoDB`
+
+
+Philosophy
+----------
+This project implementation follows the node.js phylosophy. It aggregates smaller library with `npm` to do the job. It will never couple any library or service. Require minimal global installations.
 
 Setup
 -----
 
-In `~/.bash_profile` or equivalent:
+It requires `mongoDB` and `node.js` installed. For the full list or requirements see `package.json`
 
-```bash
-export PATH=$PATH:./node_modules/.bin
-export NODE_PATH=/usr/local/lib/node_modules:./
-```
-
-From the command line:
+From terminal:
 
 ```bash
 npm install
@@ -66,38 +71,22 @@ curl -XPOST http://localhost:4000/testing/fixtures/users
 
 run the test
 
-console1
+terminal1
 ```bash
 npm run testing
 ```
 
-console2 (JSON)
+terminal2 (JSON)
 ```bash
 ciao test/functional/json -c test/functional/ciao.json
 ```
 
-console3 (HTML)
+terminal3 (HTML)
 ```bash
 ciao test/functional/html -c test/functional/ciao.json
 ```
 
-ubuntu
-------
-
-In order to run nodejs on lower port without root permission the following has been installed and executed
-```bash
-sudo apt-get install libcap2-bin
-sudo setcap cap_net_bind_service=+ep /usr/bin/nodejs
-sudo setcap cap_net_bind_service=+ep  /usr/local/lib/node_modules/coffee-script/bin/coffee
-```
-
-In order to switch between different versions of node we installed nave which can be used easly with the following
+To switch between different versions of node you can use `nave`
 ```bash
 sudo nave usemain 0.10
-```
-
-Start the server as a daemon:
-
-```bash
-nohup npm run supervisor >> /var/www/app.log 2>&1 &
 ```
