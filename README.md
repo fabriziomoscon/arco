@@ -30,15 +30,11 @@ From terminal:
 npm install
 ```
 
-```bash
-[sudo] npm install -g supervisor
-```
-
 Start Server
 ------------
 
 ```bash
-npm run supervisor
+npm run dev-api
 ```
 
 Browse localhost

@@ -12,29 +12,27 @@
     }
   ],
   "scripts": {
-    "start": "coffee app.coffee",
-    "supervisor": "supervisor app.coffee",
-    "testing": "export NODE_ENV=testing && supervisor -i ciao app.coffee",
-    "back-test": "export TZ='Europe/London' && mocha test/unit",
-    "test": "npm run back-test && coffee test/lint.coffee"
+    "testing": "NODE_ENV=testing ./node_modules/.bin/nodemon app.coffee | ./node_modules/.bin/bunyan",
+    "dev-api": "NODE_ENV=development ./node_modules/.bin/nodemon app.coffee | ./node_modules/.bin/bunyan",
+    "test": "NODE_ENV=testing make test-unit-back path=test/unit/"
   },
   "dependencies": {
-    "node-hash": "*",
     "mongodb": "1.3.19",
-    "underscore": "1.5.x",
-    "coffee-script": "1.6.x",
     "express": "3.3.x",
-    "date-utils": "*",
-    "connect-mongo": "*",
-    "check-types": "0.6.x",
+    "coffee-script": "1.6.x",
+    "underscore": "1.5.x",
     "async": "0.2.x",
-    "supervisor": "*",
-    "validator": "*",
+    "rootpath": "0.1.x",
+    "date-utils": "*",
+    "check-types": "0.6.x",
+    "node-hash": "*",
     "bunyan": "*",
     "bunyan-syslog": "0.2.x",
-    "rootpath": "0.1.x"
+    "validator": "*",
+    "connect-mongo": "*"
   },
   "devDependencies": {
+    "nodemon": "0.7.x",
     "mocha": "1.12.x",
     "should": "1.2.x",
     "breakdown": "*",
