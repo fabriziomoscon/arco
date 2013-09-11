@@ -6,7 +6,7 @@ UserModel = require 'src/model/User'
 check = require 'check-types'
 
 
-userMapperMarshall = (user) ->
+marshall = (user) ->
   throw new Error 'Invalid user' unless user instanceof UserModel
 
   data = {}
@@ -24,7 +24,7 @@ userMapperMarshall = (user) ->
   return data
 
 
-userMapperUnmarshall = (data, user) ->
+unmarshall = (data, user) ->
   throw new Error 'Invalid data' unless check.isObject data
   throw new Error 'Invalid user' if user? and user not instanceof UserModel
 
@@ -42,4 +42,4 @@ userMapperUnmarshall = (data, user) ->
   return model
 
 
-module.exports = {userMapperMarshall, userMapperUnmarshall}
+module.exports = {marshall, unmarshall}
