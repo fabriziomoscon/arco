@@ -24,7 +24,7 @@ This project implementation follows the node.js phylosophy. It aggregates smalle
 Setup
 -----
 
-It requires `mongoDB` and `node.js` installed. For the full list or requirements see `package.json`
+It requires `mongoDB`, `redis` and `node.js` installed. For the full list or requirements see `package.json`
 
 From terminal:
 
