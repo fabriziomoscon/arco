@@ -1,9 +1,8 @@
-module.exports = (req, res, peel) ->
+module.exports = (error) ->
 
-  res.status 405
-  res.data.body.error = 'Method not allowed'
-  res.view = 'pages/error/error'
+  return (req, res, next) ->
 
-  console.log 'ONION', res.data.body.error
-  
-  peel()
+    res.status 405
+    res.data.body.error = 'Method not allowed: ' + (error.message || error)
+
+    next()

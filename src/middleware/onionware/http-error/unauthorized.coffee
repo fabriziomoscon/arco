@@ -1,9 +1,9 @@
-module.exports = (req, res, peel) ->
+module.exports = (error) ->
 
-  res.status 401
-  res.data.body.error = 'Unauthorized: Please sign in to continue'
-  res.view = 'pages/auth/unauthorized'
+  return (req, res, next) ->
 
-  console.log 'ONION', res.data.body.error
+    message = 'Please sign in to continue'
+    res.status 401
+    res.data.body.error = 'Unauthorized:' + (error.message || error || message)
 
-  peel()
+    next()

@@ -1,16 +1,5 @@
-controllers =
-  index:    require 'src/controller/Index'
-  user:     require 'src/controller/User'
-
-# A helpful function to load twostep views and dispatch controllers
-dispatch = (controllerName, actionName) ->
-  return (req, res, next) ->
-    action = controllers[controllerName]
-    if actionName and typeof action[actionName] is 'function'
-      action = action[actionName]
-      try res.onion.use require "src/twostep/#{controllerName}/#{actionName}"
-      catch e then console.error "twostep view not defined for #{controllerName}/#{actionName}", e
-    action req, res, next
+express = require 'express'
+router  = new express.Router()
 
 sessionIdReplaceRedirect = (action) ->
   return (req, res, next) ->
@@ -23,26 +12,30 @@ sessionIdReplaceRedirect = (action) ->
       res.onion.peel()
 
 
-# Routes
-module.exports = ->
+controllers =
+  index:    require 'src/controller/Index'
+  user:     require 'src/controller/User'
 
-  # ---- Home ----
-  @get '/',                 dispatch 'index', 'index'
 
-  # ---- User ----
-  @get  '/user/me',  sessionIdReplaceRedirect dispatch 'user', 'single'
-  @get  '/user',     dispatch 'user', 'index'
-  @post '/user',     dispatch 'user', 'create'
-  @get  '/user/:id', dispatch 'user', 'read'
-  @put  '/user/:id', dispatch 'user', 'edit'
-  @del  '/user/:id', dispatch 'user', 'remove'
+# ---- Home ----
+router.get '/', controllers.index.index
 
-  # -- Testing Only ---
-  if process.env.NODE_ENV in ['testing', 'staging']
+# ---- User ----
+router.get    '/user/me',  sessionIdReplaceRedirect controllers.user.read
+router.get    '/users',    controllers.user.index
+router.post   '/user',     controllers.user.create
+router.get    '/user/:id', controllers.user.read
+router.put    '/user/:id', controllers.user.edit
+router.delete '/user/:id', controllers.user.remove
 
-    TestController = require 'src/controller/Test'
+# -- Testing Only ---
+if process.env.NODE_ENV in ['testing', 'staging']
 
-    @post '/testing',                TestController.index
-    @post '/testing/drop',           TestController.dropDatabase
-    @post '/testing/fixtures',       TestController.loadFixtures
-    @post '/testing/fixtures/users', TestController.loadFixturesUsers
+  TestController = require 'src/controller/Test'
+
+  router.post '/testing',                TestController.index
+  router.post '/testing/drop',           TestController.dropDatabase
+  router.post '/testing/fixtures',       TestController.loadFixtures
+  router.post '/testing/fixtures/users', TestController.loadFixturesUsers
+
+module.exports = router

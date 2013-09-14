@@ -1,25 +1,18 @@
-express      = require 'express'
 MongoGateway = require 'src/lib/mongo/Gateway'
 redisSession = require 'src/middleware/redisSession'
 
-Redis = require 'redis'
+express = require 'express'
+Redis   = require 'redis'
 
-config = require 'src/config/environment'
 
+module.exports = (config) ->
 
-module.exports = ->
+  app = express()
 
-  @use express.bodyParser()
-  @use express.methodOverride()
-  @use express.cookieParser()
-  @use redisSession(config)
-  @use require 'src/middleware/onionware/onion'
-
-  @use (req, res, next) ->
-    res.onion.use require 'src/middleware/onionware/format'
-    res.onion.use require 'src/middleware/onionware/renderer/json'
-    res.onion.use require 'src/middleware/onionware/renderer/html'
-    next()
+  app.use express.bodyParser()
+  app.use express.methodOverride()
+  app.use express.cookieParser()
+  app.use redisSession(config)
 
   if config.db.mongo.user is ''
     config.db.mongo.user = null
@@ -31,7 +24,7 @@ module.exports = ->
     mongoDBUserPass = "#{config.db.mongo.user}:#{config.db.mongo.password}@"
 
   # configure database
-  MongoGateway.setLogger @get('MongoLogger')
+  MongoGateway.setLogger app.get('MongoLogger')
 
   MongoGateway.connect(
     config.db.mongo.host
@@ -43,3 +36,29 @@ module.exports = ->
   )
 
   log.info "Connected to mongodb://#{mongoDBUserPass}#{config.db.mongo.host}:#{config.db.mongo.port}/#{config.db.mongo.dbname}"
+
+  app.use (req, res, next) ->
+    res.data = meta: {}, body: {}
+    next()
+
+  app.use require('src/server/routes').middleware
+  
+  app.use (req, res, next) ->
+    res.format(
+      json: () -> res.json res.data
+    )
+  app.use require 'src/middleware/errorHandler'
+
+
+  # # Far better error stack debugging. Do not use in production!
+  # if process.env.NODE_ENV is 'development'
+
+  #   # Breakdown
+  #   breakdown = require 'breakdown'
+  #   app.use (err, req, res, next) ->
+  #     breakdown err
+  #     res.writeHead 500, 'Content-Type': 'text/plain'
+  #     res.end err.stack
+
+
+  return app

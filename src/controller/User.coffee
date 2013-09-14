@@ -16,46 +16,50 @@ class Controller
   @index: (req, res, next) ->
 
     (new AccountService).findAllUsers (err, users) ->
-      return res.onion.use( http.serverError(error) ).peel() if err?
+      return next( http.serverError(err) ) if err?
 
       res.status 200
       res.data.body.users = users
-      return res.onion.peel()
+
+      return next()
+    return
 
 # ----------
 
-  @single: (req, res, next) ->
+  @read: (req, res, next) ->
 
     unless isValidObjectId req.params.id
-      return res.onion.use( http.badRequest(new Error 'Invalid user id') ).peel()
+      return next( http.badRequest('Invalid user id') )
 
     (new AccountService).findUserById req.params.id, (err, user) ->
-      return res.onion.use( http.serverError(err) ).peel() if err?
-      return res.onion.use( http.notFound(new Error 'user not found') ).peel() unless user?
+      return next( http.serverError(err) ) if err?
+      return next( http.notFound('user not found') ) unless user?
 
       res.status 200
       res.data.body.user = user
-      return res.onion.peel()
+
+      return next()
+    return
 
 # ----------
 
   @create: (req, res, next) ->
 
-    return res.onion.use( http.badRequest(new Error 'Invalid user data') ).peel() unless req.body?
+    return next( http.badRequest('Invalid user data') ) unless req.body?
 
-    if req.method is 'POST'
+    try user = UserMapper.unmarshall req.body
+    catch err then return next( http.badRequest(err) )
 
-      try user = UserMapper.unmarshall req.body
-      catch err then return res.onion.use( http.badRequest(err) ).peel()
+    (new AccountService).createUser user, (err, user) ->
+      return next( http.serverError(err) ) if err?
 
-      (new AccountService).createUser user, (err, user) ->
-        return res.onion.use( http.serverError(err) ).peel() if err?
+      res.status 201
 
-        res.status 201
-        res.data.body.user = user
-        return res.onion.peel()
+      try res.data.body.user = UserMapper.marshall user
+      catch err then return next(err)
 
-    else return res.onion.peel()
+      return next()
+    return
 
 
 # ----------
@@ -63,40 +67,44 @@ class Controller
   @edit: (req, res, next) ->
 
     unless isValidObjectId req.params.id
-      return res.onion.use( http.badRequest(new Error 'Invalid user id') ).peel()
+      return next( http.badRequest('Invalid user id') )
 
     if check.isEmptyObject req.body
-      return res.onion.use( http.badRequest(new Error 'Invalid body') ).peel()
-    
+      return next( http.badRequest('Invalid body') )
+
     as = new AccountService
     as.findUserById req.params.id, (err, user) ->
-      return res.onion.use( http.serverError(err) ).peel() if err?
-      return res.onion.use( http.notFound(new Error 'user not found') ).peel() unless user?
+      return next( http.serverError(err) ) if err?
+      return next( http.notFound('user not found') ) unless user?
       
       try user = UserMapper.unmarshall req.body, user
-      catch err then return res.onion.use( http.badRequest(err) ).peel()
+      catch err then return next( http.badRequest(err) )
 
       as.updateUserById req.params.id, user, (err, user) ->
-        return res.onion.use( http.serverError(err) ).peel() if err?
+        return next( http.serverError(err) ) if err?
 
         res.status 200
         res.data.body.user = user
-        return res.onion.peel()
 
+        return next()
+      return
+    return
 
 # ----------
 
   @remove: (req, res, next) ->
 
     unless isValidObjectId req.params.id
-      return res.onion.use( http.badRequest(new Error 'Invalid user id') ).peel()
+      return next( http.badRequest('Invalid user id') )
 
     (new AccountService).removeUSerById req.params.id, (err, user) ->
-      return res.onion.use( http.serverError(err) ).peel() if err?
-      return res.onion.use( http.notFound(new Error 'user not found') ).peel() unless user?
+      return next( http.serverError(err) ) if err?
+      return next( http.notFound('user not found') ) unless user?
 
       res.status 200
-      return res.onion.peel()
+
+      return next()
+    return
 
 
 module.exports = Controller

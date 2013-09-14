@@ -1,5 +1,6 @@
 Redis = require 'redis'
 
+
 module.exports = (config, log, callback)->
 
   global.redisClient = redisClient = Redis.createClient config.redis.port, config.redis.host

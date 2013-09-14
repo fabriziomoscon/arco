@@ -1,10 +1,8 @@
 module.exports = (error) ->
 
-  return (req, res, peel) ->
+  return (req, res, next) ->
 
     res.status 400
     res.data.body.error = 'Bad request: ' + (error.message || error)
 
-    console.log 'ONION', res.data.body.error
-
-    peel()
+    next()

@@ -8,7 +8,7 @@ class Controller
   @index: (req, res, next) ->
 
     res.status 200
-    return res.onion.peel()
+    return next()
 
 
 module.exports = Controller
