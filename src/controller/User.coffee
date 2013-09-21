@@ -72,15 +72,14 @@ class Controller
     if check.isEmptyObject req.body
       return next( http.badRequest('Invalid body') )
 
-    as = new AccountService
-    as.findUserById req.params.id, (err, user) ->
+    accountService.findUserById req.params.id, (err, user) ->
       return next( http.serverError(err) ) if err?
       return next( http.notFound('user not found') ) unless user?
       
       try user = UserMapper.unmarshall req.body, user
       catch err then return next( http.badRequest(err) )
 
-      as.updateUserById req.params.id, user, (err, user) ->
+      accountService.updateUserById req.params.id, user, (err, user) ->
         return next( http.serverError(err) ) if err?
 
         res.status 200
