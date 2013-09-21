@@ -13,12 +13,8 @@ sessionIdReplaceRedirect = (action) ->
 
 
 controllers =
-  index:    require 'src/controller/Index'
   user:     require 'src/controller/User'
 
-
-# ---- Home ----
-router.get '/', controllers.index.index
 
 # ---- User ----
 router.get    '/user/me',  sessionIdReplaceRedirect controllers.user.read
