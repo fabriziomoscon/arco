@@ -1,6 +1,6 @@
 MongoGateway = require 'src/lib/mongo/Gateway'
 
-http = require 'src/middleware/HttpResponse'
+http = require 'src/middleware/httpResponse'
 
 accountService = new (require 'src/service/Account')
 
