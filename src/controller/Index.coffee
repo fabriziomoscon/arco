@@ -1,4 +1,4 @@
-http = require 'src/controller/helper/httpResponse'
+http = require 'src/middleware/HttpResponse'
 
 
 class Controller

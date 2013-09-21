@@ -1,6 +1,6 @@
 MongoGateway = require 'src/lib/mongo/Gateway'
 
-http = require 'src/controller/helper/httpResponse'
+http = require 'src/middleware/HttpResponse'
 
 AccountService = require 'src/service/Account'
 
@@ -11,7 +11,7 @@ class Controller
 
 
   @index: (req, res) ->
-    return res.onion.use( http.badRequest 'Invalid ENV' ).peel() unless process.env.NODE_ENV is 'testing'
+    return next( http.badRequest 'Invalid ENV' ) unless process.env.NODE_ENV is 'testing'
     res.end '''USAGE:
       curl -XPOST http://localhost:4000/testing/drop
       curl -XPOST http://localhost:4000/testing/fixtures
@@ -24,7 +24,7 @@ class Controller
 
     alwaysResponsInJSON req, res
 
-    return res.onion.use( http.badRequest 'Invalid ENV' ).peel() unless process.env.NODE_ENV is 'testing'
+    return next( http.badRequest 'Invalid ENV' ) unless process.env.NODE_ENV is 'testing'
 
     dropDatabase req, res
 
@@ -38,17 +38,17 @@ class Controller
 
     alwaysResponsInJSON req, res
 
-    return res.onion.use( http.badRequest 'Invalid ENV' ).peel() unless process.env.NODE_ENV in ['testing', 'staging']
+    return next( http.badRequest 'Invalid ENV' ) unless process.env.NODE_ENV in ['testing', 'staging']
 
     dropDatabase req, res, (err) ->
-      return res.onion.use( http.serverError err ).peel() if err?
+      return next( http.serverError err ) if err?
 
       loadUsers req, res, (err) ->
-        return res.onion.use( http.serverError err ).peel() if err?
+        return next( http.serverError err ) if err?
 
         res.format = 'application/json'
         res.status 200
-        return res.onion.peel()
+        return next()
 
 
 module.exports = Controller
@@ -57,7 +57,7 @@ module.exports = Controller
 # local functions
 
 alwaysResponsInJSON = (req, res) ->
-  res.onion.use (req,res,peel) ->
+  next (req,res,peel) ->
     res.format = 'application/json'
     peel()
 
@@ -73,10 +73,10 @@ loadUsers = (req, res, callback) ->
 
 dropDatabase = (req, res, next) ->
   MongoGateway.db.dropDatabase (err) ->
-  return res.onion.use( http.serverError err ).peel() if err?
+  return next( http.serverError err ) if err?
 
   return next null if next instanceof Function
 
   res.format = 'application/json'
   res.status 200
-  return res.onion.peel()
+  return next()

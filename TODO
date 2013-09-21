@@ -1,4 +1,3 @@
-- move all http error away from onionware
 - let requests with Accept:text/html receive a 406
 - in controllers initialise services at the top of the file to reduce memory and init overhead
 - remove validator: find alternative way

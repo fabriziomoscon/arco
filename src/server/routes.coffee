@@ -9,7 +9,7 @@ sessionIdReplaceRedirect = (action) ->
     else
       res.status 401
       res.data.body.error = 'Unauthorized: Please sign in to continue'
-      res.onion.peel()
+      next()
 
 
 controllers =
