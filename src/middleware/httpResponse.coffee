@@ -2,7 +2,7 @@ Forbidden  = require 'src/lib/error/Forbidden'
 BadRequest = require 'src/lib/error/BadRequest'
 
 
-module.exports = {
+module.exports = httpResponse = {
 
   unauthorized:                require 'src/middleware/http-error/unauthorized'
   notFound:                    require 'src/middleware/http-error/notFound'
@@ -15,14 +15,11 @@ module.exports = {
   error: (error) ->
 
     if error instanceof Forbidden
-
-      return HttpResponse.forbidden error
+      return httpResponse.forbidden error
 
     if error instanceof BadRequest
-
-      return HttpResponse.badRequest error
+      return httpResponse.badRequest error
 
     else
-
-      return HttpResponse.serverError error
+      return httpResponse.serverError error
 }

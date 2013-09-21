@@ -1,4 +1,6 @@
 - let requests with Accept:text/html receive a 406
 - remove validator: find alternative way
 - figure out how to connect to mongo before the server start listening
-- pass error codes back to the API caller to support localisation
+- make user/edit a findAndModify
+- functional test all user modules
+- remove error subclass for Bad request and forbidden
