@@ -2,7 +2,7 @@ MongoGateway = require 'src/lib/mongo/Gateway'
 
 http = require 'src/middleware/HttpResponse'
 
-AccountService = require 'src/service/Account'
+accountService = new (require 'src/service/Account')
 
 UserMapper = require 'src/mapper/User'
 
@@ -63,13 +63,15 @@ alwaysResponsInJSON = (req, res) ->
 
 
 loadUsers = (req, res, callback) ->
-  as = new AccountService
   for key, userData of require('test/data/db/user').getData()
-    as.createUser UserMapper.unmarshall(userData), (err, result) ->
-      console.log err if err?
-      return callback err, null if err?
+    accountService.createUser UserMapper.unmarshall(userData), (err, result) ->
+      if err?
+        console.log err if err?
+        return callback err, null 
 
+  # TODO this is not really completely async proof
   return callback null, null
+
 
 dropDatabase = (req, res, next) ->
   MongoGateway.db.dropDatabase (err) ->

@@ -1,4 +1,3 @@
 - let requests with Accept:text/html receive a 406
-- in controllers initialise services at the top of the file to reduce memory and init overhead
 - remove validator: find alternative way
 - figure out how to connect to mongo before the server start listening

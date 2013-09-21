@@ -2,7 +2,7 @@ http = require 'src/middleware/HttpResponse'
 
 isValidObjectId = require 'src/validator/type/ObjectId'
 
-AccountService = require 'src/service/Account'
+accountService = new (require 'src/service/Account')
 
 UserMapper = require 'src/mapper/api/User'
 
@@ -15,7 +15,7 @@ class Controller
 
   @index: (req, res, next) ->
 
-    (new AccountService).findAllUsers (err, users) ->
+    accountService.findAllUsers (err, users) ->
       return next( http.serverError(err) ) if err?
 
       res.status 200
@@ -31,7 +31,7 @@ class Controller
     unless isValidObjectId req.params.id
       return next( http.badRequest('Invalid user id') )
 
-    (new AccountService).findUserById req.params.id, (err, user) ->
+    accountService.findUserById req.params.id, (err, user) ->
       return next( http.serverError(err) ) if err?
       return next( http.notFound('user not found') ) unless user?
 
@@ -50,7 +50,7 @@ class Controller
     try user = UserMapper.unmarshall req.body
     catch err then return next( http.badRequest(err) )
 
-    (new AccountService).createUser user, (err, user) ->
+    accountService.createUser user, (err, user) ->
       return next( http.serverError(err) ) if err?
 
       res.status 201
@@ -97,7 +97,7 @@ class Controller
     unless isValidObjectId req.params.id
       return next( http.badRequest('Invalid user id') )
 
-    (new AccountService).removeUSerById req.params.id, (err, user) ->
+    accountService.removeUSerById req.params.id, (err, user) ->
       return next( http.serverError(err) ) if err?
       return next( http.notFound('user not found') ) unless user?
 
