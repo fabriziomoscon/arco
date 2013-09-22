@@ -1,0 +1,14 @@
+#nodemon ignore file
+
+/docs/*
+/test/functional/*
+/test/mocha.opts
+/test/init.js
+Makefile
+README.md
+TODO
+.gitignore
+set-env
+package.json
+.travis.yml
+.git/*
