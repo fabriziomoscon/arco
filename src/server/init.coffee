@@ -10,7 +10,6 @@ module.exports = (config) ->
   app = express()
 
   app.use express.bodyParser()
-  app.use express.methodOverride()
   app.use express.cookieParser()
   app.use redisSession(config)
 
@@ -38,16 +37,16 @@ module.exports = (config) ->
   log.info "Connected to mongodb://#{mongoDBUserPass}#{config.db.mongo.host}:#{config.db.mongo.port}/#{config.db.mongo.dbname}"
 
   app.use (req, res, next) ->
-    res.data = meta: {}, body: {}
+    res.data = {}
     next()
 
   app.use require('src/server/routes').middleware
   
+  app.use require 'src/middleware/errorHandler'
   app.use (req, res, next) ->
     res.format(
       json: () -> res.json res.data
     )
-  app.use require 'src/middleware/errorHandler'
 
 
   # # Far better error stack debugging. Do not use in production!

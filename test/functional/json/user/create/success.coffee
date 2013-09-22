@@ -17,14 +17,11 @@ response.statusCode.should.equal 201
 #? Should set a cookie
 response.should.have.header 'Set-Cookie'
 
-#? Response.body should exist
-should.exist json.body
-
-#? Response.body.user should exist
-should.exist json.body.user
+#? Response.user should exist
+should.exist json.user
 
 #? user properties
-should.exist json.body.user.id
-should.exist json.body.user.first_name
-should.exist json.body.user.last_name
-should.exist json.body.user.email
+should.exist json.user.id
+should.exist json.user.first_name
+should.exist json.user.last_name
+should.exist json.user.email

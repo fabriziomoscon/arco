@@ -47,7 +47,6 @@ class Controller
         return next( http.serverError err ) if err?
 
         res.format = 'application/json'
-        res.status 200
         return next()
 
 
@@ -80,5 +79,4 @@ dropDatabase = (req, res, next) ->
   return next null if next instanceof Function
 
   res.format = 'application/json'
-  res.status 200
   return next()

@@ -1,5 +1,4 @@
-Forbidden  = require 'src/lib/error/Forbidden'
-BadRequest = require 'src/lib/error/BadRequest'
+ApplicationError = require 'src/lib/error/Application'
 
 
 module.exports = httpResponse = {
@@ -14,12 +13,12 @@ module.exports = httpResponse = {
 
   error: (error) ->
 
-    if error instanceof Forbidden
-      return httpResponse.forbidden error
+    if error.type is ApplicationError.FORBIDDEN
+      return httpResponse.forbidden  error.message, error.code
 
-    if error instanceof BadRequest
-      return httpResponse.badRequest error
+    if error.type is ApplicationError.BAD_REQUEST
+      return httpResponse.badRequest  error.message, error.code
 
     else
-      return httpResponse.serverError error
+      return httpResponse.serverError error.message, error.code
 }

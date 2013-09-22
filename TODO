@@ -3,4 +3,5 @@
 - figure out how to connect to mongo before the server start listening
 - make user/edit a findAndModify
 - functional test all user modules
-- remove error subclass for Bad request and forbidden
+- implement authentication framework
+- fix ensureAuthenticated
