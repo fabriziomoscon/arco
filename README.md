@@ -21,8 +21,8 @@ Philosophy
 ----------
 This project implementation follows the node.js phylosophy. It aggregates smaller library with `npm` to do the job. It will never couple any library or service. Require minimal global installations.
 
-Setup
------
+Dependencies
+------------
 
 It requires `mongoDB`, `redis` and `node.js` installed. For the full list or requirements see `package.json`
 
@@ -77,7 +77,7 @@ run the test
 
 terminal1
 ```bash
-npm run testing
+./set-env test npm run dev-api
 ```
 
 terminal2 (JSON)
