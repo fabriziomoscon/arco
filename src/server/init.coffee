@@ -18,12 +18,13 @@ module.exports = (config) ->
   if config.db.mongo.password is ''
     config.db.mongo.password = null
 
-  mongoDBUserPass = ''
   if config.db.mongo.user? and config.db.mongo.password?
     mongoDBUserPass = "#{config.db.mongo.user}:#{config.db.mongo.password}@"
+  else
+    mongoDBUserPass = ''
 
   # configure database
-  MongoGateway.setLogger app.get('MongoLogger')
+  # MongoGateway.setLogger app.get('MongoLogger')
 
   MongoGateway.connect(
     config.db.mongo.host
