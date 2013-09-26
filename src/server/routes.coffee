@@ -21,7 +21,7 @@ controllers =
 # ---- User ----
 router.get    '/user/me',  sessionIdReplaceRedirect controllers.user.read
 router.get    '/users',                      controllers.user.index
-router.post   '/user',     ensureAuthorized, controllers.user.create
+router.post   '/user',                       controllers.user.create
 router.get    '/user/:id',                   controllers.user.read
 router.put    '/user/:id', ensureAuthorized, controllers.user.edit
 router.delete '/user/:id', ensureAuthorized, controllers.user.remove

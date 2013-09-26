@@ -1,6 +1,8 @@
 MongoGateway = require 'src/lib/mongo/Gateway'
 redisSession = require 'src/middleware/redisSession'
 
+passportLib = require 'src/lib/passport'
+
 express = require 'express'
 Redis   = require 'redis'
 
@@ -12,6 +14,11 @@ module.exports = (config) ->
   app.use express.bodyParser()
   app.use express.cookieParser()
   app.use redisSession(config)
+
+  passport = passportLib(config)
+
+  app.use passport.initialize()
+  app.use passport.session()
 
   if config.db.mongo.user is ''
     config.db.mongo.user = null
@@ -37,18 +44,12 @@ module.exports = (config) ->
 
   log.info "Connected to mongodb://#{mongoDBUserPass}#{config.db.mongo.host}:#{config.db.mongo.port}/#{config.db.mongo.dbname}"
 
-  app.use (req, res, next) ->
-    res.data = {}
-    next()
-
   app.use require('src/server/routes').middleware
-  
   app.use require 'src/middleware/errorHandler'
   app.use (req, res, next) ->
     res.format(
       json: () -> res.json res.data
     )
-
 
   # # Far better error stack debugging. Do not use in production!
   # if process.env.NODE_ENV is 'development'

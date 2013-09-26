@@ -18,10 +18,10 @@ response.statusCode.should.equal 201
 response.should.have.header 'Set-Cookie'
 
 #? Response.user should exist
-should.exist json.user
+should.exist json
 
 #? user properties
-should.exist json.user.id
-should.exist json.user.first_name
-should.exist json.user.last_name
-should.exist json.user.email
+should.exist json.id
+should.exist json.first_name
+should.exist json.last_name
+should.exist json.email

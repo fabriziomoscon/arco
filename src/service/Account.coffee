@@ -1,11 +1,10 @@
-UserMapper      = require 'src/mapper/User'
 UserModel       = require 'src/model/User'
 UserRepository  = require 'src/repository/User'
 isValidObjectId = require 'src/validator/type/ObjectId'
-isValidEmail    = require 'src/validator/email'
 
 
 class Account
+
 
   constructor: (UserRepo = UserRepository) ->
     throw new Error 'Invalid repository' unless UserRepo instanceof Function
@@ -25,11 +24,13 @@ class Account
         return callback new Error('No user created/returned'), null unless users?[0]?
 
         return callback null, users[0]
+      return
+    return
 
 
   findUserByEmail: (email, callback) ->
     throw new Error 'Invalid callback' unless callback instanceof Function
-    return callback new Error('Invalid email'), null unless isValidEmail email
+    return callback new Error('Invalid email'), null unless typeof email is 'string'
     @userRepository.findOneByEmail email, callback
 
 
@@ -52,6 +53,7 @@ class Account
           return callback new Error('Email already used'), null
 
         return @userRepository.update userId, user, callback
+      return
 
     else
 

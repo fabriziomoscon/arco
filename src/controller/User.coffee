@@ -18,7 +18,7 @@ class Controller
     accountService.findAllUsers (err, users) ->
       return next( http.serverError(err, 1041) ) if err?
 
-      res.data.users = users
+      res.data = users
 
       return next()
     return
@@ -34,7 +34,8 @@ class Controller
       return next( http.serverError(err, 1003) ) if err?
       return next( http.notFound('user not found', 1002) ) unless user?
 
-      res.data.user = user
+      try res.data = UserMapper.marshall user
+      catch err then return next( http.serverError(err, 1012) )
 
       return next()
     return
@@ -53,7 +54,7 @@ class Controller
 
       res.status 201
 
-      try res.data.user = UserMapper.marshall user
+      try res.data = UserMapper.marshall user
       catch err then return next( http.serverError(err, 1012) )
 
       return next()
@@ -80,7 +81,7 @@ class Controller
       accountService.updateUserById req.params.id, user, (err, user) ->
         return next( http.serverError(err, 1025) ) if err?
 
-        try res.data.user = UserMapper.marshall user
+        try res.data = UserMapper.marshall user
         catch err then return next( http.serverError(err, 1024) )
 
         return next()
@@ -97,6 +98,8 @@ class Controller
     accountService.removeUserById req.params.id, (err, user) ->
       return next( http.serverError(err, 1032) ) if err?
       return next( http.notFound('user not found', 1031) ) unless user?
+
+      res.status 204
 
       return next()
     return
