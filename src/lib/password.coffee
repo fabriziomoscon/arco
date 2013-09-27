@@ -8,7 +8,13 @@ hash = (password, callback) ->
   return callback new TypeError('Invalid password') '' unless typeof password is 'string'
   return callback null, '' if password is ''
 
-  bcrypt.hash password, config.server.auth.saltLength, callback
+  return bcrypt.hash password, config.server.auth.saltLength, callback
+
+
+hashSync = (password) ->
+  throw new TypeError 'Invalid password' unless typeof password is 'string'
+  return '' if password is ''
+  return bcrypt.hashSync(password, config.server.auth.saltLength)
 
 
 compare = (password, hash, callback) ->
@@ -16,7 +22,7 @@ compare = (password, hash, callback) ->
   return callback new TypeError 'Invalid password' unless typeof password is 'string'
   return callback new TypeError 'Invalid hash' unless typeof hash is 'string'
 
-  bcrypt.compare password, hash, callback
+  return bcrypt.compare password, hash, callback
 
 
-module.exports = { hash, compare }
+module.exports = { hash, hashSync, compare }

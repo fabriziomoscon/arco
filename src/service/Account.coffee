@@ -18,7 +18,7 @@ class Account
     @findUserByEmail user.email, (err, userFound) =>
       return callback err, null if err?
       return callback new Error('email already used'), null if userFound?
-      @userRepository.add user, (err, users) ->
+      @userRepository.insert user, (err, users) ->
         return callback err, null if err?
 
         return callback new Error('No user created/returned'), null unless users?[0]?
