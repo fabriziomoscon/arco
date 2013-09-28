@@ -68,8 +68,8 @@ sudo npm install ciao -g
 
 load fixtures
 ```bash
-curl -XPOST http://localhost:4000/testing/drop
-curl -XPOST http://localhost:4000/testing/fixtures
+make drop-db
+make load-fixtures
 curl -XPOST http://localhost:4000/testing/fixtures/users
 ```
 
@@ -80,14 +80,13 @@ terminal1
 ./set-env test npm run dev-api
 ```
 
-terminal2 (JSON)
+terminal2
 ```bash
-ciao test/functional/json -c test/functional/ciao.json
+make test-func path="json/<RELATIVE_PATH_TO_TESTS>"
 ```
-
-terminal3 (HTML)
+or drop and re-load fixtures
 ```bash
-ciao test/functional/html -c test/functional/ciao.json
+make test-func-init path="json/<RELATIVE_PATH_TO_TESTS>"
 ```
 
 To switch between different versions of node you can use `nave`

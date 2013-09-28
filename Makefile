@@ -6,4 +6,18 @@ test-unit-back:
 
 test: test-unit-back
 
-.PHONY: test-unit-back test
+load-fixtures:
+	curl -XPOST http://localhost:4000/testing/fixtures
+
+drop-test-db:
+	curl -XPOST http://localhost:4000/testing/drop
+
+test-func:
+	ciao test/functional/$(path) -c test/functional/cookies.json
+
+create-cookies:
+	@${BINDIR}/coffee test/functional/init.coffee;
+
+test-func-init: create-cookies load-fixtures test-func
+
+.PHONY: test-unit-back test load-fixtures drop-test-db test-func create-cookies test-func-init

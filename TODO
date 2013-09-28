@@ -1,10 +1,6 @@
-- let requests with Accept:text/html receive a 406
 - remove validator: find alternative way
+- let requests with Accept:text/html receive a 406
 - figure out how to connect to mongo before the server start listening
-- make user/edit a findAndModify
-- functional test all user modules
+- extend user functional test
 - setup mongologger
-- fix ensureAuthenticated
-- find a way to login before running test
-- double check the Auth login error are matching with passport callback interface
-- stop using classes for controllers
+- fix .nodemonignore

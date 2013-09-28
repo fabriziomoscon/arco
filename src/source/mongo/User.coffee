@@ -4,7 +4,9 @@ ObjectIdMapper = require 'src/mapper/type/ObjectId'
 
 collectionName = 'users'
 
+
 class UserSource
+
 
   @insert: (userData, callback) ->
     MongoGateway.insert collectionName, userData, {}, callback
@@ -37,8 +39,26 @@ class UserSource
 
 
   @update: (id, userData, callback) ->
-    options = multi: false
-    MongoGateway.update collectionName, {"_id":ObjectIdMapper.marshall(id)}, {$set:userData}, options, callback
+    id = ObjectIdMapper.marshall(id)
+    MongoGateway.update collectionName,
+      {"_id":id},
+      {"$set":userData},
+      {"multi": false},
+      (err, status, info) ->
+        return callback err, null if err?
+        unless status is 1
+          error = new Error "Impossible to update user #{id}"
+          log.error {
+            message: error.message
+            data: userData
+            info: info
+          }
+          return callback error, null
+
+        # reinsert the id which gets removed by the mongo gateway
+        userData._id = id
+
+        return callback null, [userData]
 
 
 module.exports = UserSource

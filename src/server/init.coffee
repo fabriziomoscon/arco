@@ -48,7 +48,9 @@ module.exports = (config) ->
   log.info "Connected to mongodb://#{mongoDBUserPass}#{config.db.mongo.host}:#{config.db.mongo.port}/#{config.db.mongo.dbname}"
 
   app.use require('src/server/routes').middleware
+
   app.use require 'src/middleware/errorHandler'
+
   app.use (req, res, next) ->
     res.format(
       json: () -> res.json res.data

@@ -2,13 +2,14 @@
 
 /docs/*
 /test/functional/*
-/test/mocha.opts
-/test/init.js
-/Makefile
-/README.md
-/.gitignore
-/set-env
-/package.json
-/.travis.yml
-/.git/*
-/arco.*.log
+test/mocha.opts
+test/init.js
+Makefile
+README.md
+.gitignore
+set-env
+package.json
+.travis.yml
+.git/*
+arco.*.log
+.nodemonignore

@@ -33,7 +33,8 @@
     "validator": "*",
     "passport": "0.1.x",
     "passport-local": "0.1.x",
-    "bcrypt": "0.7.x"
+    "bcrypt": "0.7.x",
+    "hyperquest": "0.1.x"
   },
   "devDependencies": {
     "nodemon": "0.7.x",

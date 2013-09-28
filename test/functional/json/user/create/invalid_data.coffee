@@ -7,10 +7,10 @@ headers:
 body: {}
 
 #? status: 400
-response.statusCode.should.eql 400
+response.statusCode.should.equal 400
 
 #? error message
-json.error.should.eql 'Invalid user data'
+json.error.should.equal 'Invalid user data'
 
 #? error code
-json.error_code.should.eql 1010
+json.error_code.should.equal 1010

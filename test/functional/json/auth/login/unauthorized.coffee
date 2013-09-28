@@ -16,7 +16,7 @@ response.statusCode.should.equal 401
 response.should.not.have.header 'Set-Cookie'
 
 #? error message
-json.error.should.eql 'Wrong email or password'
+json.error.should.equal 'Wrong email or password'
 
 #? error code
-json.error_code.should.eql 2002
+json.error_code.should.equal 2002

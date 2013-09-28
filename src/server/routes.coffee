@@ -1,17 +1,8 @@
 express = require 'express'
 router  = new express.Router()
 
-ensureAuthorized = require 'src/middleware/ensureAuthorized'
-
-sessionIdReplaceRedirect = (action) ->
-  return (req, res, next) ->
-    if req.user?.id
-      req.params.id = req.user.id
-      return action req, res, next
-    else
-      res.status 401
-      res.data = error: 'Unauthorized: Please sign in to continue'
-      next()
+ensureAuthorized   = require 'src/middleware/ensureAuthorized'
+sessionRestriction = require 'src/middleware/sessionRestriction'
 
 
 controllers =
@@ -22,12 +13,12 @@ controllers =
 router.post   '/auth/login',                 controllers.auth.login
 
 # ---- User ----
-router.get    '/user/me',  sessionIdReplaceRedirect controllers.user.read
-router.get    '/users',                      controllers.user.index
-router.post   '/user',                       controllers.user.create
+router.get    '/user/me',  ensureAuthorized, sessionRestriction controllers.user.read
+router.put    '/user/me',  ensureAuthorized, sessionRestriction controllers.user.edit
+router.delete '/user/me',  ensureAuthorized, sessionRestriction controllers.user.remove
 router.get    '/user/:id',                   controllers.user.read
-router.put    '/user/:id', ensureAuthorized, controllers.user.edit
-router.delete '/user/:id', ensureAuthorized, controllers.user.remove
+router.post   '/user',                       controllers.user.create
+router.get    '/users',                      controllers.user.index
 
 # -- Testing Only ---
 if process.env.NODE_ENV in ['testing', 'staging']

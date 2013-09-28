@@ -14,19 +14,17 @@ module.exports = (config) ->
     callback null, user.id
 
   passport.deserializeUser (data, callback) ->
-    accountService.findUserById data, (err, users) ->
+    accountService.findUserById data, (err, user) ->
       return callback err, null if err?
-      return callback err, false unless users?[0]?
-      return callback null, users[0]
+      return callback err, false unless user?
+      return callback null, user
 
 
   passport.use 'local-email', new LocalStrategy( {usernameField: 'email'},
     (email, password, callback) ->
-      accountService.findUserByEmail email, (err, users) ->
-        return callback err, false if err?
-        return callback null, false unless users?[0]?
-
-        user = users[0]
+      accountService.findUserByEmail email, (err, user) ->
+        return callback null, false, err if err?
+        return callback null, false unless user?
 
         # return callback null, false unless user.status.get() is 'ACTIVE'
 
@@ -35,10 +33,10 @@ module.exports = (config) ->
           return callback null, false
 
         passwordHelper.compare password, user.password, (err, result) ->
-          return callback err, false if err?
-          unless result is true
-            return callback null, false
-          return callback null, user
+          return callback null, false, err if err?
+          if result is true
+            return callback null, user
+          return callback null, false
         return
 
       return

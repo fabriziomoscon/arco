@@ -15,7 +15,7 @@ class UserRespository
 
   insert: (users, callback) ->
     users = [users] unless Array.isArray users
-    @userSource.insert (@userMapper.marshall(user) for user in users), @mapUserCallback(callback)
+    @userSource.insert (@userMapper.marshall(user) for user in users), @mapUserCallback(callback, false)
 
 
   findOneById: (userId, callback) ->
@@ -48,7 +48,7 @@ class UserRespository
     @userSource.remove userId, @mapUserCallback(callback)
 
 
-  mapUserCallback: (callback) ->
+  mapUserCallback: (callback, single = true) ->
     return (err, usersData) =>
       return callback err, null if err?
       return callback null, null unless usersData?
@@ -58,6 +58,8 @@ class UserRespository
       for userData in usersData
         try users.push @userMapper.unmarshall userData
         catch err then return callback err, null
+
+      users = users[0] if single
 
       return callback null, users
 
