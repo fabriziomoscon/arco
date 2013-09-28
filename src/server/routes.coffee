@@ -10,13 +10,16 @@ sessionIdReplaceRedirect = (action) ->
       return action req, res, next
     else
       res.status 401
-      res.data.error = 'Unauthorized: Please sign in to continue'
+      res.data = error: 'Unauthorized: Please sign in to continue'
       next()
 
 
 controllers =
+  auth:     require 'src/controller/Auth'
   user:     require 'src/controller/User'
 
+# ---- Auth ----
+router.post   '/auth/login',                 controllers.auth.login
 
 # ---- User ----
 router.get    '/user/me',  sessionIdReplaceRedirect controllers.user.read
@@ -35,5 +38,6 @@ if process.env.NODE_ENV in ['testing', 'staging']
   router.post '/testing/drop',           TestController.dropDatabase
   router.post '/testing/fixtures',       TestController.loadFixtures
   router.post '/testing/fixtures/users', TestController.loadFixturesUsers
+
 
 module.exports = router

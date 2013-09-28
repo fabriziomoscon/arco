@@ -3,6 +3,8 @@
 - figure out how to connect to mongo before the server start listening
 - make user/edit a findAndModify
 - functional test all user modules
-- login user when loading fixtures
-- fix ensureAuthenticated + finish passport auth
 - setup mongologger
+- fix ensureAuthenticated
+- find a way to login before running test
+- double check the Auth login error are matching with passport callback interface
+- stop using classes for controllers

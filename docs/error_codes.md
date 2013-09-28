@@ -21,3 +21,10 @@ User
 - 1032 DELETE  user: 500 'impossible removing the user'
 
 - 1041 GET     users: 500 'impossible finding all users' 
+
+Auth
+====
+
+- 2001 POST    login: 400 'impossible to login'
+- 2002 POST    login: 401 'wrong email or password'
+- 2002 POST    login: 500 'impossible to login'

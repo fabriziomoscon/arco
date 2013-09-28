@@ -19,6 +19,9 @@ module.exports = (config) ->
 
   app.use passport.initialize()
   app.use passport.session()
+  app.use (req, res, next) ->
+    req.passport = passport
+    next()
 
   if config.db.mongo.user is ''
     config.db.mongo.user = null
@@ -45,11 +48,11 @@ module.exports = (config) ->
   log.info "Connected to mongodb://#{mongoDBUserPass}#{config.db.mongo.host}:#{config.db.mongo.port}/#{config.db.mongo.dbname}"
 
   app.use require('src/server/routes').middleware
+  app.use require 'src/middleware/errorHandler'
   app.use (req, res, next) ->
     res.format(
       json: () -> res.json res.data
     )
-  app.use require 'src/middleware/errorHandler'
 
   # # Far better error stack debugging. Do not use in production!
   # if process.env.NODE_ENV is 'development'

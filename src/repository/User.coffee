@@ -54,7 +54,12 @@ class UserRespository
       return callback null, null unless usersData?
       usersData = [usersData] unless Array.isArray usersData
 
-      return callback null, (@userMapper.unmarshall(userData) for userData in usersData)
+      users = []
+      for userData in usersData
+        try users.push @userMapper.unmarshall userData
+        catch err then return callback err, null
+
+      return callback null, users
 
 
 module.exports = UserRespository
