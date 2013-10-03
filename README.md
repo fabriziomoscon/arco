@@ -82,11 +82,11 @@ terminal1
 
 terminal2
 ```bash
-make test-func path="json/<RELATIVE_PATH_TO_TESTS>"
+make test-func path="test/functional/json/<RELATIVE_PATH_TO_TESTS>"
 ```
 or drop and re-load fixtures
 ```bash
-make test-func-init path="json/<RELATIVE_PATH_TO_TESTS>"
+make test-func-init path="test/functional/json/<RELATIVE_PATH_TO_TESTS>"
 ```
 
 To switch between different versions of node you can use `nave`

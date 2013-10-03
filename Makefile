@@ -13,7 +13,7 @@ drop-test-db:
 	curl -XPOST http://localhost:4000/testing/drop
 
 test-func:
-	ciao test/functional/$(path) -c test/functional/cookies.json
+	ciao $(path) -c test/functional/cookies.json
 
 create-cookies:
 	@${BINDIR}/coffee test/functional/init.coffee;
