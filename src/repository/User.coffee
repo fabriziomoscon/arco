@@ -1,4 +1,4 @@
-UserSource = require 'src/source/mongo/User'
+mongoSource = require 'src/source/mongo/User'
 
 UserMapper = require 'src/mapper/User'
 
@@ -6,8 +6,8 @@ UserMapper = require 'src/mapper/User'
 class UserRespository
 
 
-  constructor: (userSource = UserSource, userMapper = UserMapper) ->
-    throw new Error 'Invalid source' unless userSource instanceof Function
+  constructor: (userSource = mongoSource, userMapper = UserMapper) ->
+    throw new Error 'Invalid source' unless userSource?
     throw new Error 'Invalid mapper' unless userMapper.marshall instanceof Function
     @userSource = userSource
     @userMapper = userMapper
