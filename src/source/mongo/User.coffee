@@ -23,7 +23,9 @@ findAll = (callback) ->
   whereQuery = {}
   fields = {}
   options = {}
-  MongoGateway.find collectionName, whereQuery, fields, options, callback
+  MongoGateway.find collectionName, whereQuery, fields, options, (err, cursor) ->
+    return callback err, null if err?
+    return cursor.toArray callback
 
 
 remove = (id, callback) ->

@@ -4,3 +4,7 @@
 - extend user functional test
 - setup mongologger
 - fix .nodemonignore
+- user id regex in route and eliminate controller checks
+- update check-types and add the date case to all checks
+- return error from user update in case the user updated is not returned and finishing testing the method
+- use async for user create and user update

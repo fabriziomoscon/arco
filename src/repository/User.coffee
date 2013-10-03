@@ -27,17 +27,7 @@ class UserRespository
 
 
   findAll: (callback) ->
-    @userSource.findAll (err, cursor) =>
-      return callback err, null if err?
-
-      users = []
-      cursor.each (err, userData) =>
-        return callback err, null if err?
-        
-        # end of loop
-        return callback null, users unless userData?
-
-        users.push @userMapper.unmarshall userData
+    @userSource.findAll @mapUserCallback(callback, false)
 
 
   update: (userId, user, callback) ->
@@ -45,7 +35,7 @@ class UserRespository
 
 
   remove: (userId, callback) ->
-    @userSource.remove userId, @mapUserCallback(callback)
+    @userSource.remove userId, callback
 
 
   mapUserCallback: (callback, single = true) ->

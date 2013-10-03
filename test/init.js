@@ -29,6 +29,8 @@ global.userFactory = function( firstName, lastName ) {
 };
 
 global.allTypes = [undefined, null, false, 1, NaN, '', [], {}, new Object(), new Date(), function() {}]
+global.allTypesNotString = [undefined, null, false, 1, NaN, [], {}, new Object(), new Date(), function() {}]
+global.allNotFunctionTypes = [undefined, null, false, 1, NaN, '', [], {}, new Object(), new Date()]
 global.allNotUndefinedTypes = [false, 1, NaN, '', [], {}, new Object(), new Date(), function() {}]
 // global.allNonObjectTypes = [undefined, null, false, 1, NaN, '', [], new Date, function() {}]
 global.allNotObjectTypes = [undefined, null, false, 1, NaN, '', [], function() {}]

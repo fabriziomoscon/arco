@@ -6,22 +6,22 @@ isValidObjectId = require 'src/validator/type/ObjectId'
 class Account
 
 
-  constructor: (UserRepo = UserRepository) ->
-    throw new Error 'Invalid repository' unless UserRepo instanceof Function
-    @userRepository = new UserRepo
+  constructor: (UserRepo = new UserRepository) ->
+    throw new Error 'Invalid repository' unless UserRepo?
+    @userRepository = UserRepo
 
 
   createUser: (user, callback) ->
     throw new Error 'Invalid callback' unless callback instanceof Function
-    return callback new Error('Invalid User'), null unless user instanceof UserModel
+    return callback new Error('Invalid user'), null unless user instanceof UserModel
     
-    @findUserByEmail user.email, (err, userFound) =>
+    @userRepository.findOneByEmail user.email, (err, userFound) =>
       return callback err, null if err?
       return callback new Error('email already used'), null if userFound?
       @userRepository.insert user, (err, users) ->
         return callback err, null if err?
 
-        return callback new Error('No user created/returned'), null unless users?[0]?
+        return callback new Error('No user created'), null unless users?[0]?
 
         return callback null, users[0]
       return
@@ -47,10 +47,10 @@ class Account
 
     if user.email?
       
-      @findUserByEmail user.email, (err, userFound) =>
+      @userRepository.findOneByEmail user.email, (err, userFound) =>
         return callback err, null if err?
         if userFound? and userId isnt userFound.id
-          return callback new Error('Email already used'), null
+          return callback new Error('email already used'), null
 
         return @userRepository.update userId, user, callback
       return
@@ -62,7 +62,7 @@ class Account
 
   findAllUsers: (callback) ->
     throw new Error 'Invalid callback' unless callback instanceof Function
-    @userRepository.findAllUsers callback
+    @userRepository.findAll callback
 
 
   removeUserById: (userId, callback) ->
