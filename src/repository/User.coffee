@@ -8,7 +8,7 @@ class UserRespository
 
   constructor: (userSource = mongoSource, userMapper = UserMapper) ->
     throw new Error 'Invalid source' unless userSource?
-    throw new Error 'Invalid mapper' unless userMapper.marshall instanceof Function
+    throw new Error 'Invalid mapper' unless typeof userMapper.marshall is 'function'
     @userSource = userSource
     @userMapper = userMapper
 

@@ -4,7 +4,7 @@ config = require 'src/config/environment'
 
 
 hash = (password, callback) ->
-  throw new TypeError 'Invalid callback' unless callback instanceof Function
+  throw new TypeError 'Invalid callback' unless typeof callback is 'function'
   return callback new TypeError('Invalid password') '' unless typeof password is 'string'
   return callback null, '' if password is ''
 
@@ -18,7 +18,7 @@ hashSync = (password) ->
 
 
 compare = (password, hash, callback) ->
-  throw new TypeError 'Invalid callback' unless callback instanceof Function
+  throw new TypeError 'Invalid callback' unless typeof callback is 'function'
   return callback new TypeError 'Invalid password' unless typeof password is 'string'
   return callback new TypeError 'Invalid hash' unless typeof hash is 'string'
 

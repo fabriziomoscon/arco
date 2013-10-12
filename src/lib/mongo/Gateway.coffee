@@ -56,7 +56,7 @@ class MongoGateway
   #   serializeFunctions {Boolean, default:false}, serialize functions on the document.
   # @param {Function} callback
   @insert: (targetCollection, data, options, callback) ->
-    throw new Error 'Invalid callback' unless callback instanceof Function
+    throw new Error 'Invalid callback' unless typeof callback is 'function'
     insertOptions =
       w: options.w ?= 1
 
@@ -68,7 +68,7 @@ class MongoGateway
   # @param {Object} options
   # @param {Function} callback
   @findOne: (targetCollection, query, options, callback) ->
-    throw new Error 'Invalid callback' unless callback instanceof Function
+    throw new Error 'Invalid callback' unless typeof callback is 'function'
     query = MongoGateway.convertId query
     query = MongoGateway.useObjectID query
 
@@ -105,7 +105,7 @@ class MongoGateway
   #   partial {Boolean, default:false}, specify if the cursor should return partial results when querying against a sharded system
   # @param {Function} callback
   @find: (targetCollection, query, fields, options, callback) ->
-    throw new Error 'Invalid callback' unless callback instanceof Function
+    throw new Error 'Invalid callback' unless typeof callback is 'function'
     callback null, MongoGateway.db.collection(targetCollection).
       find(query, fields, options)
 
@@ -123,7 +123,7 @@ class MongoGateway
   #   serializeFunctions {Boolean, default:false}, serialize functions on the document.
   # @param {Function} callback
   @update: (targetCollection, whereQuery, updateQuery, options, callback) ->
-    throw new Error 'Invalid callback' unless callback instanceof Function
+    throw new Error 'Invalid callback' unless typeof callback is 'function'
     collection = MongoGateway.db.collection targetCollection
 
     updateOptions =
@@ -146,7 +146,7 @@ class MongoGateway
   #   **journal**, (Boolean, default:false) write waits for journal sync before returning
   # @param {Function} callback
   @save: (targetCollection, document, options, callback) ->
-    throw new Error 'Invalid callback' unless callback instanceof Function
+    throw new Error 'Invalid callback' unless typeof callback is 'function'
 
     # @TODO callback depends on the value of w
     # add a switch to create different callbacks 
@@ -164,7 +164,7 @@ class MongoGateway
   # @param {Object} whereQuery
   # @param {Function} callback
   @remove: (targetCollection, whereQuery, callback) ->
-    throw new Error 'Invalid callback' unless callback instanceof Function
+    throw new Error 'Invalid callback' unless typeof callback is 'function'
     whereQuery = MongoGateway.convertId whereQuery
     whereQuery = MongoGateway.useObjectID whereQuery
     MongoGateway.db.collection(targetCollection).
