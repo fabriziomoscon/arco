@@ -16,7 +16,7 @@ router.post   '/auth/login',                 controllers.auth.login
 router.get    '/user/me',  ensureAuthorized, sessionRestriction controllers.user.read
 router.put    '/user/me',  ensureAuthorized, sessionRestriction controllers.user.edit
 router.delete '/user/me',  ensureAuthorized, sessionRestriction controllers.user.remove
-router.get    '/user/:id',                   controllers.user.read
+router.get    '/user/:id([0-9A-F]{24})',     controllers.user.read
 router.post   '/user',                       controllers.user.create
 router.get    '/users',                      controllers.user.index
 
