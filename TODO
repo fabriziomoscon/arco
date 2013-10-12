@@ -1,8 +1,7 @@
-- remove validator: find alternative way
+- remove node-validator: find alternative way
 - figure out how to connect to mongo before the server start listening
 - extend user functional test
 - setup mongologger
 - fix .nodemonignore
-- update check-types and add the date case to all checks
 - return error from user update in case the user updated is not returned and finishing testing the method
 - use async for user create and user update
