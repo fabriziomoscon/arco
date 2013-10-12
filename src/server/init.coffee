@@ -11,6 +11,8 @@ module.exports = (config) ->
 
   app = express()
 
+  app.disable 'x-powered-by'
+
   app.use express.bodyParser()
   app.use express.cookieParser()
   app.use redisSession(config)
@@ -52,9 +54,11 @@ module.exports = (config) ->
   app.use require 'src/middleware/errorHandler'
 
   app.use (req, res, next) ->
-    res.format(
-      json: () -> res.json res.data
-    )
+    if res.statusCode is 204 or res.data?
+      return res.format(
+        json: () -> res.json res.data
+      )
+    return next()
 
   # # Far better error stack debugging. Do not use in production!
   # if process.env.NODE_ENV is 'development'

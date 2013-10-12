@@ -25,6 +25,7 @@ dropDatabase = (req, res, next) ->
 
   dropDatabase req, res, (err) ->
     return next( http.serverError err ) if err?
+    res.status 204
     return next()
   return
 
@@ -45,6 +46,7 @@ loadFixturesUsers = (req, res, next) ->
       return next( http.serverError err ) if err?
 
       log.debug 'USERS loaded', users.map (user) -> user.email
+      res.status 204
 
       return next()
     return
