@@ -1,5 +1,4 @@
 - remove validator: find alternative way
-- let requests with Accept:text/html receive a 406
 - figure out how to connect to mongo before the server start listening
 - extend user functional test
 - setup mongologger
