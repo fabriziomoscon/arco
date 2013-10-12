@@ -3,3 +3,4 @@ npm-debug.log
 arco.*.log
 arco.*.log.*
 .project
+test/functional/cookies.json
