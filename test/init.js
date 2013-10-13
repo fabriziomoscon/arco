@@ -1,7 +1,7 @@
 require('rootpath')()
 
 global.log = {
-  error: function () {return},
+  error: console.error,
   warn: function () {return},
   debug: function () {return},
   info: function () {return},
