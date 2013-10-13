@@ -1,5 +1,3 @@
-validator = require 'validator'
-
 Hash = require 'node-hash'
 
 Place = require 'src/model/Place'
@@ -53,7 +51,7 @@ class User
 
   setPassword: (password) =>
     throw new TypeError 'Invalid password' unless typeof password is 'string'
-    validator.check(password, 'Invalid password').len(User.MIN_PASSWORD_LENGTH)
+    throw new Error 'Password too short' unless password.length >= User.MIN_PASSWORD_LENGTH
     @password = password
     return @
 
