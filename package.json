@@ -38,9 +38,9 @@
   },
   "devDependencies": {
     "breakdown": "*",
-    "mocha": "1.12.x",
+    "mocha": "1.13.x",
     "nodemon": "0.7.x",
-    "should": "1.2.x",
+    "should": "2.0.x",
     "walk": "~2.2.1"
   },
   "engines": {
