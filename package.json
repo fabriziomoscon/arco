@@ -1,13 +1,12 @@
 {
   "name": "arco",
-  "preferGlobal": true,
-  "private": true,
+  "preferGlobal": false,
+  "private": false,
   "version": "0.0.1",
   "description": "archery scoring API",
   "contributors": [
     {
-      "first_name": "Fabrizio",
-      "last_name": "Moscon",
+      "first_name": "Fabrizio Moscon",
       "email": "mosconfabrizio@gmail.com"
     }
   ],
@@ -46,9 +45,5 @@
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
-  },
-  "domains": [
-    "yourproject.com"
-  ],
-  "subdomain": "subdomain.yourproject.com"
+  }
 }
