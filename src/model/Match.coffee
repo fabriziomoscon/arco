@@ -1,3 +1,11 @@
+Hash     = require 'node-hash'
+NodeSet  = require 'node-set'
+ObjectID = require('mongodb').ObjectID
+
+Place = require 'src/model/Place'
+User  = require 'src/model/User'
+
+
 class Match
 
 
@@ -19,6 +27,7 @@ class Match
         30: 3
 
     'FITA 70+60+50+30': {}
+    'FITA 50+40+30+20': {}
     '70m qualification': {}
     'H+F 12+12': {}
     'H+F 24+24': {}
@@ -27,7 +36,10 @@ class Match
 
 
   constructor: () ->
-    @score_ids = []
+    @score_ids = new NodeSet ObjectID
+    @times = new Hash Date
+    @places = new Hash Place
+    @participants = new NodeSet User
 
 
   setId: (id) ->
@@ -38,9 +50,6 @@ class Match
   setType: (type) ->
     throw new TypeError 'Invalid type' unless type in Object.keys(Match.TYPES)
     @type = type
-
-
-
 
 
 module.exports = Match

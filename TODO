@@ -1,7 +1,20 @@
-- remove node-validator: find alternative way
+system
 - figure out how to connect to mongo before the server start listening
-- extend user functional test
 - setup mongologger
 - fix .nodemonignore
+
+lib
+- create node-set mapper
+
+user
 - return error from user update in case the user updated is not returned and finishing testing the method
 - use async for user create and user update
+
+score system
+- unit test for match
+- unit test for score
+- let user insert a new score
+- let user find all his scores
+
+test
+- extend user functional test
