@@ -29,3 +29,8 @@ Auth
 - 2001 POST    login: 400 'impossible to login'
 - 2002 POST    login: 401 'wrong email or password'
 - 2002 POST    login: 500 'impossible to login'
+
+Score
+=====
+
+- 3001 POST    score: 400 'invalid body'
