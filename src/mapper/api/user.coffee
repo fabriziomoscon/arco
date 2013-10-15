@@ -1,6 +1,6 @@
 check = require 'check-types'
 
-DateMapper = require 'src/mapper/api/type/Date'
+dateMapper = require 'src/mapper/api/type/date'
 
 UserModel = require 'src/model/User'
 

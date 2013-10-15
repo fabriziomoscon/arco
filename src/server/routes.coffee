@@ -6,9 +6,9 @@ sessionRestriction = require 'src/middleware/sessionRestriction'
 
 
 controllers =
-  auth:     require 'src/controller/Auth'
-  score:    require 'src/controller/Score'
-  user:     require 'src/controller/User'
+  auth:     require 'src/controller/auth'
+  score:    require 'src/controller/score'
+  user:     require 'src/controller/user'
 
 # ---- Auth ----
 router.post   '/auth/login',                 controllers.auth.login
@@ -27,7 +27,7 @@ router.post   'score',     ensureAuthorized, sessionRestriction, controllers.sco
 # -- Testing Only ---
 if process.env.NODE_ENV in ['testing', 'staging']
 
-  TestController = require 'src/controller/Test'
+  TestController = require 'src/controller/test'
 
   router.post '/testing',                TestController.index
   router.post '/testing/drop',           TestController.dropDatabase
