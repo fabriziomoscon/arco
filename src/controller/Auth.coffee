@@ -1,6 +1,6 @@
 http = require 'src/middleware/httpResponse'
 
-UserMapper = require 'src/mapper/api/User'
+apiUserMapper = require 'src/mapper/api/user'
 
 logger = log.child {component: 'AuthController'}
 
@@ -19,7 +19,7 @@ login = (req, res, next) ->
         logger.error {err:err, user:user}
         return next( http.serverError(err, 2003) )
 
-      try res.data = UserMapper.marshall user
+      try res.data = apiUserMapper.marshall user
       catch err then return next( http.serverError(err, 1012) )
 
       return next()

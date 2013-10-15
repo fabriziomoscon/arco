@@ -1,6 +1,6 @@
 MongoGateway = require 'src/lib/mongo/Gateway'
 
-ObjectIdMapper = require 'src/mapper/type/ObjectId'
+objectIdMapper = require 'src/mapper/type/objectId'
 
 collectionName = 'users'
 
@@ -11,7 +11,7 @@ insert = (userData, callback) ->
 
 findOneById = (id, callback) =>
   options = {}
-  MongoGateway.findOne collectionName, {"_id": ObjectIdMapper.marshall(id)}, options, callback
+  MongoGateway.findOne collectionName, {"_id": objectIdMapper.marshall(id)}, options, callback
 
 
 findOneByEmail = (email, callback) =>
@@ -30,7 +30,7 @@ findAll = (callback) ->
 
 remove = (id, callback) ->
   MongoGateway.findAndModify collectionName,
-    {"_id": ObjectIdMapper.marshall(id)},
+    {"_id": objectIdMapper.marshall(id)},
     [],
     {},
     {"new": false},
@@ -38,7 +38,7 @@ remove = (id, callback) ->
 
 
 update = (id, userData, callback) ->
-  id = ObjectIdMapper.marshall(id)
+  id = objectIdMapper.marshall(id)
   MongoGateway.update collectionName,
     {"_id":id},
     {"$set":userData},

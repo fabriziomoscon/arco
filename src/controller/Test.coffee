@@ -4,7 +4,7 @@ http = require 'src/middleware/httpResponse'
 
 userRepository = new (require 'src/repository/User')
 
-UserMapper = require 'src/mapper/User'
+userMapper = require 'src/mapper/user'
 
 password = require 'src/lib/password'
 
@@ -61,7 +61,7 @@ loadUsers = (req, res, callback) ->
   users = []
   for key, userData of require('test/data/db/user').getData()
     userData.password = password.hashSync userData.password if userData.password?
-    try users.push UserMapper.unmarshall userData
+    try users.push userMapper.unmarshall userData
     catch err then return callback err, null
 
   return userRepository.insert users, callback

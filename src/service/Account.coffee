@@ -1,6 +1,6 @@
 UserModel       = require 'src/model/User'
 UserRepository  = require 'src/repository/User'
-isValidObjectId = require 'src/validator/type/ObjectId'
+isValidObjectId = require 'src/validator/type/objectId'
 
 
 class Account

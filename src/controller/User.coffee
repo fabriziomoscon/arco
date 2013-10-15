@@ -2,7 +2,7 @@ http = require 'src/middleware/httpResponse'
 
 accountService = new (require 'src/service/Account')
 
-UserMapper = require 'src/mapper/api/User'
+apiUserMapper = require 'src/mapper/api/user'
 
 check = require 'check-types'
 
@@ -27,7 +27,7 @@ read = (req, res, next) ->
     return next( http.serverError(err, 1003) ) if err?
     return next( http.notFound('user not found', 1002) ) unless user?
 
-    try res.data = UserMapper.marshall user
+    try res.data = apiUserMapper.marshall user
     catch err then return next( http.serverError(err, 1012) )
 
     return next()
@@ -39,7 +39,7 @@ create = (req, res, next) ->
 
   return next( http.badRequest('Invalid user data', 1010) ) if check.isEmptyObject req.body
 
-  try user = UserMapper.unmarshallForCreating req.body
+  try user = apiUserMapper.unmarshallForCreating req.body
   catch err then return next( http.badRequest(err, 1011) )
 
   accountService.createUser user, (err, user) ->
@@ -47,7 +47,7 @@ create = (req, res, next) ->
 
     res.status 201
 
-    try res.data = UserMapper.marshall user
+    try res.data = apiUserMapper.marshall user
     catch err then return next( http.serverError(err, 1012) )
 
     return next()
@@ -65,13 +65,13 @@ edit = (req, res, next) ->
     return next( http.serverError(err, 1003) ) if err?
     return next( http.notFound('user not found', 1022) ) unless user?
 
-    try user = UserMapper.unmarshallForEditing req.body, user
+    try user = apiUserMapper.unmarshallForEditing req.body, user
     catch err then return next( http.badRequest(err, 1023) )
 
     accountService.updateUserById req.params.id, user, (err, user) ->
       return next( http.serverError(err, 1025) ) if err?
 
-      try res.data = UserMapper.marshall user
+      try res.data = apiUserMapper.marshall user
       catch err then return next( http.serverError(err, 1024) )
 
       return next()

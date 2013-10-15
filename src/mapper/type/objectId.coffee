@@ -1,6 +1,6 @@
 ObjectID = require('mongodb').ObjectID
 
-isValidObjectId = require 'src/validator/type/ObjectId'
+isValidObjectId = require 'src/validator/type/objectId'
 
 
 marshall = (id) ->

@@ -1,6 +1,6 @@
 should = require 'should'
 
-apiUserMapper = require 'src/mapper/api/User'
+apiUserMapper = require 'src/mapper/api/user'
 
 User = require 'src/model/User'
 

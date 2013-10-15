@@ -1,12 +1,12 @@
-mongoSource = require 'src/source/mongo/User'
+mongoSource = require 'src/source/mongo/user'
 
-UserMapper = require 'src/mapper/User'
+backUserMapper = require 'src/mapper/user'
 
 
 class UserRespository
 
 
-  constructor: (userSource = mongoSource, userMapper = UserMapper) ->
+  constructor: (userSource = mongoSource, userMapper = backUserMapper) ->
     throw new Error 'Invalid source' unless userSource?
     throw new Error 'Invalid mapper' unless typeof userMapper.marshall is 'function'
     @userSource = userSource

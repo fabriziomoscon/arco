@@ -3,7 +3,7 @@ Hash = require 'node-hash'
 Place = require 'src/model/Place'
 Score = require 'src/model/Score'
 
-isValidObjectId = require 'src/validator/type/ObjectId'
+isValidObjectId = require 'src/validator/type/objectId'
 isValidEmail    = require 'src/validator/email'
 
 

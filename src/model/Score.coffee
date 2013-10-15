@@ -2,7 +2,7 @@ User  = require 'src/model/User'
 Place = require 'src/model/Place'
 Match = require 'src/model/Match'
 
-isValidObjectId = require 'src/validator/type/ObjectId'
+isValidObjectId = require 'src/validator/type/objectId'
 
 Hash = require 'node-hash'
 
