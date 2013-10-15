@@ -1,3 +1,5 @@
+check = require 'check-types'
+
 DateMapper = require 'src/mapper/api/type/Date'
 
 UserModel = require 'src/model/User'
@@ -12,12 +14,13 @@ marshall = (user) ->
   data.first_name = user.first_name if user.first_name?
   data.last_name = user.last_name if user.last_name?
   data.email = user.email if user.email?
-  data.created = DateMapper.marshall user.createdAt if user.createdAt?
 
   return data
 
+
 unmarshallForCreating = (data) ->
-  throw new TypeError 'Invalid user data' unless data?
+
+  throw new TypeError 'Invalid user data' unless check.isObject data
 
   initData = {}
   initData.first_name = data.first_name if data.first_name?
