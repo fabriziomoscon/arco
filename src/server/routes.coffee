@@ -22,7 +22,7 @@ router.post   '/user',                       controllers.user.create
 router.get    '/users',                      controllers.user.index
 
 #------ Score -----
-router.post   'score',     ensureAuthorized, sessionRestriction, controllers.score.insert
+router.post   '/score',    ensureAuthorized, sessionRestriction, controllers.score.create
 
 # -- Testing Only ---
 if process.env.NODE_ENV in ['testing', 'staging']

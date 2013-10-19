@@ -64,11 +64,6 @@ describe 'user mapper', ->
           it "should not unmarshall #{invalid}", ->
             (-> userMapper.unmarshall invalid).should.throw 'Invalid data'
 
-      call() for call in allNotUndefinedTypes.map (invalid) ->
-        () ->
-          it "should not unmarshall #{invalid}", ->
-            (-> userMapper.unmarshall {}, invalid).should.throw 'Invalid user'
-
     describe 'success', ->
 
       it 'should unmarshall the _id', ->

@@ -6,6 +6,7 @@ system
 lib
 - create node-set mapper
 - use hash mapper to map api times for user + test
+- abstract map repositoy callback into a generic function
 
 user
 - use bcrypt to hash the password of the user on creation and editing
@@ -13,10 +14,12 @@ user
 - use async for user create and user update
 
 score system
+- api mapper for place
 - unit test for match
 - unit test for score
-- let user insert a new score
 - let user find all his scores
+- model score partial structure
+- model score arrow structure
 
 test
 - extend user functional test
@@ -24,3 +27,7 @@ test
 - model score
 - model match
 - mapper back score
+- unit test api score mapper marshall
+- geolocation mapper
+- place mapper
+- score mapper
