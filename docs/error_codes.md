@@ -17,6 +17,8 @@ User
 - 1023 PUT     user: 400 'invalid user data validation'
 - 1024 PUT     user: 500 'invalid user data during API marshall'
 - 1025 PUT     user: 500 'impossible editing a user'
+- 1026 PUT     user: 400 'missing password confirmation'
+- 1027 PUT     user: 400 'password mismatch'
 
 - 1031 DELETE  user: 404 'user not found'
 - 1032 DELETE  user: 500 'impossible removing the user'

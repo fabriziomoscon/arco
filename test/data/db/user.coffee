@@ -11,9 +11,9 @@ ids =
   validIdString4: '50b896ddc814556766000004'
   validIdString5: '50b896ddc814556766000005'
   validIdString6: '50b896ddc814556766000006'
-  validIdString6: '50b896ddc814556766000007'
-  validIdString6: '50b896ddc814556766000008'
-  validIdString6: '50b896ddc814556766000009'
+  validIdString7: '50b896ddc814556766000007'
+  validIdString8: '50b896ddc814556766000008'
+  validIdString9: '50b896ddc814556766000009'
 
 
 data =

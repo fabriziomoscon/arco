@@ -23,4 +23,3 @@ should.exist json.id
 should.exist json.first_name
 should.exist json.last_name
 should.exist json.email
-

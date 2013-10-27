@@ -61,6 +61,10 @@ edit = (req, res, next) ->
   if check.isEmptyObject req.body
     return next( http.badRequest('Invalid body', 1021) )
 
+  if req.body.password?
+    return next( http.badRequest('Missing password confirmation', 1026) ) unless req.body.confirm_password?
+    return next( http.badRequest('Password mismatch', 1027) ) unless req.body.confirm_password is req.body.password
+
   accountService.findUserById req.params.id, (err, user) ->
     return next( http.error(err, 1003) ) if err?
     return next( http.notFound('user not found', 1022) ) unless user?

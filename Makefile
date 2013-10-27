@@ -18,6 +18,6 @@ test-func:
 create-cookies:
 	@${BINDIR}/coffee test/functional/init.coffee;
 
-test-func-init: create-cookies load-fixtures test-func
+test-func-init: drop-test-db load-fixtures create-cookies test-func
 
 .PHONY: test-unit-back test load-fixtures drop-test-db test-func create-cookies test-func-init

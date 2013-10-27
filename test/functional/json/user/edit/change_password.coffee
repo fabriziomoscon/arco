@@ -1,4 +1,4 @@
-#> edit user success
+#> edit user change password
 path: '/user/me'
 method: 'PUT'
 headers:
@@ -6,14 +6,8 @@ headers:
   'Content-Type': 'application/json'
   'Cookie': config.system_users[1]
 body:
-  first_name: 'Fab'
-  last_name: 'Mos'
+  password: 'myNewSuperSecretPassword'
+  confirm_password: 'myNewSuperSecretPassword'
 
 #? response status 200
 response.statusCode.should.equal 200
-
-#? first_name changed
-json.first_name.should.equal 'Fab'
-
-#? last_name changed
-json.last_name.should.equal 'Mos'

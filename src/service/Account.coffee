@@ -1,6 +1,9 @@
+async = require 'async'
+
 UserModel       = require 'src/model/User'
 UserRepository  = require 'src/repository/User'
 isValidObjectId = require 'src/validator/type/objectId'
+passwordHelper  = require 'src/lib/password'
 
 
 class Account
@@ -15,17 +18,33 @@ class Account
     throw new TypeError 'Invalid callback' unless typeof callback is 'function'
     return callback new Error('Invalid user'), null unless user instanceof UserModel
     
-    @userRepository.findOneByEmail user.email, (err, userFound) =>
+    async.waterfall [
+
+      (next) =>
+        @userRepository.findOneByEmail user.email, (err, userFound) =>
+          return next err, null if err?
+          return next new Error('email already used'), null if userFound?
+          return next()
+
+      (next) ->
+        if user.password?
+          passwordHelper.hash user.password, (err, encrypted) ->
+            return next err, null if err?
+            user.setPassword encrypted
+            return next()
+        else
+          return next()
+
+      (next) =>
+        @userRepository.insert user, (err, users) ->
+          return next err, null if err?
+          return next new Error('No user created'), null unless users?[0]?
+          return next null, users[0]
+
+    ], (err, user) ->
       return callback err, null if err?
-      return callback new Error('email already used'), null if userFound?
-      @userRepository.insert user, (err, users) ->
-        return callback err, null if err?
 
-        return callback new Error('No user created'), null unless users?[0]?
-
-        return callback null, users[0]
-      return
-    return
+      return callback null, user
 
 
   findUserByEmail: (email, callback) ->
@@ -45,19 +64,34 @@ class Account
     return callback new Error('Invalid userId'), null unless isValidObjectId userId
     return callback new Error('Invalid user'), null unless user instanceof UserModel
 
-    if user.email?
+    async.waterfall [
+
+      (next) =>
+        if user.email?
+          @userRepository.findOneByEmail user.email, (err, userFound) =>
+            return next err, null if err?
+            if userFound? and userId isnt userFound.id
+              return next new Error('email already used'), null
+            return next()
+        else
+          return next()
+
+      (next) ->
+        if user.password?
+          passwordHelper.hash user.password, (err, encrypted) ->
+            return next err, null if err?
+            user.setPassword encrypted
+            return next()
+        else
+          return next()
+
+      (next) =>
+        return @userRepository.update userId, user, next
+
+    ], (err, user) ->
+      return callback err, null if err?
       
-      @userRepository.findOneByEmail user.email, (err, userFound) =>
-        return callback err, null if err?
-        if userFound? and userId isnt userFound.id
-          return callback new Error('email already used'), null
-
-        return @userRepository.update userId, user, callback
-      return
-
-    else
-
-      return @userRepository.update userId, user, callback
+      return callback null, user
 
 
   findAllUsers: (callback) ->

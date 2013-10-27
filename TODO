@@ -7,11 +7,6 @@ lib
 - create node-set mapper
 - use hash mapper to map api times for user + test
 
-user
-- use bcrypt to hash the password of the user on creation and editing
-- return error from user update in case the user updated is not returned and finishing testing the method
-- use async for user create and user update
-
 score system
 - api mapper for place
 - unit test for match
@@ -31,3 +26,4 @@ test
 - place mapper
 - score mapper
 - record mapper
+- account service updateUserById
