@@ -3,7 +3,8 @@ node_js:
   - "0.10"
   - "0.11"
 env:
-  - NODE_ENV=testing
-  - REDIS_HOST=127.0.0.1
-  - REDIS_PORT=6379
-  - REDIS_PASSWORD=''
+  global:
+    - NODE_ENV=testing
+    - REDIS_HOST=127.0.0.1
+    - REDIS_PORT=6379
+    - REDIS_PASSWORD=''
