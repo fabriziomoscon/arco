@@ -8,9 +8,9 @@ marshall = (geolocation) ->
   throw new Error 'Invalid geolocation' unless geolocation instanceof geolocationModel
 
   return {
-      type: 'Point'
-      coordinates: [geolocation.long, geolocation.lat]
-    }
+    type: 'Point'
+    coordinates: [geolocation.long, geolocation.lat]
+  }
 
 
 unmarshall = (data) ->

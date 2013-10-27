@@ -1,6 +1,7 @@
 mongoSource = require 'src/source/mongo/user'
 
 backUserMapper = require 'src/mapper/user'
+recordMapper   = require 'src/mapper/record'
 
 
 class UserRespository
@@ -15,43 +16,31 @@ class UserRespository
 
   insert: (users, callback) ->
     users = [users] unless Array.isArray users
-    @userSource.insert (@userMapper.marshall(user) for user in users), @mapUserCallback(callback, false)
+    @userSource.insert (@userMapper.marshall(user) for user in users),
+      recordMapper(@userMapper.unmarshall, callback, false)
 
 
   findOneById: (userId, callback) ->
-    @userSource.findOneById userId, @mapUserCallback(callback)
+    @userSource.findOneById userId,
+      recordMapper @userMapper.unmarshall, callback
 
 
   findOneByEmail: (email, callback) ->
-    @userSource.findOneByEmail email, @mapUserCallback(callback)
+    @userSource.findOneByEmail email,
+      recordMapper @userMapper.unmarshall, callback
 
 
   findAll: (callback) ->
-    @userSource.findAll @mapUserCallback(callback, false)
+    @userSource.findAll recordMapper @userMapper.unmarshall, callback, false
 
 
   update: (userId, user, callback) ->
-    @userSource.update userId, @userMapper.marshall(user), @mapUserCallback(callback)
+    @userSource.update userId,
+      @userMapper.marshall(user), recordMapper(@userMapper.unmarshall, callback)
 
 
   remove: (userId, callback) ->
     @userSource.remove userId, callback
-
-
-  mapUserCallback: (callback, single = true) ->
-    return (err, usersData) =>
-      return callback err, null if err?
-      return callback null, null unless usersData?
-      usersData = [usersData] unless Array.isArray usersData
-
-      users = []
-      for userData in usersData
-        try users.push @userMapper.unmarshall userData
-        catch err then return callback err, null
-
-      users = users[0] if single
-
-      return callback null, users
 
 
 module.exports = UserRespository

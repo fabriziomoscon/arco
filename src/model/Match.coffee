@@ -33,6 +33,7 @@ class Match
     'H+F 24+24': {}
     'Indoor 18m': {}
     'Indoor 25m': {}
+    'Indoor 25+18': {}
 
 
   constructor: () ->

@@ -6,7 +6,6 @@ system
 lib
 - create node-set mapper
 - use hash mapper to map api times for user + test
-- abstract map repositoy callback into a generic function
 
 user
 - use bcrypt to hash the password of the user on creation and editing
@@ -31,3 +30,4 @@ test
 - geolocation mapper
 - place mapper
 - score mapper
+- record mapper
