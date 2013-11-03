@@ -38,8 +38,8 @@ class Match
 
   constructor: () ->
     @score_ids = new NodeSet ObjectID
-    @times = new Hash Date
-    @places = new Hash Place
+    @times = new Hash ['created'], Hash.comparator.Date
+    @places = new Hash ['address'], (v) -> v instanceof Place
     @participants = new NodeSet User
 
 

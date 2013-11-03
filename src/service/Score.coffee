@@ -13,7 +13,7 @@ class Score
     throw new TypeError 'Invalid callback' unless typeof callback is 'function'
     return callback new TypeError 'Invalid score' unless score instanceof ScoreModel
 
-    score.times.set 'created_at', new Date
+    score.times.created = new Date
 
     @scoreRepository.insert score, (err, scoresInserted) ->
       return callback err, null if err?

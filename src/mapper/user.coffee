@@ -1,9 +1,10 @@
+check = require 'check-types'
+Hash = require 'node-hash'
+
 objectIdMapper = require 'src/mapper/type/objectId'
-hashMapper     = require 'src/mapper/type/hash'
 
 UserModel = require 'src/model/User'
 
-check = require 'check-types'
 
 
 marshall = (user) ->
@@ -20,7 +21,7 @@ marshall = (user) ->
   data.gender = user.gender if user.gender?
   data.birthdate = user.birthdate if user.birthdate?
 
-  data.times = hashMapper.marshall user.times, 'times'
+  data.times = user.times.marshall()
 
   return data
 
@@ -38,7 +39,8 @@ unmarshall = (data) ->
   user.setPassword data.password if data.password?
   user.setBirthdate data.birthdate if data.birthdate?
 
-  hashMapper.unmarshall data.times, user.times
+  if data.times?
+    user.times = Hash.unmarshall data.times, Hash.comparator.Date
 
   return user
 

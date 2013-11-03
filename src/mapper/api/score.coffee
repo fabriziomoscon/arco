@@ -1,6 +1,8 @@
 check = require 'check-types'
+Hash = require 'node-hash'
 
-hashMapper = require 'src/mapper/type/hash'
+apiDateMapper = require 'src/mapper/api/type/date'
+#apiPlaceMapepr = require 'src/mapper/api/place'
 
 Score = require 'src/model/Score'
 
@@ -15,9 +17,9 @@ marshall = (score) ->
   scoreData.type = score.type if score.type?
   scoreData.total = score.total if score.total?
 
-  scoreData.times = hashMapper.marshall score.times, 'times'
-  # scoreData.places = hashMapper.marshall score.places, 'places', placeMapper.marshall
-  scoreData.partials = hashMapper.marshall score.partials, 'partials', (number) -> number.valueOf()
+  scoreData.times = score.times.marshall apiDateMapper.marshall
+  # scoreData.places = score.places.marshall apiPlaceMapper.marshall
+  scoreData.partials = score.partials.marshall()
 
   return scoreData
 

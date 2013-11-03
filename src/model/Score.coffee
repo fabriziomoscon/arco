@@ -1,22 +1,20 @@
+Hash = require 'node-hash'
+check = require 'check-types'
+
 User  = require 'src/model/User'
 Place = require 'src/model/Place'
 Match = require 'src/model/Match'
 
 isValidObjectId = require 'src/validator/type/objectId'
 
-Hash = require 'node-hash'
-
-check = require 'check-types'
-
 
 class Score
 
 
   constructor: () ->
-    @times = new Hash Date
-    @places = new Hash Place
-    @partials = new Hash Number
-    @arrows = new Hash Object
+    @times = new Hash ['created'], Hash.comparator.Date
+    @places = new Hash ['address'], (v) -> v instanceof Place
+    @arrows = new Hash [], Hash.comparator.object
 
 
   setId: (id) ->
@@ -27,6 +25,7 @@ class Score
   setType: (type) ->
     throw new TypeError 'Invalid type' unless type in Object.keys(Match.TYPES)
     @type = type
+    @partials = new Hash Match.TYPES[@type].partials, Hash.comparator.number
 
 
   setTotal: (total) ->
@@ -54,11 +53,11 @@ class Score
       throw new Error "#{partial_name} is not valid for a #{@type} score"
 
     if not @arrows.get(partial_name)?
-      @arrows.set partial_name, [point]
+      @arrows[partial_name] = [point]
     else
       if @arrows.get(partial_name).length is Match.TYPES[@type].max_arrows
         throw new Error "this score has already #{Match.TYPES[@type].max_arrows}"
-      @arrows.get(partial_name).push point
+      @arrows[partial_name].push point
 
     return @arrows
 

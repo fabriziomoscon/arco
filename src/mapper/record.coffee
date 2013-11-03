@@ -8,6 +8,7 @@ module.exports = (unmarshall, callback, single = true) ->
     data = [data] unless Array.isArray data
 
     list = data.map( (record) ->
+      unmarshall record
       try return unmarshall record
       catch err then log.error {err}, 'Impossible to unmarshall some record'
     ).filter (model) -> return model?

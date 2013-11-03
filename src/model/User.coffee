@@ -2,6 +2,7 @@ Hash = require 'node-hash'
 
 Place = require 'src/model/Place'
 Score = require 'src/model/Score'
+Match = require 'src/model/Match'
 
 isValidObjectId = require 'src/validator/type/objectId'
 isValidEmail    = require 'src/validator/email'
@@ -20,9 +21,9 @@ class User
 
     @setFirstName props.first_name
     @setLastName props.last_name
-    @times = new Hash Date
-    @places = new Hash Place
-    @records = new Hash Score
+    @times = new Hash ['created'], Hash.comparator.Date
+    @places = new Hash ['current', 'home'], (v) -> v instanceof Place
+    @records = new Hash Object.keys(Match.TYPES), (v) -> v instanceof Score
 
 
   setId: (id) ->

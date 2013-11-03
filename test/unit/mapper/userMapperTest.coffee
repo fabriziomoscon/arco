@@ -51,7 +51,7 @@ describe 'user mapper', ->
 
       it 'should marshall the times', ->
         u = userFactory()
-        u.times.set( 'created', new Date 2013, 0, 1)
+        u.times.created = new Date 2013, 0, 1
         data = userMapper.marshall u
         data.times.created.should.eql new Date 2013, 0, 1
 
@@ -102,4 +102,4 @@ describe 'user mapper', ->
         user.should.have.property 'times'
         user.times.should.be.instanceof Hash
         user.times.getData().should.have.property 'created'
-        user.times.get('created').should.be.instanceof Date
+        user.times.created.should.be.instanceof Date
