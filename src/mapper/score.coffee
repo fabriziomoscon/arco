@@ -21,6 +21,7 @@ marshall = (score) ->
   data.times = score.times.marshall()
   data.places = score.places.marshall placeMapper.marshall
   data.partials = score.partials.marshall()
+  data.total = score.total if score.total?
 
   return data
 
@@ -37,6 +38,7 @@ unmarshall = (data) ->
   score.times = Hash.unmarshall data.times, Hash.comparator.Date
   score.places = Hash.unmarshall data.places, ((v) -> v instanceof Place), placeMapper.marshall
   score.partials = Hash.unmarshall data.partials, Hash.comparator.number
+  score.setTotal data.total if data.total?
 
   return score
 

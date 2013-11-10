@@ -1,4 +1,5 @@
 system
+- implement setter and getter for all properties of the models and change mappers
 - figure out how to connect to mongo before the server start listening
 - setup mongologger
 - fix .nodemonignore

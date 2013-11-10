@@ -33,6 +33,7 @@ unmarshallForCreating = (data) ->
   score = new Score
   score.setUserId data.user_id
   score.setType data.type
+  score.setTotal parseInt(data.total, 10) if data.total?
 
   return score
 
