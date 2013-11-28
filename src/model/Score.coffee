@@ -11,52 +11,74 @@ isValidObjectId = require 'src/validator/type/objectId'
 class Score
 
 
-  constructor: () ->
+  constructor: (type, rules) ->
+    @type = type
+
+    unless rules?
+      rules = Match.TYPES[type]
+
+    @rules = rules
     @times = new Hash ['created'], Hash.comparator.Date
     @places = new Hash ['address'], (v) -> v instanceof Place
-    @arrows = new Hash [], Hash.comparator.object
+    @arrows = new Hash rules.partials, Hash.comparator.Array
 
+  Object.defineProperty Score.prototype, 'rules', {
+    get: () -> this._rules
+    set: (value) ->
+      throw new TypeError 'Invalid rules' unless check.isObject value
+      throw new TypeError 'Invalid max arrows' unless check.isPositiveNumber(value.max_arrows) or value.max_arrows is 0
+      throw new TypeError 'Invalid min per arrow' unless check.isPositiveNumber(value.min_per_arrow) or value.min_per_arrow is 0
+      throw new TypeError 'Invalid max per arrow' unless check.isPositiveNumber(value.max_per_arrow)
+      throw new TypeError 'Invalid partials' unless Array.isArray value.partials
+      this._rules = value
+  }
 
-  setId: (id) ->
-    throw new TypeError 'Invalid id' unless isValidObjectId id
-    @id = id
+  Object.defineProperty Score.prototype, 'id', {
+    get: () -> this._id
+    set: (value) ->
+      throw new TypeError 'Invalid id' unless isValidObjectId value
+      this._id = value
+  }
 
+  Object.defineProperty Score.prototype, 'type', {
+    get: () -> this._type
+    set: (value) ->
+      throw new TypeError 'Invalid type' unless value in Object.keys(Match.TYPES)
+      this._type = value
+  }
 
-  setType: (type) ->
-    throw new TypeError 'Invalid type' unless type in Object.keys(Match.TYPES)
-    @type = type
-    @partials = new Hash Match.TYPES[@type].partials, Hash.comparator.number
+  Object.defineProperty Score.prototype, 'total', {
+    get: () -> this._total
+    set: (value) ->
+      throw new TypeError 'Invalid total' unless check.isPositiveNumber(value) or value is 0
+      this._total = value
+  }
 
-
-  setTotal: (total) ->
-    throw new TypeError 'Invalid total' unless check.isPositiveNumber total
-    @total = total
-
-
-  setUserId: (user_id) ->
-    throw new TypeError 'Invalid user id' unless isValidObjectId user_id
-    @user_id = user_id
-
+  Object.defineProperty Score.prototype, 'user_id', {
+    get: () -> this._user_id
+    set: (value) ->
+      throw new TypeError 'Invalid user id' unless isValidObjectId value
+      this._user_id = value
+  }
 
   addPoint: (point, partial_name) ->
-    throw new Error 'Score type not specified' unless @type?
     throw new TypeError 'Invalid point' unless check.isPositiveNumber(point) or point is 0
     throw new TypeError 'Invalid partial name' unless typeof partial_name is 'string' and partial_name.length > 0
 
-    if Match.TYPES[@type].min_per_arrow? and point < Match.TYPES[@type].min_per_arrow
-      throw new Error "Point #{point} is below the minimum for #{@type}"
+    if @rules.min_per_arrow? and point < @rules.min_per_arrow
+      throw new Error "#{point} is below the minimum for #{@type}"
 
-    if Match.TYPES[@type].max_per_arrow? and point > Match.TYPES[@type].max_per_arrow
-      throw new Error "Point #{point} is above the minimum for #{@type}"
+    if @rules.max_per_arrow? and point > @rules.max_per_arrow
+      throw new Error "#{point} is above the maximum for #{@type}"
 
-    unless partial_name in Match.TYPES[@type].partials
-      throw new Error "#{partial_name} is not valid for a #{@type} score"
+    unless partial_name in @rules.partials
+      throw new Error "#{partial_name} is not a valid partial for #{@type} score"
 
-    if not @arrows.get(partial_name)?
+    if not @arrows[partial_name]?
       @arrows[partial_name] = [point]
     else
-      if @arrows.get(partial_name).length is Match.TYPES[@type].max_arrows
-        throw new Error "this score has already #{Match.TYPES[@type].max_arrows}"
+      if @arrows[partial_name].length is @rules.max_arrows
+        throw new Error "this score has already #{@rules.max_arrows} arrows"
       @arrows[partial_name].push point
 
     return @arrows

@@ -39,7 +39,7 @@ describe 'Account service', ->
             as = new AccountService
             (-> as.findUserByEmail 'fab@gmail.com', invalid).should.throw 'Invalid callback'
       
-      call() for call in allTypesNotString.map (invalid) ->
+      call() for call in allNotStringTypes.map (invalid) ->
         () ->
           it "should not accept #{invalid} as email", (done) ->
             as = new AccountService
@@ -175,7 +175,7 @@ describe 'Account service', ->
             as = new AccountService
             (-> as.createUser userFactory(), invalid).should.throw 'Invalid callback'
 
-      call() for call in allTypesNotString.map (invalid) ->
+      call() for call in allNotStringTypes.map (invalid) ->
         () ->
           it "should not accept #{invalid} as user", (done) ->
             as = new AccountService
@@ -250,7 +250,7 @@ describe 'Account service', ->
             as = new AccountService
             (-> as.updateUserById '50b896ddc814556766000001', userFactory(), invalid).should.throw 'Invalid callback'
 
-      call() for call in allTypesNotString.map (invalid) ->
+      call() for call in allNotStringTypes.map (invalid) ->
         () ->
           it "should not accept #{invalid} as user id", (done) ->
             as = new AccountService
@@ -260,7 +260,7 @@ describe 'Account service', ->
               should.not.exist user
               done()
 
-      call() for call in allTypesNotString.map (invalid) ->
+      call() for call in allNotStringTypes.map (invalid) ->
         () ->
           it "should not accept #{invalid} as user", (done) ->
             as = new AccountService

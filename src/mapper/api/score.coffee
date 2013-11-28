@@ -19,7 +19,7 @@ marshall = (score) ->
 
   scoreData.times = score.times.marshall apiDateMapper.marshall
   # scoreData.places = score.places.marshall apiPlaceMapper.marshall
-  scoreData.partials = score.partials.marshall()
+  scoreData.arrows = score.arrows.marshall()
 
   return scoreData
 
@@ -30,10 +30,9 @@ unmarshallForCreating = (data) ->
   throw new TypeError 'Invalid score user_id' unless data.user_id?
   throw new TypeError 'Invalid score type' unless data.type?
 
-  score = new Score
-  score.setUserId data.user_id
-  score.setType data.type
-  score.setTotal parseInt(data.total, 10) if data.total?
+  score = new Score data.type
+  score.user_id = data.user_id
+  score.total = parseInt(data.total, 10) if data.total?
 
   return score
 

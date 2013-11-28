@@ -22,7 +22,7 @@ should.exist json.type
 should.exist json.user_id
 should.exist json.times
 # should.exist json.places
-should.exist json.partials
+should.exist json.arrows
 
 #? return correct type
 json.type.should.equal 'FITA 90+70+50+30'

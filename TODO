@@ -8,7 +8,12 @@ lib
 - create node-set mapper
 - use hash mapper to map api times for user + test
 
+model
+- put rules in a model
+- load rules from a JSON conf file 
+
 score system
+- add model score calculate total
 - api mapper for place
 - unit test for match
 - unit test for score

@@ -46,7 +46,7 @@ After each commit is pushed TravisCI starts testing as part of their Open Source
 ###On localhost
 You can test a specific file like so:
 ```bash
-./set-env test make test-unit-back path="test/unit/mapper/UserMapperTest.coffee"
+./set-env test make && test-unit-back path="test/unit/mapper/UserMapperTest.coffee"
 ```
 
 ##Functional test
