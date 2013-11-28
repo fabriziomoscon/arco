@@ -32,12 +32,13 @@ unmarshall = (data) ->
 
   user = new UserModel first_name: data.first_name, last_name: data.last_name
 
-  user.setId objectIdMapper.unmarshall data._id if data._id?
-  user.setEmail data.email if data.email?
-  user.setFirstName data.first_name if data.first_name?
-  user.setLastName data.last_name if data.last_name?
-  user.setPassword data.password if data.password?
-  user.setBirthdate data.birthdate if data.birthdate?
+  user.id = objectIdMapper.unmarshall data._id if data._id?
+  user.email = data.email if data.email?
+  user.first_name = data.first_name if data.first_name?
+  user.last_name = data.last_name if data.last_name?
+  user.password = data.password if data.password?
+  user.birthdate = data.birthdate if data.birthdate?
+  user.gender = data.gender if data.gender?
 
   if data.times?
     user.times = Hash.unmarshall data.times, Hash.comparator.Date

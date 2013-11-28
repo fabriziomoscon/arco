@@ -34,13 +34,13 @@ describe 'api user mapper', ->
 
       it 'should marshall the email', ->
         u = userFactory()
-        u.setEmail 'fab@gmail.com'
+        u.email = 'fab@gmail.com'
         data = apiUserMapper.marshall u
         data.email.should.equal 'fab@gmail.com'
 
       it 'should marshall the created time', ->
         u = userFactory()
-        u.setEmail 'fab@gmail.com'
+        u.email = 'fab@gmail.com'
         data = apiUserMapper.marshall u
         data.email.should.equal 'fab@gmail.com'
 
@@ -114,14 +114,21 @@ describe 'api user mapper', ->
 
       it 'should unmarshall the new email', ->
         user = new User mandatoryData
-        user.setEmail 'fab@gmail.com'
+        user.email = 'fab@gmail.com'
         editedUser = apiUserMapper.unmarshallForEditing {email: 'xxx@gmail.com'}, user
         editedUser.should.be.instanceof User
         editedUser.email.should.equal 'xxx@gmail.com'
 
       it 'should unmarshall the new password', ->
         user = new User mandatoryData
-        user.setPassword 'initialPassword'
+        user.password = 'initialPassword'
         editedUser = apiUserMapper.unmarshallForEditing {password: 'aNewPassword'}, user
         editedUser.should.be.instanceof User
         editedUser.password.should.equal 'aNewPassword'
+
+      it 'should unmarshall the new gender', ->
+        user = new User mandatoryData
+        user.gender = 'F'
+        editedUser = apiUserMapper.unmarshallForEditing {gender: 'M'}, user
+        editedUser.should.be.instanceof User
+        editedUser.gender.should.equal 'M'

@@ -34,19 +34,27 @@ describe 'user mapper', ->
         data.last_name.should.equal 'mos'
 
       it 'should marshall the email', ->
-        data = userMapper.marshall userFactory().setEmail 'fabmos@gmail.com'
+        u = userFactory()
+        u.email = 'fabmos@gmail.com'
+        data = userMapper.marshall u
         data.email.should.equal 'fabmos@gmail.com'
 
       it 'should marshall the password', ->
-        data = userMapper.marshall userFactory().setPassword 'mysupersecurepassword'
+        u = userFactory()
+        u.password = 'mysupersecurepassword'
+        data = userMapper.marshall u
         data.password.should.equal 'mysupersecurepassword'
 
       it 'should marshall the gender', ->
-        data = userMapper.marshall userFactory().setGender 'F'
+        u = userFactory()
+        u.gender = 'F'
+        data = userMapper.marshall u
         data.gender.should.equal 'F'
 
       it 'should marshall the birthdate', ->
-        data = userMapper.marshall userFactory().setBirthdate new Date 1960, 0, 1
+        u = userFactory()
+        u.birthdate = new Date 1960, 0, 1
+        data = userMapper.marshall u
         data.birthdate.should.eql new Date 1960, 0, 1
 
       it 'should marshall the times', ->
@@ -96,6 +104,11 @@ describe 'user mapper', ->
         user.should.have.property 'birthdate'
         user.birthdate.should.be.instanceof Date
         user.birthdate.should.equal mockUsers.validUser1.birthdate
+
+      it 'should unmarshall the gender', ->
+        user = userMapper.unmarshall mockUsers.validUser1
+        user.should.have.property 'gender'
+        user.gender.should.equal mockUsers.validUser1.gender
 
       it 'should unmarshall the times', ->
         user = userMapper.unmarshall mockUsers.validUser1

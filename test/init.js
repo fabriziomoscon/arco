@@ -24,12 +24,13 @@ global.userFactory = function( firstName, lastName ) {
   }
 
   var u = new User( {first_name: firstName, last_name: lastName})
-  u.setId(mockUser._id.toHexString())
+  u.id = mockUser._id.toHexString()
   return u
 };
 
-global.allTypes = [undefined, null, false, 1, NaN, '', [], {}, new Object(), new Date(), function() {}]
-global.allTypesNotString = [undefined, null, false, 1, NaN, [], {}, new Object(), new Date(), function() {}]
-global.allNotFunctionTypes = [undefined, null, false, 1, NaN, '', [], {}, new Object(), new Date()]
-global.allNotUndefinedTypes = [false, 1, NaN, '', [], {}, new Object(), new Date(), function() {}]
-global.allNotObjectTypes = [undefined, null, false, 1, NaN, '', [], new Date, function() {}]
+global.allTypes = [undefined, null, false, 1, 1385668252435, NaN, '', [], {}, new Object(), new Date(), function() {}]
+global.allTypesNotString = [undefined, null, false, 1, 1385668252435, NaN, [], {}, new Object(), new Date(), function() {}]
+global.allNotFunctionTypes = [undefined, null, false, 1, 1385668252435, NaN, '', [], {}, new Object(), new Date()]
+global.allNotUndefinedTypes = [false, 1, 1385668252435, NaN, '', [], {}, new Object(), new Date(), function() {}]
+global.allNotObjectTypes = [undefined, null, false, 1, 1385668252435, NaN, '', [], new Date, function() {}]
+global.allNotDatesTypes = [undefined, null, false, 1, 1385668252435, NaN, '', [], {}, new Object(), function() {}]

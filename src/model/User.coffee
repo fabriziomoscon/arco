@@ -1,4 +1,5 @@
-Hash = require 'node-hash'
+Hash  = require 'node-hash'
+check = require 'check-types'
 
 Place = require 'src/model/Place'
 Score = require 'src/model/Score'
@@ -15,58 +16,63 @@ class User
 
 
   constructor: (props) ->
-    throw new TypeError 'Invalid properties' unless props?
-    throw new TypeError 'Invalid first name' unless props.first_name?
-    throw new TypeError 'Invalid last name'  unless props.last_name?
+    throw new TypeError 'Invalid properties' unless check.isObject props
 
-    @setFirstName props.first_name
-    @setLastName props.last_name
+    @first_name = props.first_name
+    @last_name = props.last_name
     @times = new Hash ['created'], Hash.comparator.Date
     @places = new Hash ['current', 'home'], (v) -> v instanceof Place
     @records = new Hash Object.keys(Match.TYPES), (v) -> v instanceof Score
 
 
-  setId: (id) ->
-    throw new TypeError 'Invalid id' unless isValidObjectId id
-    @id = id
-    return @
+  Object.defineProperty User.prototype, 'id', {
+    get: () -> this._id
+    set: (value) ->
+      throw new TypeError 'Invalid id' unless isValidObjectId value
+      this._id = value
+  }
 
+  Object.defineProperty User.prototype, 'email', {
+    get: () -> this._email
+    set: (value) ->
+      throw new TypeError 'Invalid email' unless isValidEmail value
+      this._email = value
+  }
 
-  setEmail: (email) =>
-    throw new TypeError 'Invalid email' unless isValidEmail email
-    @email = email
-    return @
+  Object.defineProperty User.prototype, 'first_name', {
+    get: () -> this._first_name
+    set: (value) ->
+      throw new TypeError 'Invalid first name' unless typeof value is 'string'
+      this._first_name = value
+  }
 
+  Object.defineProperty User.prototype, 'last_name', {
+    get: () -> this._last_name
+    set: (value) ->
+      throw new TypeError 'Invalid last name' unless typeof value is 'string'
+      this._last_name = value
+  }
 
-  setFirstName: (first_name) =>
-    throw new TypeError 'Invalid first name' unless typeof first_name is 'string'
-    @first_name = first_name
-    return @
+  Object.defineProperty User.prototype, 'password', {
+    get: () -> this._password
+    set: (value) ->
+      throw new TypeError 'Invalid password' unless typeof value is 'string'
+      this._password = value
+  }
 
+  Object.defineProperty User.prototype, 'birthdate', {
+    get: () -> this._birthdate
+    set: (value) ->
+      throw new TypeError 'Invalid birthdate' unless value instanceof Date
+      this._birthdate = value
+  }
 
-  setLastName: (last_name) =>
-    throw new TypeError 'Invalid last name' unless typeof last_name is 'string'
-    @last_name = last_name
-    return @
-
-
-  setPassword: (password) =>
-    throw new TypeError 'Invalid password' unless typeof password is 'string'
-    throw new Error 'Password too short' unless password.length >= User.MIN_PASSWORD_LENGTH
-    @password = password
-    return @
-
-
-  setBirthdate: (birthdate) ->
-    throw new TypeError 'Invalid birthdate' unless birthdate instanceof Date
-    @birthdate = birthdate
-    return @
-
-
-  setGender: (gender) ->
-    throw new TypeError 'Invalid gender' unless gender in ['M', 'F']
-    @gender = gender
-    return @
+  Object.defineProperty User.prototype, 'gender', {
+    get: () -> this._gender
+    set: (value) ->
+      throw new TypeError 'Invalid gender' unless value in ['M', 'F']
+      this._gender = value
+  }
 
 
 module.exports = User

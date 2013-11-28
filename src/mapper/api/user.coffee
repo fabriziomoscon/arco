@@ -28,8 +28,8 @@ unmarshallForCreating = (data) ->
 
   user = new UserModel initData
 
-  user.setEmail data.email if data.email?
-  user.setPassword data.password if data.password?
+  user.email = data.email if data.email?
+  user.password = data.password if data.password?
 
   return user
 
@@ -38,10 +38,11 @@ unmarshallForEditing = (data, user) ->
 
   throw new TypeError 'Invalid user' unless user instanceof UserModel
 
-  user.setFirstName data.first_name if data.first_name?
-  user.setLastName data.last_name if data.last_name?
-  user.setEmail data.email if data.email?
-  user.setPassword data.password if data.password?
+  user.first_name = data.first_name if data.first_name?
+  user.last_name = data.last_name if data.last_name?
+  user.email = data.email if data.email?
+  user.password = data.password if data.password?
+  user.gender = data.gender if data.gender?
 
   return user
 
