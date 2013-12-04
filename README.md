@@ -2,7 +2,7 @@
 
 #Arco
 
-`Arco` lets you run a server to store your archery scores. The server listens to `HTTP` and provides a RESTful Open Public API.
+`Arco` is an `HTTP` server to store your archery scores that provides a RESTful Open Public API.
 
 ##Contributions
 
@@ -10,7 +10,7 @@ If you care about archery and know how to build software you can help making pro
 
 ##Technologies
 
-The server is a `node.js` application written mainly in CoffeeScript and it is based on `express.js`. The database is `mongoDB`.
+The server is a `node.js` application written mainly in CoffeeScript and it is based on `express.js`. The storage is `mongoDB`.
 
 ##Philosophy
 
@@ -77,10 +77,4 @@ make test-func path="test/functional/json/<RELATIVE_PATH_TO_TESTS>"
 or drop and re-load fixtures
 ```bash
 make test-func-init path="test/functional/json/<RELATIVE_PATH_TO_TESTS>"
-```
-
-##node.js version
-To switch between different versions of node you can use `nave`
-```bash
-sudo nave usemain 0.10
 ```
