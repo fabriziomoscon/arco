@@ -22,44 +22,6 @@ class Score
     @places = new Hash ['address'], (v) -> v instanceof Place
     @arrows = new Hash rules.partials, Hash.comparator.Array
 
-  Object.defineProperty Score.prototype, 'rules', {
-    get: () -> this._rules
-    set: (value) ->
-      throw new TypeError 'Invalid rules' unless check.isObject value
-      throw new TypeError 'Invalid max arrows' unless check.isPositiveNumber(value.max_arrows) or value.max_arrows is 0
-      throw new TypeError 'Invalid min per arrow' unless check.isPositiveNumber(value.min_per_arrow) or value.min_per_arrow is 0
-      throw new TypeError 'Invalid max per arrow' unless check.isPositiveNumber(value.max_per_arrow)
-      throw new TypeError 'Invalid partials' unless Array.isArray value.partials
-      this._rules = value
-  }
-
-  Object.defineProperty Score.prototype, 'id', {
-    get: () -> this._id
-    set: (value) ->
-      throw new TypeError 'Invalid id' unless isValidObjectId value
-      this._id = value
-  }
-
-  Object.defineProperty Score.prototype, 'type', {
-    get: () -> this._type
-    set: (value) ->
-      throw new TypeError 'Invalid type' unless value in Object.keys(Match.TYPES)
-      this._type = value
-  }
-
-  Object.defineProperty Score.prototype, 'total', {
-    get: () -> this._total
-    set: (value) ->
-      throw new TypeError 'Invalid total' unless check.isPositiveNumber(value) or value is 0
-      this._total = value
-  }
-
-  Object.defineProperty Score.prototype, 'user_id', {
-    get: () -> this._user_id
-    set: (value) ->
-      throw new TypeError 'Invalid user id' unless isValidObjectId value
-      this._user_id = value
-  }
 
   addPoint: (point, partial_name) ->
     throw new TypeError 'Invalid point' unless check.isPositiveNumber(point) or point is 0
@@ -82,6 +44,46 @@ class Score
       @arrows[partial_name].push point
 
     return @arrows
+
+
+Object.defineProperty Score.prototype, 'rules', {
+  get: () -> this._rules
+  set: (value) ->
+    throw new TypeError 'Invalid rules' unless check.isObject value
+    throw new TypeError 'Invalid max arrows' unless check.isPositiveNumber(value.max_arrows) or value.max_arrows is 0
+    throw new TypeError 'Invalid min per arrow' unless check.isPositiveNumber(value.min_per_arrow) or value.min_per_arrow is 0
+    throw new TypeError 'Invalid max per arrow' unless check.isPositiveNumber(value.max_per_arrow)
+    throw new TypeError 'Invalid partials' unless Array.isArray value.partials
+    this._rules = value
+}
+
+Object.defineProperty Score.prototype, 'id', {
+  get: () -> this._id
+  set: (value) ->
+    throw new TypeError 'Invalid id' unless isValidObjectId value
+    this._id = value
+}
+
+Object.defineProperty Score.prototype, 'type', {
+  get: () -> this._type
+  set: (value) ->
+    throw new TypeError 'Invalid type' unless value in Object.keys(Match.TYPES)
+    this._type = value
+}
+
+Object.defineProperty Score.prototype, 'total', {
+  get: () -> this._total
+  set: (value) ->
+    throw new TypeError 'Invalid total' unless check.isPositiveNumber(value) or value is 0
+    this._total = value
+}
+
+Object.defineProperty Score.prototype, 'user_id', {
+  get: () -> this._user_id
+  set: (value) ->
+    throw new TypeError 'Invalid user id' unless isValidObjectId value
+    this._user_id = value
+}
 
 
 module.exports = Score

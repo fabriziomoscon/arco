@@ -15,7 +15,7 @@ marshall = (geolocation) ->
 
 unmarshall = (data) ->
 
-  throw new Error 'Invalid data' unless check.isObject data
+  throw new Error 'Invalid geolocation data' unless check.isObject data
 
   return new geolocationModel data.lat, data.long
 
