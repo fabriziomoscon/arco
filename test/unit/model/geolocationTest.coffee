@@ -2,6 +2,7 @@ should = require 'should'
 
 Geolocation = require 'src/model/Geolocation'
 
+
 describe 'geolocation model', ->
 
   describe 'contructor', ->

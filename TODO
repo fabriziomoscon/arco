@@ -1,5 +1,4 @@
 system
-- implement setter and getter for all properties of the models and change mappers
 - figure out how to connect to mongo before the server start listening
 - setup mongologger
 - fix .nodemonignore
@@ -7,23 +6,26 @@ system
 lib
 - create node-set mapper
 - use hash mapper to map api times for user + test
+- abstract `Object.defineProperty` into a mongo model library to avoid copy and paste
 
 model
-- put rules in a model
+- model rules as another entity
 - load rules from a JSON conf file 
 
+mapper
+- match mapper back
+- match mapper api
+
 score system
+- allow points to be added in bunch of 3 or 6 arrows from API
 - add model score calculate total
 - api mapper for place
-- unit test for match
-- unit test for score
 - let user find all his scores
 - model score partial structure
 - model score arrow structure
 
 test
 - extend user functional test
-- model score
 - model match
 - mapper back score
 - unit test api score mapper marshall
@@ -32,3 +34,6 @@ test
 - score mapper
 - record mapper
 - account service updateUserById
+
+review
+- reconsider choice of geolocation mapper marshall as it is coupled to Mongo syntax

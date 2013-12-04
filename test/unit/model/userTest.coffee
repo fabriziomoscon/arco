@@ -11,7 +11,7 @@ describe 'user model', ->
 
       call() for call in allNotObjectTypes.map (invalid) ->
         () ->
-          it "should not accept #{invalid} as ", ->
+          it "should not accept #{invalid} as properties", ->
             (-> new User invalid).should.throw 'Invalid properties'
 
     describe 'success', ->

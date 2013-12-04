@@ -30,7 +30,7 @@ class Account
         if user.password?
           passwordHelper.hash user.password, (err, encrypted) ->
             return next err, null if err?
-            user.setPassword encrypted
+            user.password = encrypted
             return next()
         else
           return next()
@@ -80,7 +80,7 @@ class Account
         if user.password?
           passwordHelper.hash user.password, (err, encrypted) ->
             return next err, null if err?
-            user.setPassword encrypted
+            user.password = encrypted
             return next()
         else
           return next()

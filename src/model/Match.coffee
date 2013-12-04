@@ -5,6 +5,8 @@ ObjectID = require('mongodb').ObjectID
 Place = require 'src/model/Place'
 User  = require 'src/model/User'
 
+isValidObjectId = require 'src/validator/type/objectId'
+
 
 class Match
 
@@ -43,14 +45,20 @@ class Match
     @participants = new NodeSet User
 
 
-  setId: (id) ->
-    throw new TypeError 'Invalid id' unless isValidObjectId id
-    @id = id
+Object.defineProperty Match.prototype, 'id', {
+  get: () -> this._id
+  set: (value) ->
+    throw new TypeError 'Invalid id' unless isValidObjectId value
+    this._id = value
+}
 
-
-  setType: (type) ->
-    throw new TypeError 'Invalid type' unless type in Object.keys(Match.TYPES)
-    @type = type
+Object.defineProperty Match.prototype, 'type', {
+  get: () -> this._type
+  set: (value) ->
+    throw new TypeError 'Invalid type' unless isValidObjectId value
+    throw new TypeError 'Invalid type' unless value in Object.keys(Match.TYPES)
+    this._type = value
+}
 
 
 module.exports = Match

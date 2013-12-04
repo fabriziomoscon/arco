@@ -27,9 +27,9 @@ unmarshall = (data) ->
 
   place = new PlaceModel geolocationMapper.unmarshall data.geolocation
 
-  place.setId objectIdMapper.unmarshall data._id if data._id?
-  place.setCountry data.country if data.country?
-  place.setCity data.city if data.city?
+  place.id = objectIdMapper.unmarshall data._id if data._id?
+  place.country = data.country if data.country?
+  place.city = data.city if data.city?
 
   return place
 
