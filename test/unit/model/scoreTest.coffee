@@ -121,6 +121,16 @@ describe 'user model', ->
             s.total = valid
             s.total.should.equal valid
 
+      it 'should return 0 as total if total is undefined and there are no arrows', ->
+        s = new Score 'Indoor 18m', mockRules
+        s.total.should.equal 0
+
+      it 'should calculate the total if total is undefined and there are arrows', ->
+        s = new Score 'Indoor 18m', mockRules
+        s.arrows.first = [10]
+        s.arrows.second = []
+        s.total.should.be.above 0
+
 # -------------------------------------------------
 
   describe 'user id setter/getter', ->
@@ -204,3 +214,45 @@ describe 'user model', ->
         s.addPoint 6, 'first'
         s.addPoint 9, 'first'
         s.arrows.first.should.eql [10, 6, 9]
+
+# -------------------------------------------------------------------------
+
+  describe '_calculateTotal', ->
+
+    describe 'success', ->
+
+      it 'should return 0 if there are no arrows', ->
+
+        s = new Score 'Indoor 18m', {
+          max_arrows: 2
+          min_per_arrow: 4
+          max_per_arrow: 10
+          partials: ['first', 'second']
+        }
+        s.arrows.first = []
+        s.arrows.second = []
+        s._calculateTotal().should.equal 0
+
+      it 'should calculate the correct total for type Indoor one partials', ->
+
+        s = new Score 'Indoor 18m', {
+          max_arrows: 2
+          min_per_arrow: 4
+          max_per_arrow: 10
+          partials: ['first', 'second']
+        }
+        s.arrows.first = [10, 6, 9, 6, 10, 2, 0, 10, 8]
+        s.arrows.second = []
+        s._calculateTotal().should.equal 61
+
+      it 'should calculate the correct total for type Indoor two partials', ->
+
+        s = new Score 'Indoor 18m', {
+          max_arrows: 2
+          min_per_arrow: 4
+          max_per_arrow: 10
+          partials: ['first', 'second']
+        }
+        s.arrows.first = [10, 6, 9, 6, 10, 2, 0, 10, 8]
+        s.arrows.second = [8, 4, 5, 8, 1, 0, 10, 9]
+        s._calculateTotal().should.equal 106

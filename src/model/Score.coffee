@@ -46,6 +46,14 @@ class Score
     return @arrows
 
 
+  _calculateTotal: () ->
+    tot = 0
+    for partialName in @arrows.keys()
+      if @arrows[partialName]? and @arrows[partialName].length > 0
+        tot += @arrows[partialName].reduce (a, b) -> a+b
+    return tot
+
+
 Object.defineProperty Score.prototype, 'rules', {
   get: () -> this._rules
   set: (value) ->
@@ -72,7 +80,10 @@ Object.defineProperty Score.prototype, 'type', {
 }
 
 Object.defineProperty Score.prototype, 'total', {
-  get: () -> this._total
+  get: () ->
+    unless this._total?
+      this._total = @_calculateTotal()
+    return this._total
   set: (value) ->
     throw new TypeError 'Invalid total' unless check.isPositiveNumber(value) or value is 0
     this._total = value
