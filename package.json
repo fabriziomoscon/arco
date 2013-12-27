@@ -26,6 +26,7 @@
     "check-types": "0.6.x",
     "coffee-script": "1.6.x",
     "connect-redis": "1.4.x",
+    "cors": "2.1.x",
     "date-utils": "*",
     "express": "3.4.x",
     "hyperquest": "0.1.x",

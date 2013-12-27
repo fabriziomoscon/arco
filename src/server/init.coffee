@@ -1,10 +1,11 @@
+express = require 'express'
+Redis   = require 'redis'
+cors    = require 'cors'
+
 MongoGateway = require 'src/lib/mongo/Gateway'
 redisSession = require 'src/middleware/redisSession'
 
 passportLib = require 'src/lib/passport'
-
-express = require 'express'
-Redis   = require 'redis'
 
 
 module.exports = (config) ->
@@ -16,6 +17,7 @@ module.exports = (config) ->
   app.use express.bodyParser()
   app.use express.cookieParser()
   app.use redisSession(config)
+  app.use cors(origin: true, credentials: true)
 
   passport = passportLib(config)
 
