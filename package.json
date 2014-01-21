@@ -31,7 +31,7 @@
     "express": "3.4.x",
     "hyperquest": "0.1.x",
     "mongodb": "1.3.19",
-    "node-hash": "git://github.com/fabriziomoscon/node-hash.git#master",
+    "node-hash": "1.x",
     "node-set": "*",
     "passport": "0.1.x",
     "passport-local": "0.1.x",

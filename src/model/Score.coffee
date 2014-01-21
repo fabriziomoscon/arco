@@ -20,7 +20,7 @@ class Score
     @rules = rules
     @times = new Hash ['created'], Hash.comparator.Date
     @places = new Hash ['address'], (v) -> v instanceof Place
-    @arrows = new Hash rules.partials, Hash.comparator.Array
+    @arrows = new Hash rules.partials, Hash.comparator.Array, []
 
 
   addPoint: (point, partial_name) ->
@@ -36,12 +36,10 @@ class Score
     unless partial_name in @rules.partials
       throw new Error "#{partial_name} is not a valid partial for #{@type} score"
 
-    if not @arrows[partial_name]?
-      @arrows[partial_name] = [point]
-    else
-      if @arrows[partial_name].length is @rules.max_arrows
-        throw new Error "this score has already #{@rules.max_arrows} arrows"
-      @arrows[partial_name].push point
+    if @arrows[partial_name].length is @rules.max_arrows
+      throw new Error "this score has already #{@rules.max_arrows} arrows"
+
+    @arrows[partial_name].push point
 
     return @arrows
 
