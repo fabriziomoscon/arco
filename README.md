@@ -1,8 +1,10 @@
-[![Build Status](https://travis-ci.org/fabriziomoscon/arco.png?branch=master)](https://travis-ci.org/fabriziomoscon/arco)
-
 #Arco
 
 `Arco` is an `HTTP` server to store your archery scores that provides a RESTful Open Public API.
+
+**Current Version:** *0.0.1*  
+**Build Status:** [![Build Status](https://travis-ci.org/fabriziomoscon/arco.png?branch=master)](https://travis-ci.org/fabriziomoscon/arco)  
+**Node Support:** *0.11*  
 
 ##Contributions
 
@@ -10,7 +12,7 @@ If you care about archery and know how to build software you can help making pro
 
 ##Technologies
 
-The server is a `node.js` application written mainly in CoffeeScript and it is based on `express.js`. The storage is `mongoDB`.
+The server is a [node.js][node] application written mainly in [CoffeeScript][coffeescript] and it is based on [express.js][express]. The storage is [mongoDB][mongodb].
 
 ##Philosophy
 
@@ -18,7 +20,7 @@ The project implementation follows the node.js phylosophy aggregating smaller li
 
 ##Dependencies
 
-To run the server you need `mongoDB`, `redis` and `node.js` installed. For the full list or requirements see `package.json`,
+To run the server you need [mongoDB][mongodb], [redis][redis] and [node.js][node] installed. For the full list or requirements see `package.json`,
 
 type in the shell:
 
@@ -41,7 +43,7 @@ testing modality
 
 ##Testing
 
-After each commit is pushed TravisCI starts testing as part of their Open Source cloud testing facility.
+After each commit is pushed [TravisCI][travisci] starts testing as part of their Open Source cloud testing facility.
 
 ###On localhost
 You can test a specific file like so:
@@ -78,3 +80,15 @@ or drop and re-load fixtures
 ```bash
 make test-func-init path="test/functional/json/<RELATIVE_PATH_TO_TESTS>"
 ```
+
+##LICENSE
+
+Arco is licensed under the [MIT][mit] license.
+
+[coffeescript]: http://coffeescript.org/
+[express]: http://expressjs.com/
+[mit]: http://opensource.org/licenses/mit-license.php
+[mongodb]: http://www.mongodb.org/
+[node]: http://nodejs.org/
+[redis]: http://redis.io/
+[travisci]: https://travis-ci.org/
