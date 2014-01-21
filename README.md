@@ -16,7 +16,7 @@ The server is a [node.js][node] application written mainly in [CoffeeScript][cof
 
 ##Philosophy
 
-The project implementation follows the node.js phylosophy aggregating smaller library published on `npm` to achieve the final goal. It tries not to couple any library or service together. It requires minimal global installations to run.
+The project implementation follows the node.js phylosophy aggregating smaller library published on [npm][npm] to achieve the final goal. It tries not to couple any library or service together. It requires minimal global installations to run.
 
 ##Dependencies
 
@@ -90,5 +90,6 @@ Arco is licensed under the [MIT][mit] license.
 [mit]: http://opensource.org/licenses/mit-license.php
 [mongodb]: http://www.mongodb.org/
 [node]: http://nodejs.org/
+[npm]: https://npmjs.org/
 [redis]: http://redis.io/
 [travisci]: https://travis-ci.org/
