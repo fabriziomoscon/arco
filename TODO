@@ -6,7 +6,8 @@ system
 lib
 - create node-set mapper
 - use hash mapper to map api times for user + test
-- abstract `Object.defineProperty` into a mongo model library to avoid copy and paste
+- abstract `Object.defineProperty.id` into a mongo model library to avoid copy and paste
+- find a deep clone function from npm
 
 model
 - model rules as another entity
@@ -20,7 +21,7 @@ score system
 - allow points to be added in bunch of 3 or 6 arrows from API
 - add model score calculate total
 - api mapper for place
-- let user find all his scores
+- let user find all their scores
 - model score partial structure
 - model score arrow structure
 

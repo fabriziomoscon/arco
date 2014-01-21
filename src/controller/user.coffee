@@ -1,10 +1,10 @@
+check = require 'check-types'
+
 http = require 'src/middleware/httpResponse'
 
 accountService = new (require 'src/service/Account')
 
 apiUserMapper = require 'src/mapper/api/user'
-
-check = require 'check-types'
 
 
 # ----------

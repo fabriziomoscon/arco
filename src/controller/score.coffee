@@ -1,6 +1,6 @@
-http = require 'src/middleware/httpResponse'
-
 check = require 'check-types'
+
+http = require 'src/middleware/httpResponse'
 
 apiScoreMapper = require 'src/mapper/api/score'
 

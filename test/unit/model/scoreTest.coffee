@@ -10,7 +10,7 @@ mockRules = {
   partials: ['first', 'second']
 }
 
-describe 'user model', ->
+describe 'score model', ->
 
   describe 'contructor', ->
 
