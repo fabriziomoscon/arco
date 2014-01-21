@@ -47,7 +47,7 @@ class Score
   _calculateTotal: () ->
     tot = 0
     for partialName in @arrows.keys()
-      if @arrows[partialName]? and @arrows[partialName].length > 0
+      if @arrows[partialName].length > 0
         tot += @arrows[partialName].reduce (a, b) -> a+b
     return tot
 
