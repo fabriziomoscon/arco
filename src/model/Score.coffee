@@ -14,6 +14,8 @@ class Score
   constructor: (type, rules) ->
     @type = type
 
+    throw new TypeError 'Invalid Match type' unless type in Object.keys Match.TYPES
+
     unless rules?
       rules = Match.TYPES[type]
 

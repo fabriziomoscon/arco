@@ -27,7 +27,7 @@ describe 'geolocation model', ->
         () ->
           it "should not accept #{invalid} as lat", ->
             g = new Geolocation 1, 20
-            (-> g.lat = invalid).should.throw 'Invalid latitude'
+            (-> g.lat = invalid).should.throw "Invalid latitude: #{invalid}"
 
     describe 'success', ->
 
@@ -48,7 +48,7 @@ describe 'geolocation model', ->
         () ->
           it "should not accept #{invalid} as long", ->
             g = new Geolocation 1, 20
-            (-> g.long = invalid).should.throw 'Invalid longitude'
+            (-> g.long = invalid).should.throw "Invalid longitude: #{invalid}"
 
     describe 'success', ->
 

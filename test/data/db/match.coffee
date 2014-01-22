@@ -23,7 +23,7 @@ data =
   validMatch1:
     _id: new ObjectID(ids.validIdString1)
     name: 'Outdoor match example 1'
-    type: 'FITA'
+    type: 'FITA 90+70+50+30'
     participants: [
       users.validUser1, users.validUser2
     ]
@@ -31,12 +31,12 @@ data =
       created: new Date 2013, 1, 1
     places:
       location: places.validPlace1
-    score_ids: [scores.validScore1._id]
+    score_ids: [scores['FITA 90+70+50+30'][0]._id]
   
   validMatch2:
     _id: new ObjectID(ids.validIdString2)
     name: 'Indoor match example 1'
-    type: 'Indoor 18'
+    type: 'Indoor 18m'
     participants: [
       users.validUser1, users.validUser2
     ]
@@ -44,7 +44,7 @@ data =
       created: new Date 2013, 1, 1
     places:
       location: places.validPlace2
-    score_ids: [scores.validScore2._id]
+    score_ids: [scores['Indoor 18m'][0]._id]
   
   validMatch3:
     _id: new ObjectID(ids.validIdString3)
@@ -57,11 +57,11 @@ data =
       created: new Date 2013, 1, 1
     places:
       location: places.validPlace3
-    score_ids: [scores.validScore3._id]
+    score_ids: [scores['H+F 24+24'][0]._id]
 
   validMatch4:
     _id: new ObjectID(ids.validIdString4)
-    name: 'Hunter match example 1'
+    name: '70 OR match example 1'
     type: '70m qualification'
     participants: [
       users.validUser1, users.validUser2
@@ -70,7 +70,7 @@ data =
       created: new Date 2013, 1, 1
     places:
       location: places.validPlace4
-    score_ids: [scores.validScore3._id]
+    score_ids: [scores['70m qualification'][0]._id]
 
 
 module.exports.getData = () -> deepClone data

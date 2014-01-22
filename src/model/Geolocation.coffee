@@ -12,14 +12,14 @@ class Geolocation
 Object.defineProperty Geolocation.prototype, 'lat', {
   get: () -> this._lat
   set: (value) ->
-    throw new TypeError 'Invalid latitude' unless check.isNumber(value) and -90 <= value <= 90
+    throw new TypeError "Invalid latitude: #{value}" unless check.isNumber(value) and -90 <= value <= 90
     this._lat = value
 }
 
 Object.defineProperty Geolocation.prototype, 'long', {
   get: () -> this._long
   set: (value) ->
-    throw new TypeError 'Invalid longitude' unless check.isNumber(value) and -180 <= value <= 180
+    throw new TypeError "Invalid longitude: #{value}" unless check.isNumber(value) and -180 <= value <= 180
     this._long = value
 }
 

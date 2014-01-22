@@ -1,5 +1,12 @@
 require('rootpath')()
 
+var User  = require('src/model/User');
+var userMapper = require('src/mapper/user');
+var scoreMapper = require('src/mapper/score');
+
+var mockUsers = require('test/data/db/user').getData()
+var mockScores = require('test/data/db/score').getData()
+
 global.log = {
   error: console.error,
   warn: function () {return},
@@ -10,23 +17,31 @@ global.log = {
   child: function () {return this}
 };
 
-User = require('src/model/User');
 
 global.userFactory = function( firstName, lastName ) {
 
-  var mockUser = require('test/data/db/user').getData().validUser1
   if (firstName == null) {
-    firstName = mockUser.first_name
+    firstName = mockUsers.validUser1.first_name
   }
 
   if (lastName == null) {
-    lastName = mockUser.last_name
+    lastName = mockUsers.validUser1.last_name
   }
 
   var u = new User( {first_name: firstName, last_name: lastName})
-  u.id = mockUser._id.toHexString()
+  u.id = mockUsers.validUser1._id.toHexString()
   return u
 };
+
+global.scoreFactory = function( type ) {
+
+  if (type == null) {
+    type = 'Indoor 18m'
+  }
+
+  return scoreMapper.unmarshall( mockScores[type][0] );
+
+}
 
 global.allTypes = [undefined, null, false, 1, 1385668252435, NaN, '', [], {}, new Object(), new Date(), function() {}]
 global.allNotStringTypes = [undefined, null, false, 1, 1385668252435, NaN, [], {}, new Object(), new Date(), function() {}]

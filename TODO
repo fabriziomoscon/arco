@@ -5,7 +5,6 @@ system
 
 lib
 - create node-set mapper
-- use hash mapper to map api times for user + test
 - abstract `Object.defineProperty.id` into a mongo model library to avoid copy and paste
 - find a deep clone function from npm
 
@@ -26,6 +25,7 @@ score system
 - model score arrow structure
 
 test
+- use user mocks for userFactory
 - extend user functional test
 - model match
 - mapper back score

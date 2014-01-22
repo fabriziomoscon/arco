@@ -1,6 +1,6 @@
 check = require 'check-types'
 
-dateMapper = require 'src/mapper/api/type/date'
+apiDateMapper = require 'src/mapper/api/type/date'
 
 UserModel = require 'src/model/User'
 
@@ -14,6 +14,8 @@ marshall = (user) ->
   data.first_name = user.first_name if user.first_name?
   data.last_name = user.last_name if user.last_name?
   data.email = user.email if user.email?
+
+  data.times = user.times.marshall apiDateMapper.marshall
 
   return data
 

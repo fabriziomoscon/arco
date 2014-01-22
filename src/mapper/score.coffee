@@ -35,8 +35,8 @@ unmarshall = (data) ->
   score.user_id = objectIdMapper.unmarshall data.user_id if data.user_id?
 
   score.times = Hash.unmarshall data.times, Hash.comparator.Date
-  score.places = Hash.unmarshall data.places, ((v) -> v instanceof Place), placeMapper.marshall
-  score.arrows = Hash.unmarshall data.arrows, Hash.comparator.number
+  score.places = Hash.unmarshall data.places, ((v) -> v instanceof Place), placeMapper.unmarshall
+  score.arrows = Hash.unmarshall data.arrows, Hash.comparator.Array
   score.total = data.total if data.total?
 
   return score

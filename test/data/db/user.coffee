@@ -40,5 +40,27 @@ data =
     times:
       created: new Date 2012, 11, 7
 
+  validUser3:
+    _id: new ObjectID( ids.validIdString3 )
+    first_name: 'ismini'
+    last_name: 'chatzitheofilou'
+    email: 'ismini@coffestack.com'
+    password: 'qwerty21'
+    gender: 'F'
+    birthdate: new Date 1986, 10, 6
+    times:
+      created: new Date 2012, 11, 7
+
+  validUser4:
+    _id: new ObjectID( ids.validIdString3 )
+    first_name: 'sixto'
+    last_name: 'rodriguez'
+    email: 'sixto@coffestack.com'
+    password: 'qwerty21'
+    gender: 'm'
+    birthdate: new Date 1942, 6, 10
+    times:
+      created: new Date 2012, 11, 7
+
 
 module.exports.getData = () -> deepClone data

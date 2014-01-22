@@ -33,9 +33,24 @@ class Match
     '70m qualification': {}
     'H+F 12+12': {}
     'H+F 24+24': {}
-    'Indoor 18m': {}
-    'Indoor 25m': {}
-    'Indoor 25+18': {}
+    'Indoor 18m': {
+      max_arrows: 60
+      min_per_arrow: 0
+      max_per_arrow: 10
+      partials: ['first', 'second']
+    }
+    'Indoor 25m': {
+      max_arrows: 60
+      min_per_arrow: 0
+      max_per_arrow: 10
+      partials: ['first', 'second']
+    }
+    'Indoor 25+18': {
+      max_arrows: 120
+      min_per_arrow: 0
+      max_per_arrow: 10
+      partials: ['first 25m', 'second 25m', 'first 18m', 'second 18m']
+    }
 
 
   constructor: () ->

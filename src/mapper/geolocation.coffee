@@ -17,7 +17,7 @@ unmarshall = (data) ->
 
   throw new Error 'Invalid geolocation data' unless check.isObject data
 
-  return new geolocationModel data.lat, data.long
+  return new geolocationModel data.coordinates[0], data.coordinates[1]
 
 
 module.exports = {marshall, unmarshall}
