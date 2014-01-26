@@ -1,7 +1,7 @@
 mongoSource = require 'src/source/mongo/score'
 
 backScoreMapper = require 'src/mapper/score'
-recordMapper    = require 'src/mapper/record'
+documentMapper  = require 'src/mapper/document'
 
 
 class ScoreRespository
@@ -17,7 +17,7 @@ class ScoreRespository
   insert: (scores, callback) ->
     scores = [scores] unless Array.isArray scores
     @scoreSource.insert (@scoreMapper.marshall score for score in scores),
-      recordMapper(@scoreMapper.unmarshall, callback, false)
+      documentMapper(@scoreMapper.unmarshall, callback, false)
 
 
 module.exports = ScoreRespository

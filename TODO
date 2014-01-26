@@ -1,9 +1,11 @@
 system
+- user mongo stream API
 - figure out how to connect to mongo before the server start listening
 - setup mongologger
 - fix .nodemonignore
 
 lib
+- update check types !!!
 - create node-set mapper
 - abstract `Object.defineProperty.id` into a mongo model library to avoid copy and paste
 - find a deep clone function from npm
@@ -25,6 +27,7 @@ score system
 - model score arrow structure
 
 test
+- let service to use mock data not mock repository.
 - use user mocks for userFactory
 - extend user functional test
 - model match

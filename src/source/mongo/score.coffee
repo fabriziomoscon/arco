@@ -2,11 +2,11 @@ MongoGateway = require 'src/lib/mongo/Gateway'
 
 objectIdMapper = require 'src/mapper/type/objectId'
 
-collectionName = 'scores'
+SCORES_COLLECTION = 'scores'
 
 
-insert = (scoresData, callback) ->
-  MongoGateway.insert collectionName, scoresData, {}, callback
+module.exports = {
 
-
-module.exports = {insert}
+  insert: (scoresData, callback) ->
+    MongoGateway.insert SCORES_COLLECTION, scoresData, {}, callback
+}

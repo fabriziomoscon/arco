@@ -1,3 +1,4 @@
+check = require 'check-types'
 async = require 'async'
 
 UserModel       = require 'src/model/User'
@@ -94,9 +95,12 @@ class Account
       return callback null, user
 
 
-  findAllUsers: (callback) ->
+  findAllUsers: (offset = 0, limit = 20, callback) ->
     throw new TypeError 'Invalid callback' unless typeof callback is 'function'
-    @userRepository.findAll callback
+    return callback new TypeError('Invalid offset'), null unless check.isPositiveNumber(offset) or offset is 0
+    return callback new TypeError('Invalid limit'), null unless check.isPositiveNumber(limit) or limit is 0
+
+    @userRepository.findAll offset, limit, callback
 
 
   removeUserById: (userId, callback) ->

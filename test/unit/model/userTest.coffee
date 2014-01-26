@@ -43,7 +43,7 @@ describe 'user model', ->
         () ->
           it "should not accept #{invalid} as id", ->
             u = userFactory()
-            (-> u.id = invalid).should.throw 'Invalid id'
+            (-> u.id = invalid).should.throw "Invalid id: #{invalid}"
 
     describe 'success', ->
 
@@ -62,7 +62,7 @@ describe 'user model', ->
         () ->
           it "should not accept #{invalid} as email", ->
             u = userFactory()
-            (-> u.email = invalid).should.throw 'Invalid email'
+            (-> u.email = invalid).should.throw "Invalid email: #{invalid}"
 
     describe 'success', ->
 
@@ -81,7 +81,7 @@ describe 'user model', ->
         () ->
           it "should not accept #{invalid} as first name", ->
             u = userFactory()
-            (-> u.first_name = invalid).should.throw 'Invalid first name'
+            (-> u.first_name = invalid).should.throw "Invalid first name: #{invalid}"
 
     describe 'success', ->
 
@@ -100,7 +100,7 @@ describe 'user model', ->
         () ->
           it "should not accept #{invalid} as last name", ->
             u = userFactory()
-            (-> u.last_name = invalid).should.throw 'Invalid last name'
+            (-> u.last_name = invalid).should.throw "Invalid last name: #{invalid}"
 
     describe 'success', ->
 
@@ -119,7 +119,7 @@ describe 'user model', ->
         () ->
           it "should not accept #{invalid} as passwrod", ->
             u = userFactory()
-            (-> u.password = invalid).should.throw 'Invalid password'
+            (-> u.password = invalid).should.throw "Invalid password: #{invalid}"
 
     describe 'success', ->
 
@@ -138,7 +138,7 @@ describe 'user model', ->
         () ->
           it "should not accept #{invalid} as birthdate", ->
             u = userFactory()
-            (-> u.birthdate = invalid).should.throw 'Invalid birthdate'
+            (-> u.birthdate = invalid).should.throw "Invalid birthdate: #{invalid}"
 
     describe 'success', ->
 
@@ -157,7 +157,7 @@ describe 'user model', ->
         () ->
           it "should not accept #{invalid} as gender", ->
             u = userFactory()
-            (-> u.gender = invalid).should.throw 'Invalid gender'
+            (-> u.gender = invalid).should.throw "Invalid gender: #{invalid}"
 
     describe 'success', ->
 

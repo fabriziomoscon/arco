@@ -1,7 +1,7 @@
 mongoSource = require 'src/source/mongo/user'
 
 backUserMapper = require 'src/mapper/user'
-recordMapper   = require 'src/mapper/record'
+documentMapper = require 'src/mapper/document'
 
 
 class UserRespository
@@ -17,26 +17,30 @@ class UserRespository
   insert: (users, callback) ->
     users = [users] unless Array.isArray users
     @userSource.insert (@userMapper.marshall(user) for user in users),
-      recordMapper(@userMapper.unmarshall, callback, false)
+      documentMapper(@userMapper.unmarshall, callback, false)
 
 
   findOneById: (userId, callback) ->
     @userSource.findOneById userId,
-      recordMapper @userMapper.unmarshall, callback
+      documentMapper @userMapper.unmarshall, callback
 
 
   findOneByEmail: (email, callback) ->
     @userSource.findOneByEmail email,
-      recordMapper @userMapper.unmarshall, callback
+      documentMapper @userMapper.unmarshall, callback
 
 
-  findAll: (callback) ->
-    @userSource.findAll recordMapper @userMapper.unmarshall, callback, false
+  findAll: (offset, limit, callback) ->
+    @userSource.findAll(
+      offset
+      limit
+      documentMapper(@userMapper.unmarshall, callback, false)
+    )
 
 
   update: (userId, user, callback) ->
     @userSource.update userId,
-      @userMapper.marshall(user), recordMapper(@userMapper.unmarshall, callback)
+      @userMapper.marshall(user), documentMapper(@userMapper.unmarshall, callback)
 
 
   remove: (userId, callback) ->

@@ -9,9 +9,18 @@ apiUserMapper = require 'src/mapper/api/user'
 
 # ----------
 
-index = (req, res, next) ->
+list = (req, res, next) ->
 
-  accountService.findAllUsers (err, users) ->
+  if req.query?.limit?
+    req.query.limit = parseInt req.query.limit, 10
+    req.query.limit = undefined if req.query.limit <= 0
+    req.query.offset = undefined unless req.query.offset?
+    req.query.offset = parseInt req.query.offset, 10
+    req.query.offset = undefined if req.query.offset < 0
+  else
+    req.query.offset = undefined
+
+  accountService.findAllUsers req.query.offset, req.query.limit, (err, users) ->
     return next( http.serverError(err, 1041) ) if err?
 
     res.data = users
@@ -96,4 +105,4 @@ remove = (req, res, next) ->
   return
 
 
-module.exports = {create, read, edit, remove, index}
+module.exports = {create, read, edit, remove, list}

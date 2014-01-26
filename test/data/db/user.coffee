@@ -52,12 +52,12 @@ data =
       created: new Date 2012, 11, 7
 
   validUser4:
-    _id: new ObjectID( ids.validIdString3 )
+    _id: new ObjectID( ids.validIdString4 )
     first_name: 'sixto'
     last_name: 'rodriguez'
     email: 'sixto@coffestack.com'
     password: 'qwerty21'
-    gender: 'm'
+    gender: 'M'
     birthdate: new Date 1942, 6, 10
     times:
       created: new Date 2012, 11, 7

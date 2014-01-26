@@ -107,20 +107,20 @@ describe 'Account service', ->
         () ->
           it "should not accept #{invalid} as callback", ->
             as = new AccountService
-            (-> as.findAllUsers invalid).should.throw 'Invalid callback'
+            (-> as.findAllUsers null, null, invalid).should.throw 'Invalid callback'
 
     describe 'success', ->
 
       it 'should return all users', (done) ->
         mockSource = {
-          findAll: (callback) -> callback null, [
+          findAll: (offset, limit, callback) -> callback null, [
             {first_name: 'fab', last_name: 'mos'}
             {first_name: 'john', last_name: 'lewis'}
             {first_name: 'darren', last_name: 'reuter'}
           ]
         }
         as = new AccountService new UserRepository mockSource
-        as.findAllUsers (err, users) ->
+        as.findAllUsers null, null, (err, users) ->
           should.not.exist err
           should.exist users
           users.should.be.instanceof Array

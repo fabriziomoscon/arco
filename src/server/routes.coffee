@@ -19,10 +19,11 @@ router.put    '/user/me',  ensureAuthorized, sessionRestriction, controllers.use
 router.delete '/user/me',  ensureAuthorized, sessionRestriction, controllers.user.remove
 router.get    '/user/:id([0-9A-F]{24})',     controllers.user.read
 router.post   '/user',                       controllers.user.create
-router.get    '/users',                      controllers.user.index
+router.get    '/users',                      controllers.user.list
 
 #------ Score -----
 router.post   '/score',    ensureAuthorized, sessionRestriction, controllers.score.create
+
 
 # -- Testing Only ---
 if process.env.NODE_ENV in ['testing', 'staging']
