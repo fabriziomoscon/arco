@@ -21,44 +21,46 @@ describe 'user mapper', ->
     describe 'success', ->
 
       it 'should marshall the _id', ->
-        data = userMapper.marshall userFactory 'fab', 'mos'
+        data = userMapper.marshall userFactory 'validUser1'
         should.exist data._id
         data._id.should.be.instanceof ObjectID
 
       it 'should marshall the first name', ->
-        data = userMapper.marshall userFactory 'fab', 'mos'
-        data.first_name.should.equal 'fab'
+        user1 = userFactory 'validUser1'
+        data = userMapper.marshall user1
+        data.first_name.should.equal user1.first_name
 
       it 'should marshall the last name', ->
-        data = userMapper.marshall userFactory 'fab', 'mos'
-        data.last_name.should.equal 'mos'
+        user1 = userFactory 'validUser1'
+        data = userMapper.marshall user1
+        data.last_name.should.equal user1.last_name
 
       it 'should marshall the email', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         u.email = 'fabmos@gmail.com'
         data = userMapper.marshall u
         data.email.should.equal 'fabmos@gmail.com'
 
       it 'should marshall the password', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         u.password = 'mysupersecurepassword'
         data = userMapper.marshall u
         data.password.should.equal 'mysupersecurepassword'
 
       it 'should marshall the gender', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         u.gender = 'F'
         data = userMapper.marshall u
         data.gender.should.equal 'F'
 
       it 'should marshall the birthdate', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         u.birthdate = new Date 1960, 0, 1
         data = userMapper.marshall u
         data.birthdate.should.eql new Date 1960, 0, 1
 
       it 'should marshall the times', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         u.times.created = new Date 2013, 0, 1
         data = userMapper.marshall u
         data.times.created.should.eql new Date 2013, 0, 1

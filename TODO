@@ -1,5 +1,5 @@
 system
-- user mongo stream API
+- use mongo stream API
 - figure out how to connect to mongo before the server start listening
 - setup mongologger
 - fix .nodemonignore
@@ -27,8 +27,7 @@ score system
 - model score arrow structure
 
 test
-- let service to use mock data not mock repository.
-- use user mocks for userFactory
+- let service use mock data not mock repository.
 - extend user functional test
 - model match
 - mapper back score
@@ -36,7 +35,7 @@ test
 - geolocation mapper
 - place mapper
 - score mapper
-- record mapper
+- document mapper
 - account service updateUserById
 
 review

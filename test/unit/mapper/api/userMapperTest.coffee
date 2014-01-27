@@ -19,28 +19,28 @@ describe 'api user mapper', ->
     describe 'succes', ->
 
       it 'should marshall the id', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         data = apiUserMapper.marshall u
         data.id.should.equal u.id
 
       it 'should marshall the first_name', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         data = apiUserMapper.marshall u
         data.first_name.should.equal u.first_name
 
       it 'should marshall the last_name', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         data = apiUserMapper.marshall u
         data.last_name.should.equal u.last_name
 
       it 'should marshall the email', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         u.email = 'fab@gmail.com'
         data = apiUserMapper.marshall u
         data.email.should.equal 'fab@gmail.com'
 
       it 'should marshall any set time within user times', ->
-        u = userFactory()
+        u = userFactory 'validUser1'
         u.times = new Hash ['created', 'last_changed_password', 'empty'], Hash.comparator.Date
 
         u.times.created = new Date 2010, 0, 1

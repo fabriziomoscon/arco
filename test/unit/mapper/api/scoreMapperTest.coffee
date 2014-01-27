@@ -20,27 +20,27 @@ describe 'api score mapper', ->
     describe 'success', ->
 
       it 'should marshall the id', ->
-        s = scoreFactory()
+        s = scoreFactory 'Indoor 18m'
         data = apiScoreMapper.marshall s
         data.id.should.equal s.id
 
       it 'should marshall the user id', ->
-        s = scoreFactory()
+        s = scoreFactory 'Indoor 18m'
         data = apiScoreMapper.marshall s
         data.user_id.should.equal s.user_id
 
       it 'should marshall the type', ->
-        s = scoreFactory()
+        s = scoreFactory 'Indoor 18m'
         data = apiScoreMapper.marshall s
         data.type.should.equal s.type
 
       it 'should marshall the total', ->
-        s = scoreFactory()
+        s = scoreFactory 'Indoor 18m'
         data = apiScoreMapper.marshall s
         data.total.should.equal s.total
 
       it 'should marshall any set time within score times', ->
-        s = scoreFactory()
+        s = scoreFactory 'Indoor 18m'
         s.times = new Hash ['created', 'half', 'empty'], Hash.comparator.Date
 
         s.times.created = new Date 2010, 0, 1
@@ -53,7 +53,7 @@ describe 'api score mapper', ->
         should.not.exist data.times.empty
 
       it 'should marshall the arrows', ->
-        s = scoreFactory()
+        s = scoreFactory 'Indoor 18m'
         data = apiScoreMapper.marshall s
         should.exist data.arrows.first
         data.arrows.first.should.eql s.arrows.first

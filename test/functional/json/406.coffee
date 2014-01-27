@@ -1,4 +1,4 @@
-#> test a 404 page
+#> test a 406 page
 path: '/users'
 method: 'GET'
 headers:

@@ -173,7 +173,7 @@ describe 'Account service', ->
         () ->
           it "should not accept #{invalid} as callback", ->
             as = new AccountService
-            (-> as.createUser userFactory(), invalid).should.throw 'Invalid callback'
+            (-> as.createUser userFactory('validUser1'), invalid).should.throw 'Invalid callback'
 
       call() for call in allNotStringTypes.map (invalid) ->
         () ->
@@ -191,7 +191,7 @@ describe 'Account service', ->
           insert: (users, callback) -> callback new Error 'The DB exploded', null
         }
         as = new AccountService new UserRepository mockSource
-        as.createUser userFactory(), (err, user) ->
+        as.createUser userFactory('validUser1'), (err, user) ->
           should.not.exist user
           should.exist err
           err.message.should.equal 'The DB exploded'
@@ -203,7 +203,7 @@ describe 'Account service', ->
           insert: (users, callback) -> callback null, null
         }
         as = new AccountService new UserRepository mockSource
-        as.createUser userFactory(), (err, user) ->
+        as.createUser userFactory('validUser1'), (err, user) ->
           should.not.exist user
           should.exist err
           err.message.should.equal 'No user created'
@@ -217,7 +217,7 @@ describe 'Account service', ->
           insert: (users, callback) -> callback null, users
         }
         as = new AccountService new UserRepository mockSource
-        as.createUser userFactory(), (err, user) ->
+        as.createUser userFactory('validUser1'), (err, user) ->
           should.not.exist user
           should.exist err
           err.message.should.equal 'email already used'
@@ -231,11 +231,9 @@ describe 'Account service', ->
           insert: (users, callback) -> callback null, users
         }
         as = new AccountService new UserRepository mockSource
-        as.createUser userFactory('f', 'm'), (err, user) ->
+        as.createUser userFactory('validUser1'), (err, user) ->
           should.not.exist err
           user.should.be.instanceof User
-          user.first_name.should.equal 'f'
-          user.last_name.should.equal 'm'
           done()
 
 # ------------------------------------------------------------------
@@ -248,13 +246,13 @@ describe 'Account service', ->
         () ->
           it "should not accept #{invalid} as callback", ->
             as = new AccountService
-            (-> as.updateUserById '50b896ddc814556766000001', userFactory(), invalid).should.throw 'Invalid callback'
+            (-> as.updateUserById '50b896ddc814556766000001', userFactory('validUser1'), invalid).should.throw 'Invalid callback'
 
       call() for call in allNotStringTypes.map (invalid) ->
         () ->
           it "should not accept #{invalid} as user id", (done) ->
             as = new AccountService
-            as.updateUserById invalid, userFactory(), (err, user) ->
+            as.updateUserById invalid, userFactory('validUser1'), (err, user) ->
               should.exist err
               err.message.should.equal 'Invalid userId'
               should.not.exist user
@@ -269,3 +267,5 @@ describe 'Account service', ->
               err.message.should.equal 'Invalid user'
               should.not.exist user
               done()
+
+    describe 'success', ->
