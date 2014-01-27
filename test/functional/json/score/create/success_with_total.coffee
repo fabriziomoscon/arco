@@ -1,4 +1,4 @@
-#> Create new score success
+#> Create new score with total - success
 path: '/score'
 method: 'POST'
 headers:
@@ -15,18 +15,24 @@ response.statusCode.should.equal 201
 #? Response.user should exist
 should.exist json
 
-#? score properties
-console.log json
+#? score id
 should.exist json.id
-should.exist json.type
-should.exist json.user_id
-should.exist json.times
-# should.exist json.places
-should.exist json.arrows
 
-#? return correct type
+#? score type
+should.exist json.type
 json.type.should.equal 'FITA 90+70+50+30'
 
+#? score user id
+should.exist json.user_id
+
+#? score times
+should.exist json.times
+
+#? score places
+# should.exist json.places
+
+#?score arrows
+should.exist json.arrows
+
 #? return correct total
-console.log json
 json.total.should.equal 1300

@@ -21,7 +21,7 @@ marshall = (score) ->
   data.times = score.times.marshall()
   data.places = score.places.marshall placeMapper.marshall
   data.arrows = score.arrows.marshall()
-  data.total = score.total if score.total?
+  data.total = score.total
 
   return data
 

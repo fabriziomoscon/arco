@@ -22,6 +22,8 @@ score system
 - let user find all their scores
 - model score partial structure
 - model score arrow structure
+- add num of arrow for the score
+- add model method to check if the score is completed to send out to via the API
 
 test
 - let service use mock data not mock repository.

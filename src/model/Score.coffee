@@ -85,14 +85,14 @@ Object.defineProperty Score.prototype, 'total', {
       this._total = @_calculateTotal()
     return this._total
   set: (value) ->
-    throw new TypeError 'Invalid total' unless check.isPositiveNumber(value) or value is 0
+    throw new TypeError "Invalid total: #{value}" unless check.isPositiveNumber(value) or value is 0
     this._total = value
 }
 
 Object.defineProperty Score.prototype, 'user_id', {
   get: () -> this._user_id
   set: (value) ->
-    throw new TypeError 'Invalid user id' unless isValidObjectId value
+    throw new TypeError "Invalid user id: #{value}" unless isValidObjectId value
     this._user_id = value
 }
 

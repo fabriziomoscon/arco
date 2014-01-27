@@ -110,7 +110,7 @@ describe 'score model', ->
         () ->
           it "should not accept #{invalid} as total", ->
             s = new Score 'Indoor 18m', mockRules
-            (-> s.total = invalid).should.throw 'Invalid total'
+            (-> s.total = invalid).should.throw "Invalid total: #{invalid}"
 
     describe 'success', ->
 
@@ -141,7 +141,7 @@ describe 'score model', ->
         () ->
           it "should not accept #{invalid} as user id", ->
             s = new Score 'Indoor 18m', mockRules
-            (-> s.user_id = invalid).should.throw 'Invalid user id'
+            (-> s.user_id = invalid).should.throw "Invalid user id: #{invalid}"
 
     describe 'success', ->
 

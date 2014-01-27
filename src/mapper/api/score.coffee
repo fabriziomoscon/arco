@@ -27,12 +27,14 @@ marshall = (score) ->
 unmarshallForCreating = (data) ->
 
   throw new TypeError 'Invalid score data' unless check.isObject data
-  throw new TypeError 'Invalid score user_id' unless data.user_id?
-  throw new TypeError 'Invalid score type' unless data.type?
 
   score = new Score data.type
   score.user_id = data.user_id
-  score.total = parseInt(data.total, 10) if data.total?
+  if data.arrows? and check.isObject(data.arrows)
+    score.arrows = Hash.unmarshall data.arrows, Hash.comparator.Array
+  else
+    if data.total?
+      score.total = parseInt(data.total, 10)
 
   return score
 

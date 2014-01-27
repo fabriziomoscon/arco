@@ -71,16 +71,6 @@ describe 'api score mapper', ->
           it "should not unmarshall #{invalid}", ->
             (-> apiScoreMapper.unmarshallForCreating invalid).should.throw 'Invalid score data'
 
-      call() for call in [{}, {x:1}].map (invalid) ->
-        () ->
-          it "should not unmarshall #{invalid} as user_id", ->
-            (-> apiScoreMapper.unmarshallForCreating invalid).should.throw 'Invalid score user_id'
-
-      call() for call in [{user_id:10}].map (invalid) ->
-        () ->
-          it "should not unmarshall #{invalid} as type", ->
-            (-> apiScoreMapper.unmarshallForCreating invalid).should.throw 'Invalid score type'
-
     describe 'success', ->
 
       mandatoryData =
@@ -96,3 +86,14 @@ describe 'api score mapper', ->
         score = apiScoreMapper.unmarshallForCreating mandatoryData
         score.should.be.instanceof Score
         score.type.should.equal mandatoryData.type
+
+      it 'should unmarshall the arrows if provided', ->
+        scoreData = scoreFactory 'Indoor 18m', (v) -> v
+        score = apiScoreMapper.unmarshallForCreating scoreData
+        score.arrows.getData().should.eql scoreData.arrows
+
+      it 'should unmarshall the total if arrows are not provided', ->
+        scoreData = scoreFactory 'Indoor 18m', (v) -> v
+        delete scoreData.arrows
+        score = apiScoreMapper.unmarshallForCreating scoreData
+        score.total.should.eql scoreData.total

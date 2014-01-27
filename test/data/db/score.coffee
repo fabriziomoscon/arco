@@ -59,12 +59,12 @@ data =
       places:
         address: places.validPlace2
       partials:
-        first: 280
-        second: 290 
+        first: 61
+        second: 45
       arrows:
         first: [10, 6, 9, 6, 10, 2, 0, 10, 8]
         second: [8, 4, 5, 8, 1, 0, 10, 9]
-      total: 570
+      total: 106
     }
   ]
   
