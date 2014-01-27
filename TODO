@@ -1,8 +1,6 @@
 system
-- use mongo stream API
 - figure out how to connect to mongo before the server start listening
 - setup mongologger
-- fix .nodemonignore
 
 lib
 - update check types !!!
@@ -20,7 +18,6 @@ mapper
 
 score system
 - allow points to be added in bunch of 3 or 6 arrows from API
-- add model score calculate total
 - api mapper for place
 - let user find all their scores
 - model score partial structure
