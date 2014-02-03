@@ -54,6 +54,12 @@ class Score
     return tot
 
 
+  canEdit: (userId) ->
+    throw new TypeError "Invalid user id: #{userId}" unless isValidObjectId userId
+    return userId is @user_id
+
+
+
 Object.defineProperty Score.prototype, 'rules', {
   get: () -> this._rules
   set: (value) ->

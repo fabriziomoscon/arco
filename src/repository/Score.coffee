@@ -20,4 +20,18 @@ class ScoreRespository
       documentMapper(@scoreMapper.unmarshall, callback, false)
 
 
+  findOneById: (scoreId, callback) ->
+    @scoreSource.findOneById scoreId,
+      documentMapper @scoreMapper.unmarshall, callback
+
+
+  update: (score, callback) ->
+    @scoreSource.update(
+      score.id
+      @scoreMapper.marshall(score)
+      documentMapper(@scoreMapper.unmarshall, callback)
+    )
+
+
+
 module.exports = ScoreRespository

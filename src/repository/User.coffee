@@ -38,9 +38,12 @@ class UserRespository
     )
 
 
-  update: (userId, user, callback) ->
-    @userSource.update userId,
-      @userMapper.marshall(user), documentMapper(@userMapper.unmarshall, callback)
+  update: (user, callback) ->
+    @userSource.update(
+      user.id
+      @userMapper.marshall(user)
+      documentMapper(@userMapper.unmarshall, callback)
+    )
 
 
   remove: (userId, callback) ->

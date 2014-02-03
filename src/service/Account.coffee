@@ -87,7 +87,7 @@ class Account
           return next()
 
       (next) =>
-        return @userRepository.update userId, user, next
+        return @userRepository.update user, next
 
     ], (err, user) ->
       return callback err, null if err?

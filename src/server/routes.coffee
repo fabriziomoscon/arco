@@ -22,7 +22,8 @@ router.post   '/user',                       controllers.user.create
 router.get    '/users',                      controllers.user.list
 
 #------ Score -----
-router.post   '/score',    ensureAuthorized, sessionRestriction, controllers.score.create
+router.post   '/score',                      ensureAuthorized, controllers.score.create
+router.put    '/score/:id([0-9A-F]{24})',    ensureAuthorized, controllers.score.edit
 
 
 # -- Testing Only ---

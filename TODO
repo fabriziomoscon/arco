@@ -1,3 +1,10 @@
+WIP
+- api score mapper for editing
+- sync up score edit in controller
+- write unit test for map api score for editing
+- write ciao test for edit
+- simplify user account passing user and user id...
+
 system
 - figure out how to connect to mongo before the server start listening
 - setup mongologger
@@ -17,7 +24,7 @@ mapper
 - match mapper api
 
 score system
-- allow points to be added in bunch of 3 or 6 arrows from API
+- PUT score => allow points to be added in bunch of 3 or 6 arrows from API
 - api mapper for place
 - let user find all their scores
 - model score partial structure

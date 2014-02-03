@@ -39,3 +39,6 @@ Score
 - 3002 POST    score: 400 'invalid input score'
 - 3003 POST    score: 500 'impossible to create a score'
 - 3004 POST    score: 500 'invalid sccore data during API marshall'
+
+- 3010 PUT     score: 500 'impossible to edit a score'
+- 3011 PUT     score: 404 'score not found'
