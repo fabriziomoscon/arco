@@ -35,7 +35,7 @@
     "node-set": "*",
     "passport": "0.2.x",
     "passport-local": "0.1.x",
-    "redis": "0.8.x",
+    "redis": "0.10.1",
     "rootpath": "0.1.x",
     "yapec": "0.0.2"
   },

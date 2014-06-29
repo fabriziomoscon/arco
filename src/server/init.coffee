@@ -1,5 +1,4 @@
 express = require 'express'
-Redis   = require 'redis'
 cors    = require 'cors'
 
 MongoGateway = require 'src/lib/mongo/Gateway'
