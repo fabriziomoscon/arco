@@ -1,49 +1,27 @@
-Db       = require('mongodb').Db
-Server   = require('mongodb').Server
-ObjectID = require('mongodb').ObjectID
+mongodb = require('mongodb')
+
+Db          = mongodb.Db
+Server      = mongodb.Server
+MongoClient = mongodb.MongoClient
 
 
 class MongoGateway
 
-  @db = undefined
+  # For options see http://mongodb.github.io/node-mongodb-native/driver-articles/mongoclient.html
+  connect: (mongoUrl, options, callback) ->
+    @db = undefined
 
-  @setLogger: (@logger) ->
-
-  @getLogger: () ->
-    return MongoGateway.logger
-
-  # Options
-  #   safe {true | {w:n, wtimeout:n} | {fsync:true}, default:false}, execute insert with a getLastError command returning the result of the insert command.
-  #   readPreference {String}, the prefered read preference (ReadPreference.PRIMARY, ReadPreference.PRIMARY_PREFERRED, ReadPreference.SECONDARY, ReadPreference.SECONDARY_PREFERRED, ReadPreference.NEAREST).
-  #   native_parser {Boolean, default:false}, use c++ bson parser.
-  #   forceServerObjectId {Boolean, default:false}, force server to create _id fields instead of client.
-  #   pkFactory {Object}, object overriding the basic ObjectID primary key generation.
-  #   serializeFunctions {Boolean, default:false}, serialize functions.
-  #   raw {Boolean, default:false}, peform operations using raw bson buffers.
-  #   recordQueryStats {Boolean, default:false}, record query statistics during execution.
-  #   reaper {Boolean, default:false}, enables the reaper, timing out calls that never return.
-  #   reaperInterval {Number, default:10000}, number of miliseconds between reaper wakups.
-  #   reaperTimeout {Number, default:30000}, the amount of time before a callback times out.
-  #   retryMiliSeconds {Number, default:5000}, number of miliseconds between retries.
-  #   numberOfRetries {Number, default:5}, number of retries off connection.
-  @getDbInstance: (host, dbName, port, options = {safe:true}) ->
-    if MongoGateway.db is undefined
-      options.logger = MongoGateway.getLogger()
-      dbServer = new Server host, port
-      MongoGateway.db = new Db dbName, dbServer, options
-    return MongoGateway.db
+    if typeof options is 'function'
+      callback = options
+      options = null
 
 
-  @connect: (host, dbName, port, option, username, password) ->
-    # open() calls server.connect() internally
-    MongoGateway.getDbInstance(host, dbName, port, option)
-      .open (err, Db) ->
-        if err? then throw new Error "error #{err} when opening a connection", 500
+    MongoClient.connect mongoUrl, options, (err, db) =>
+      if err?
+        return callback err
+      @db = db
+      callback()
 
-        if username? and password?
-          Db.authenticate username, password, (err, result) ->
-            if err? or result is false or result is null
-              throw new Error "error #{err} authenticating with: #{username}:#{password}", 500
 
   # @param {String} targetCollection
   # @param {Object} data
@@ -55,24 +33,22 @@ class MongoGateway
   #   continueOnError/keepGoing {Boolean, default:false}, keep inserting documents even if one document has an error, mongodb 1.9.1 >.
   #   serializeFunctions {Boolean, default:false}, serialize functions on the document.
   # @param {Function} callback
-  @insert: (targetCollection, data, options, callback) ->
-    throw new Error 'Invalid callback' unless typeof callback is 'function'
+  insert: (targetCollection, data, options, callback) ->
+    throw new Error 'Invalid callback' unless callback instanceof Function
     insertOptions =
-      w: options.w ?= 1
+      # w: options.w ?= 'majority'
+      w: options.w ?= '1'
 
-    MongoGateway.db.collection(targetCollection).
-      insert data, insertOptions, callback
+    @db.collection(targetCollection).insert data, insertOptions, callback
 
   # @param {String} targetCollection
   # @param {Object} query
   # @param {Object} options
   # @param {Function} callback
-  @findOne: (targetCollection, query, options, callback) ->
-    throw new Error 'Invalid callback' unless typeof callback is 'function'
-    query = MongoGateway.convertId query
-    query = MongoGateway.useObjectID query
+  findOne: (targetCollection, query, options, callback) ->
+    throw new Error 'Invalid callback' unless callback instanceof Function
 
-    MongoGateway.db.collection(targetCollection).findOne query, options, callback
+    @db.collection(targetCollection).findOne query, options, callback
 
   # @param {String} targetCollection
   # @param {Object} query
@@ -104,10 +80,14 @@ class MongoGateway
   #   numberOfRetries {Number, default:5}, if using awaidata specifies the number of times to retry on timeout.
   #   partial {Boolean, default:false}, specify if the cursor should return partial results when querying against a sharded system
   # @param {Function} callback
-  @find: (targetCollection, query, fields, options, callback) ->
-    throw new Error 'Invalid callback' unless typeof callback is 'function'
-    callback null, MongoGateway.db.collection(targetCollection).
+  find: (targetCollection, query, fields, options, callback) ->
+    throw new Error 'Invalid callback' unless callback instanceof Function
+    callback null, @db.collection(targetCollection).
       find(query, fields, options)
+
+  search: (targetCollection, search, callback) ->
+    throw new Error 'Invalid callback' unless callback instanceof Function
+    @db.command({ text: targetCollection, search: search }, callback )
 
   # @param {String} targetCollection
   # @param {Object} whereQuery
@@ -122,17 +102,16 @@ class MongoGateway
   #   multi {Boolean, default:false}, update all documents matching the selector.
   #   serializeFunctions {Boolean, default:false}, serialize functions on the document.
   # @param {Function} callback
-  @update: (targetCollection, whereQuery, updateQuery, options, callback) ->
-    throw new Error 'Invalid callback' unless typeof callback is 'function'
-    collection = MongoGateway.db.collection targetCollection
+  update: (targetCollection, whereQuery, updateQuery, options, callback) ->
+    throw new Error 'Invalid callback' unless callback instanceof Function
+    collection = @db.collection targetCollection
 
     updateOptions =
       multi: options.multi ?= false
       upsert: options.upsert ?= false
-      w: options.w ?= 1
-    whereQuery = MongoGateway.convertId whereQuery
-    whereQuery = MongoGateway.useObjectID whereQuery
-    updateQuery = MongoGateway.removeIdFromUpdate updateQuery
+      w: options.w ?= '1'
+
+    updateQuery = @removeIdFromUpdate updateQuery
 
     collection.update whereQuery, updateQuery, updateOptions, callback
 
@@ -145,54 +124,39 @@ class MongoGateway
   #   **fsync**, (Boolean, default:false) write waits for fsync before returning
   #   **journal**, (Boolean, default:false) write waits for journal sync before returning
   # @param {Function} callback
-  @save: (targetCollection, document, options, callback) ->
-    throw new Error 'Invalid callback' unless typeof callback is 'function'
+  save: (targetCollection, document, options, callback) ->
+    throw new Error 'Invalid callback' unless callback instanceof Function
 
     # @TODO callback depends on the value of w
-    # add a switch to create different callbacks 
+    # add a switch to create different callbacks
     # in order to log possible errors
     #
     # example with w > 1
     # (err, numUpdates, info) -> console.log err, numUpdates, info
 
-    # MongoGateway.db.collection(targetCollection)
+    # @db.collection(targetCollection)
     #   .save document, {w: options.w ?= false}, callback
-    MongoGateway.db.collection(targetCollection)
-      .save document, {w: options.w ?= 1}, callback
+    @db.collection(targetCollection).save document, {w: options.w ?= '1'}, callback
 
   # @param {String} targetCollection
   # @param {Object} whereQuery
   # @param {Function} callback
-  @remove: (targetCollection, whereQuery, callback) ->
-    throw new Error 'Invalid callback' unless typeof callback is 'function'
-    whereQuery = MongoGateway.convertId whereQuery
-    whereQuery = MongoGateway.useObjectID whereQuery
-    MongoGateway.db.collection(targetCollection).
+  remove: (targetCollection, whereQuery, callback) ->
+    throw new Error 'Invalid callback' unless callback instanceof Function
+
+    @db.collection(targetCollection).
       remove whereQuery, {safe: 1}, callback
 
 
-  @findAndModify: (targetCollection, whereQuery, sort, doc, options, callback) ->
-    MongoGateway.db.collection(targetCollection).
+  findAndModify: (targetCollection, whereQuery, sort, doc, options, callback) ->
+    @db.collection(targetCollection).
       findAndModify whereQuery, sort, doc, options, callback
 
 
-  # Convert id to _id
-  @convertId: (query) ->
-    for k, v of query
-      if k is 'id'
-        query._id = query.id
-        delete query.id
-    return query
-
-  # cast id to ObjectId
-  @useObjectID: (query) ->
-    if query._id?
-      query._id = new ObjectID query._id unless query._id instanceof ObjectID
-    return query
-
   # mongo native driver fails when the update contains an objectid
-  @removeIdFromUpdate: (updateQuery) ->
+  removeIdFromUpdate: (updateQuery) ->
     delete updateQuery['$set']._id if updateQuery['$set']?._id?
     return updateQuery
+
 
 module.exports = MongoGateway

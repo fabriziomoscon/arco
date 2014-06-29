@@ -1,5 +1,12 @@
 require('rootpath')()
 
+redis = require('fakeredis')
+
+global.redisClient = redis.createClient()
+
+global.mongoGateway = {}
+
+
 global.log = {
   error: console.error,
   warn: function () {return},

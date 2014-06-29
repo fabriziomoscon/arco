@@ -24,15 +24,41 @@
 # copied file. Please don't commit the duplicated file to git...
 
 
+# exit if anything goes wrong
+set -e
+
+
+# Usage message that is displayed when `--help` is given as an argument.
+usage() {
+  echo "Usage: ./set-env [<envvar file>] command args1 args2"
+  echo "Run things with env vars"
+  echo
+  echo "This script reads commands from <envvar file> and runs the command"
+  echo "you specify afterwards"
+}
+
+# If the --help option is given, show the usage message and exit.
+expr -- "$*" : ".*--help" >/dev/null && {
+  usage
+  exit 0
+}
+
 envfile=("$@")
 
 if [ -r src/env/$envfile.conf ]
 then
-	. src/env/$envfile.conf
-	shift
+  ENVFILE=src/env/$envfile.conf
+  shift
 else
-	. src/env/local.conf
+  ENVFILE=src/env/local.conf
 fi
+
+while read line || [ -n "$line" ]; do
+  if [[ "$line" != \#* ]] && [[ "$line" == *=* ]]; then
+    eval "export $line"
+  fi
+done < "$ENVFILE"
+
 
 "$@"
 

@@ -6,7 +6,6 @@ WIP
 - simplify user account passing user and user id...
 
 system
-- figure out how to connect to mongo before the server start listening
 - setup mongologger
 
 lib

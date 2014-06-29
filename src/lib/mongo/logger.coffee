@@ -1,27 +1,22 @@
-module.exports =
+module.exports = (log) ->
 
-  error: (message, command) ->
+  return {
 
-    console.log('\x1B[0;31mMongo ERR:\x1B[0m %s', message) if message?
-    console.log('\x1B[0;31mMongo ERR:\x1B[0m %s', command) if command?
+    error: (message, command) ->
+      log.error {command}, message
 
-  log: (message, command) ->
+    log: (message, command) ->
+      log.info {command}, message
 
-    console.log('\x1B[0;33mMongo LOG:\x1B[0m %s', message) if message?
-    console.log('\x1B[0;33mMongo LOG:\x1B[0m %s', command) if command?
+    debug: (message, command) ->
 
-  debug: (message, command) ->
+      lobj = {}
 
-    if message?
-      console.log '\x1B[0;36mMongo DEBUG:\x1B[0m %s', message
+      if command?.json?
+        lobj.collection = command.json.collectionName if command.json.collectionName?
+        lobj.spec = command.json.spec if command.json.spec?
+        lobj.query = command.json.query if command.json.query?
+        lobj.document = command.json.document if command.json.document?
 
-    if command?.json?
-      console.log "collection [#{command.json.collectionName}]" if command.json.collectionName?
-      console.log 'spec', command.json.spec if command.json.spec?
-      console.log 'query', command.json.query if command.json.query?
-      console.log 'document', command.json.document if command.json.document?
-
-    # if command?.binary?
-    #   console.log 'Mongo DEBUG bin', command.binary
-
-  doDebug: true
+      log.debug {command:lobj}, message
+  }

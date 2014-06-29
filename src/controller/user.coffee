@@ -2,13 +2,12 @@ check = require 'check-types'
 
 http = require 'src/middleware/httpResponse'
 
-accountService = new (require 'src/service/Account')
-
 apiUserMapper = require 'src/mapper/api/user'
 
 
+module.exports = (accountService) ->
 
-module.exports = {
+  return {
 
 
     list: (req, res, next) ->
@@ -114,4 +113,4 @@ module.exports = {
       return
 
 
-}
+  }
