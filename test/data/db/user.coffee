@@ -22,7 +22,7 @@ data =
     _id: new ObjectID( ids.validIdString1 )
     first_name: 'fabrizio'
     last_name: 'moscon'
-    email: 'fab@coffeestack.com'
+    email: 'fab@c.com'
     password: 'qwerty21'
     gender: 'M'
     birthdate: new Date 1983, 5, 6

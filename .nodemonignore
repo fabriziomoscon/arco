@@ -4,7 +4,7 @@
 /test/functional/*
 test/mocha.opts
 test/init.js
-Makefile
+./Makefile
 README.md
 .gitignore
 set-env

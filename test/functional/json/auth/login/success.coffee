@@ -5,7 +5,7 @@ headers:
   'Accept': 'application/json'
   'Content-Type': 'application/json'
 body:
-  email: 'fab@coffeestack.com'
+  email: 'fab@c.com'
   password: 'qwerty21'
 
 

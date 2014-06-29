@@ -1,6 +1,7 @@
 ScoreRepository = require 'src/repository/Score'
-ScoreModel      = require 'src/model/Score'
-UserModel       = require 'src/model/User'
+
+ScoreModel = require 'src/model/Score'
+UserModel  = require 'src/model/User'
 
 isValidObjectId = require 'src/validator/type/objectId'
 
@@ -22,8 +23,10 @@ class Score
     score.times.created = new Date
 
     @scoreRepository.insert score, (err, scoresInserted) ->
-      return callback err, null if err?
-      return callback new Error('No score created'), null unless scoresInserted?[0]?
+      if err?
+        return callback err
+      unless scoresInserted?[0]?
+        return callback new Error 'No score created'
       return callback null, scoresInserted[0]
     return
 

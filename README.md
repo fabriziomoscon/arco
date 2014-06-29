@@ -32,7 +32,7 @@ to install all local dependencies.
 ##Start Server
 
 ```bash
-./set-env local npm run dev-api
+-./set-env local npm run dev-api
 ```
 
 testing modality
@@ -58,11 +58,11 @@ You need to install ciao globally to run the functional tests.
 sudo npm install ciao -g
 ```
 
-load fixtures
+It is possible to load the fixtures manually
 ```bash
-make drop-db
+make drop-test-db
 make load-fixtures
-curl -XPOST http://localhost:4000/testing/fixtures/users
+make create-cookies
 ```
 
 run the test
