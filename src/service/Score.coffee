@@ -43,7 +43,7 @@ class Score
     return callback new TypeError 'Invalid score' unless score instanceof ScoreModel
     return callback new TypeError 'Invalid user' unless user instanceof UserModel
 
-    return callback new ApplicationError 'Not allowed', ApplicationError.FORBIDDEN unless score.canEdit user.id
+    return callback new ApplicationError 'Not allowed', 3012, ApplicationError.FORBIDDEN unless score.canEdit user.id
 
     @scoreRepository.update score, callback
 

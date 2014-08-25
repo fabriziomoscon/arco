@@ -3,7 +3,7 @@ WIP
 - sync up score edit in controller
 - write unit test for map api score for editing
 - write ciao test for edit
-- simplify user account passing user and user id...
+- Account service move function updatePassword to another function different from updateUser => single responsability
 
 system
 - setup mongologger
@@ -41,7 +41,7 @@ test
 - place mapper
 - score mapper
 - document mapper
-- account service updateUserById
+
 
 review
 - reconsider choice of geolocation mapper marshall as it is coupled to Mongo syntax

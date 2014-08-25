@@ -9,18 +9,23 @@ isValidObjectId = require 'src/validator/type/objectId'
 
 passwordHelper = require 'src/lib/password'
 
+ApplicationError = require 'src/lib/error/Application'
+
 
 class Account
 
 
   constructor: (UserRepo = new UserRepository) ->
-    throw new TypeError 'Invalid repository' unless UserRepo?
+    unless UserRepo?
+      throw new TypeError 'Invalid repository'
     @userRepository = UserRepo
 
 
   createUser: (user, callback) ->
-    throw new TypeError 'Invalid callback' unless typeof callback is 'function'
-    return callback new Error 'Invalid user' unless user instanceof UserModel
+    unless typeof callback is 'function'
+      throw new TypeError 'Invalid callback'
+    unless user instanceof UserModel
+      return callback new Error 'Invalid user'
     
     async.waterfall [
 
@@ -58,21 +63,30 @@ class Account
 
 
   findUserByEmail: (email, callback) ->
-    throw new TypeError 'Invalid callback' unless typeof callback is 'function'
-    return callback new Error 'Invalid email' unless typeof email is 'string'
+    unless typeof callback is 'function'
+      throw new TypeError 'Invalid callback'
+    unless typeof email is 'string'
+      return callback new Error 'Invalid email'
+
     @userRepository.findOneByEmail email, callback
 
 
   findUserById: (userId, callback) ->
-    throw new TypeError 'Invalid callback' unless typeof callback is 'function'
-    return callback new Error 'Invalid userId' unless isValidObjectId userId
+    unless typeof callback is 'function'
+      throw new TypeError 'Invalid callback'
+    unless isValidObjectId userId
+      return callback new Error 'Invalid userId'
+
     @userRepository.findOneById userId, callback
 
 
-  updateUserById: (userId, user, callback) ->
-    throw new TypeError 'Invalid callback' unless typeof callback is 'function'
-    return callback new Error 'Invalid userId' unless isValidObjectId userId
-    return callback new Error 'Invalid user' unless user instanceof UserModel
+  updateUserById: (user, callback) ->
+    unless typeof callback is 'function'
+      throw new TypeError 'Invalid callback'
+    unless user instanceof UserModel
+      return callback new Error 'Invalid user'
+    unless user.id?
+      return callback new Error 'Invalid user id'
 
     async.waterfall [
 
@@ -81,12 +95,14 @@ class Account
           @userRepository.findOneByEmail user.email, (err, userFound) =>
             if err?
               return next err
-            if userFound? and userId isnt userFound.id
-              return next new Error 'email already used'
+            if userFound? and user.id isnt userFound.id
+              return next new ApplicationError 'email already used', 1028, ApplicationError.FORBIDDEN
+              # return next new Error 'email already used'
             return next()
         else
           return next()
 
+      # TODO move to another function => single responsibility
       (next) ->
         if user.password?
           passwordHelper.hash user.password, (err, encrypted) ->
@@ -100,24 +116,30 @@ class Account
       (next) =>
         return @userRepository.update user, next
 
-    ], (err, user) ->
+    ], (err, userUpdated) ->
       if err?
         return callback err
       
-      return callback null, user
+      return callback null, userUpdated
 
 
+  # TODO add constants
   findAllUsers: (offset = 0, limit = 20, callback) ->
-    throw new TypeError 'Invalid callback' unless typeof callback is 'function'
-    return callback new TypeError 'Invalid offset' unless check.isPositiveNumber(offset) or offset is 0
-    return callback new TypeError 'Invalid limit' unless check.isPositiveNumber(limit) or limit is 0
+    unless typeof callback is 'function'
+      throw new TypeError 'Invalid callback'
+    unless check.isPositiveNumber(offset) or offset is 0
+      return callback new TypeError 'Invalid offset'
+    unless check.isPositiveNumber(limit) or limit is 0
+      return callback new TypeError 'Invalid limit'
 
     @userRepository.findAll offset, limit, callback
 
 
   removeUserById: (userId, callback) ->
-    throw new TypeError 'Invalid callback' unless typeof callback is 'function'
-    return callback new Error 'Invalid userId' unless isValidObjectId userId
+    unless typeof callback is 'function'
+      throw new TypeError 'Invalid callback'
+    unless isValidObjectId userId
+      return callback new Error 'Invalid userId'
 
     @userRepository.remove userId, callback
 

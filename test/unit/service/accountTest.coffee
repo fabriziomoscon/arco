@@ -240,32 +240,52 @@ describe 'Account service', ->
 
   describe 'updateUserById', ->
 
+    mockSource = {
+      findOneByEmail: (email, callback) -> callback null, null
+      update: (userId, user, callback) -> callback null, user
+    }
+
     describe 'failures', ->
 
       call() for call in allNotFunctionTypes.map (invalid) ->
         () ->
           it "should not accept #{invalid} as callback", ->
-            as = new AccountService
-            (-> as.updateUserById '50b896ddc814556766000001', userFactory('validUser1'), invalid).should.throw 'Invalid callback'
-
-      call() for call in allNotStringTypes.map (invalid) ->
-        () ->
-          it "should not accept #{invalid} as user id", (done) ->
-            as = new AccountService
-            as.updateUserById invalid, userFactory('validUser1'), (err, user) ->
-              should.exist err
-              err.message.should.equal 'Invalid userId'
-              should.not.exist user
-              done()
+            as = new AccountService new UserRepository mockSource
+            (-> as.updateUserById userFactory('validUser1'), invalid).should.throw 'Invalid callback'
 
       call() for call in allNotStringTypes.map (invalid) ->
         () ->
           it "should not accept #{invalid} as user", (done) ->
-            as = new AccountService
-            as.updateUserById '50b896ddc814556766000001', invalid, (err, user) ->
+            as = new AccountService new UserRepository mockSource
+            as.updateUserById invalid, (err, user) ->
               should.exist err
               err.message.should.equal 'Invalid user'
               should.not.exist user
               done()
 
+    describe 'forbidden', ->
+
+      it 'should not accept an email already in use', (done) ->
+        email = 'email+resent@gmail.com'
+        mockSourceEmailAlreadyPresent = {
+          findOneByEmail: (email, callback) -> callback null, {first_name: 'fab', last_name: 'mos', email: email}
+        }
+        as = new AccountService new UserRepository mockSourceEmailAlreadyPresent
+        u1 = userFactory('validUser1')
+        u1.email = email
+        as.updateUserById u1, (err, user) ->
+          should.exist err
+          err.message.should.equal 'email already used'
+          should.not.exist user
+          done()
+
     describe 'success', ->
+
+      it 'should update the user', (done) ->
+        as = new AccountService new UserRepository mockSource
+        u1 = userFactory('validUser1')
+        as.updateUserById u1, (err, user) ->
+          should.not.exist err
+          should.exist user
+          user.should.be.instanceof User
+          done()

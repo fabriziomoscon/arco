@@ -19,6 +19,7 @@ User
 - 1025 PUT     user: 500 'impossible editing a user'
 - 1026 PUT     user: 400 'missing password confirmation'
 - 1027 PUT     user: 400 'password mismatch'
+- 1028 PUT     user: 400 'email already used'
 
 - 1031 DELETE  user: 404 'user not found'
 - 1032 DELETE  user: 500 'impossible removing the user'
@@ -42,3 +43,4 @@ Score
 
 - 3010 PUT     score: 500 'impossible to edit a score'
 - 3011 PUT     score: 404 'score not found'
+- 3012 PUT     score: 404 'this user cannot edit this score'

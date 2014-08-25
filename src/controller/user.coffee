@@ -87,7 +87,7 @@ module.exports = (accountService) ->
         try user = apiUserMapper.unmarshallForEditing req.body, user
         catch err then return next( http.badRequest(err, 1023) )
 
-        accountService.updateUserById req.params.id, user, (err, user) ->
+        accountService.updateUserById user, (err, user) ->
           if err?
             return next( http.error(err, 1025) )
 

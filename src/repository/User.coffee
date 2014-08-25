@@ -13,7 +13,6 @@ class UserRespository
     @userSource = userSource
     @userMapper = userMapper
 
-
   insert: (users, callback) ->
     users = [users] unless Array.isArray users
     @userSource.insert (@userMapper.marshall(user) for user in users),
