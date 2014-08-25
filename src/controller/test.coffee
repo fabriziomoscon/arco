@@ -1,4 +1,4 @@
-MongoGateway = require 'src/lib/mongo/Gateway'
+MongoGateway = global.mongoGateway
 
 http = require 'src/middleware/httpResponse'
 
@@ -40,7 +40,7 @@ exports = module.exports = () ->
 
     loadFixtures: (req, res, next) ->
 
-      exports.loadFixturesUsers req, res, next
+      exports().loadFixturesUsers req, res, next
 
 
     loadFixturesUsers: (req, res, next) ->
