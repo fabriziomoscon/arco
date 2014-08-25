@@ -20,13 +20,13 @@
   },
   "dependencies": {
     "async": "0.9.x",
-    "bcrypt": "0.7.x",
+    "bcrypt": "0.8.x",
     "bunyan": "*",
     "bunyan-syslog": "0.2.x",
     "check-types": "0.6.x",
     "coffee-script": "1.6.x",
     "connect-redis": "1.4.x",
-    "cors": "2.3.x",
+    "cors": "2.4.x",
     "date-utils": "*",
     "express": "3.4.x",
     "hyperquest": "0.3.x",
@@ -42,7 +42,7 @@
   "devDependencies": {
     "breakdown": "*",
     "fakeredis": "0.2.x",
-    "mocha": "1.20.x",
+    "mocha": "1.21.x",
     "nodemon": "1.2.x",
     "should": "4.0.x",
     "walk": "2.3.x"
